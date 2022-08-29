@@ -1,0 +1,14 @@
+{
+	"name": "Modulo Cozinha",
+	"description": "Módulo de Produção na Cozinha do restaurante",
+	"version": "1.0.0",
+	"homepage": "http://adrianosantostreina.com.br",
+	"mainsrc": "src",
+	"projects": [],
+	"dependencies": {
+		"github.com/academiadocodigo/router4delphi": "^1.0.7",
+		"github.com/adrianosantostreina/customthread": "^1.0.0",
+		"github.com/viniciussanchez/dataset-serialize": "^v2.3.6",
+		"github.com/viniciussanchez/restrequest4delphi": "^v3.0.16"
+	}
+}
