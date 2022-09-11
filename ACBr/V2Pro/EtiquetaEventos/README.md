@@ -55,7 +55,7 @@ Um exemplo de Endereço válido, para baixar o arquivo acima, direto no aplicati
 https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv
 
 ## Configurando o aplicativo
-- Clique no icone de Ferramenta, no canto esquerdo superior, do aplicativo  
+- Clique no icone de Ferramenta, no canto direito superior, do aplicativo  
 	- Digite o endereço da URL, de onde baixar a lista (link direto)  
 	- Clique no botão "Baixar"  
 	- Observe as mensagens de sucesso ou falha, na importação da lista  
@@ -65,7 +65,7 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 	- Espaços
 - Clique em "Salvar" e retorne a tela principal
 	
-## Como abrir o Projeto
+## Como abrir o Projeto no Delphi
 - **Importante**, esse projeto depende dos componentes do **[Projeto ACBr](https://projetoacbr.com.br/)**
 - Se você precisa de mais informações de como baixar e instalar os componentes do ACBr em sua IDE, por favor leia com atenção as intruções dessa página:  
 	https://projetoacbr.com.br/fontes/
