@@ -34,14 +34,14 @@ O Arquivo deve estar no formato .CSV (TXT formatado), com as seguintes definiç�
 - O separador de linha, geralmente será o caractere LF (Linux), mas também pode ser CR+LF (Windows)
 
 ## Exemplo de Arquivo
-Inscricao1,nome_participante1,nome_empresa1
-Inscricao2,nome_participante2,nome_empresa2
-Inscricao3,nome_participante3,nome_empresa3
-...
-InscricaoN,nome_participanteN,nome_empresaN
+Inscricao1,nome_participante1,nome_empresa1  
+Inscricao2,nome_participante2,nome_empresa2  
+Inscricao3,nome_participante3,nome_empresa3  
+...  
+InscricaoN,nome_participanteN,nome_empresaN  
 
 
 ## Histórico
-| **Versão** | **Data** | **Autor** | **Mudanças** |
-| 0.9 | 01/08/2022 | DSA | Primeira Versão |
-| 1.0 | 11/09/2022 | DSA | Adição de Impressão do QRCode |
+| **Versão** | **Data** | **Autor** | **Mudanças** |  
+| 0.9 | 01/08/2022 | DSA | Primeira Versão |  
+| 1.0 | 11/09/2022 | DSA | Adição de Impressão do QRCode |  
