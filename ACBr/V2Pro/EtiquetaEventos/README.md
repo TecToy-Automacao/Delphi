@@ -44,6 +44,9 @@ InscricaoN,nome_participanteN,nome_empresaN
 
 Você pode ver um exemplo de arquivo, [nesse link](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv)
 
+Um exemplo de Endereço válido, para baixar o arquivo acima, direto no aplicativo, seria:
+https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv
+
 ## Histórico
 | **Versão** | **Data** | **Autor** | **Mudanças** |  
 | --- | --- | --- | --- |  
