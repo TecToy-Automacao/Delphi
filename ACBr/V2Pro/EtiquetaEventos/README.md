@@ -56,13 +56,13 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 
 ## Configurando o aplicativo
 - Clique no icone de Ferramenta, no canto esquerdo superior, do aplicativo  
-	-- Digite o endereço da URL, de onde baixar a lista (link direto)  
-	-- Clique no botão "Baixar"  
-	-- Observe as mensagens de sucesso ou falha, na importação da lista  
+	- Digite o endereço da URL, de onde baixar a lista (link direto)  
+	- Clique no botão "Baixar"  
+	- Observe as mensagens de sucesso ou falha, na importação da lista  
 - O programa assumirá por padrão, as configurações para a impressão no V2Pro
 - Se necessário, modifique os parâmetros de impressão, para melhor ajuste na etiqueta, como:  
-	-- Linhas de Pulo  
-	-- Espaços
+	- Linhas de Pulo  
+	- Espaços
 - Clique em "Salvar" e retorne a tela principal
 	
 ## Como abrir o Projeto
