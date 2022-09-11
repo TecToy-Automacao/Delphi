@@ -43,5 +43,6 @@ InscricaoN,nome_participanteN,nome_empresaN
 
 ## Histórico
 | **Versão** | **Data** | **Autor** | **Mudanças** |  
+| --- | --- | --- | --- |  
 | 0.9 | 01/08/2022 | DSA | Primeira Versão |  
 | 1.0 | 11/09/2022 | DSA | Adição de Impressão do QRCode |  
