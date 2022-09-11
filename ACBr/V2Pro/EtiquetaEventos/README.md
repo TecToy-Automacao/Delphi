@@ -11,6 +11,8 @@ O aplicativo também permite a impressão de etiquetas de forma avulsa, informan
 A importação da lista de inscritos usará um endereço em nuvem (no formato http), para baixar um arquivo em formato específico (ver abaixo)
 Após o download do arquivo, o aplicativo exibirá o número de inscritos encontrados no arquivo, e os exibirá na tela principal do aplicativo
 
+Atualmente, nessa versão a impressão irá remover a acentuação e cedilha dos Nomes dos incritos, e usará sempre letras MAIÚSCULAS.
+
 ## Características da Etiqueta
 - O Rolo de Etiquetas deve ser térmico
 - As etiquetas devem ter o tamanho 60x40mm
@@ -40,6 +42,7 @@ Inscricao3,nome_participante3,nome_empresa3
 ...  
 InscricaoN,nome_participanteN,nome_empresaN  
 
+Você pode ver um exemplo de arquivo, [nesse link](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv)
 
 ## Histórico
 | **Versão** | **Data** | **Autor** | **Mudanças** |  
