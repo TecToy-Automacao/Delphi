@@ -355,6 +355,9 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             RowCollection = <
               item
                 Value = 100.000000000000000000
+              end
+              item
+                SizeStyle = Auto
               end>
             object btImprimir: TButton
               Align = Client
@@ -408,7 +411,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         Size.Width = 438.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 0
+        TabOrder = 1
         object lblTituloConfig: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
@@ -432,581 +435,727 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           end
         end
       end
-      object lbConfig: TListBox
+      object tabsConfig: TTabControl
         Align = Client
         Size.Width = 438.000000000000000000
-        Size.Height = 543.000000000000000000
+        Size.Height = 496.000000000000000000
         Size.PlatformDefault = False
-        TabOrder = 1
-        ShowScrollBars = False
-        DisableFocusEffect = True
-        DefaultItemStyles.ItemStyle = ''
-        DefaultItemStyles.GroupHeaderStyle = ''
-        DefaultItemStyles.GroupFooterStyle = ''
-        Viewport.Width = 438.000000000000000000
-        Viewport.Height = 543.000000000000000000
-        object ListBoxGroupHeader5: TListBoxGroupHeader
-          Selectable = False
-          TextSettings.HorzAlign = Center
-          StyledSettings = [Family, Size, Style, FontColor]
-          Margins.Left = 10.000000000000000000
-          Margins.Top = 2.000000000000000000
-          Margins.Right = 10.000000000000000000
-          Margins.Bottom = 2.000000000000000000
-          Position.X = 10.000000000000000000
-          Position.Y = 2.000000000000000000
-          Size.Width = 418.000000000000000000
-          Size.Height = 30.000000000000000000
+        TabHeight = 49.000000000000000000
+        TabIndex = 0
+        TabOrder = 2
+        TabPosition = PlatformDefault
+        Sizes = (
+          438s
+          447s
+          438s
+          447s
+          438s
+          447s)
+        object tabEtiqueta: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = True
+          Size.Width = 146.000000000000000000
+          Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 4
-          Text = 'URL lista'
-        end
-        object lbiURL: TListBoxItem
-          Position.Y = 34.000000000000000000
-          Size.Width = 438.000000000000000000
-          Size.Height = 47.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 1
-          object edtURL: TEdit
-            Touch.InteractiveGestures = [LongTap, DoubleTap]
-            Align = VertCenter
-            TabOrder = 5
-            Position.X = 8.000000000000000000
-            Position.Y = 7.000000000000000000
-            Margins.Left = 8.000000000000000000
-            Size.Width = 308.000000000000000000
-            Size.Height = 32.000000000000000000
-            Size.PlatformDefault = False
-          end
-          object btBaixarLista: TButton
-            Align = Right
-            Images = ImageList1
-            ImageIndex = 11
-            Margins.Left = 8.000000000000000000
-            Margins.Top = 4.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Margins.Bottom = 4.000000000000000000
-            Position.X = 324.000000000000000000
-            Position.Y = 4.000000000000000000
-            Size.Width = 106.000000000000000000
-            Size.Height = 39.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 6
-            Text = 'Baixar'
-            OnClick = btBaixarListaClick
-          end
-        end
-        object ListBoxGroupHeader1: TListBoxGroupHeader
-          Selectable = False
-          TextSettings.HorzAlign = Center
-          StyledSettings = [Family, Size, Style, FontColor]
-          Margins.Left = 10.000000000000000000
-          Margins.Top = 2.000000000000000000
-          Margins.Right = 10.000000000000000000
-          Margins.Bottom = 2.000000000000000000
-          Position.X = 10.000000000000000000
-          Position.Y = 83.000000000000000000
-          Size.Width = 418.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 3
-          Text = 'Modelo da Impressora'
-        end
-        object lbModelos: TListBoxItem
-          Selectable = False
-          Position.Y = 115.000000000000000000
-          Size.Width = 438.000000000000000000
-          Size.Height = 52.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 2
-          object cbxModelo: TComboBox
-            Align = VertCenter
-            Margins.Left = 8.000000000000000000
-            Margins.Top = 4.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Margins.Bottom = 4.000000000000000000
-            Position.X = 8.000000000000000000
-            Position.Y = 10.000000000000000000
-            Size.Width = 193.000000000000000000
-            Size.Height = 32.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 0
-          end
-          object cbControlePorta: TCheckBox
-            Align = Right
-            IsChecked = True
-            Margins.Left = 8.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Position.X = 318.000000000000000000
-            Size.Width = 112.000000000000000000
-            Size.Height = 52.000000000000000000
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Etiqueta'
+          object lbEtiqueta: TListBox
+            Align = Client
+            Size.Width = 438.000000000000000000
+            Size.Height = 447.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
-            Text = 'Controle Porta'
-            TextSettings.WordWrap = True
-          end
-          object cbxPagCodigo: TComboBox
-            Align = Right
-            Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
-            ItemHeight = 13.000000000000000000
-            Margins.Left = 8.000000000000000000
-            Margins.Top = 4.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Margins.Bottom = 4.000000000000000000
-            Position.X = 217.000000000000000000
-            Position.Y = 10.000000000000000000
-            Size.Width = 85.000000000000000000
-            Size.Height = 32.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 3
+            ShowScrollBars = False
+            DisableFocusEffect = True
+            DefaultItemStyles.ItemStyle = ''
+            DefaultItemStyles.GroupHeaderStyle = ''
+            DefaultItemStyles.GroupFooterStyle = ''
+            Viewport.Width = 438.000000000000000000
+            Viewport.Height = 447.000000000000000000
+            object ListBoxGroupHeader5: TListBoxGroupHeader
+              Selectable = False
+              TextSettings.HorzAlign = Center
+              StyledSettings = [Family, Size, Style, FontColor]
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 2.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 2.000000000000000000
+              Size.Width = 418.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              Text = 'Elementos da Impress'#227'o'
+            end
+            object ListBoxItem6: TListBoxItem
+              Position.Y = 34.000000000000000000
+              TabOrder = 1
+              object cbImpCodBarras: TCheckBox
+                Align = Client
+                IsChecked = True
+                Margins.Left = 8.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Size.Width = 422.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 2
+                Text = 'Imprimir Cod.Barras Inscri'#231#227'o'
+                TextSettings.WordWrap = True
+              end
+            end
+            object ListBoxItem7: TListBoxItem
+              Position.Y = 78.000000000000000000
+              TabOrder = 2
+              object seCaracteresLinha: TSpinBox
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Right
+                TabOrder = 0
+                Cursor = crIBeam
+                Value = 16.000000000000000000
+                Position.X = 264.000000000000000000
+                Position.Y = 6.000000000000000000
+                Margins.Left = 8.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Size.Width = 166.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object Label8: TLabel
+                Align = Client
+                Margins.Left = 10.000000000000000000
+                Size.Width = 246.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                Text = 'Caracteres por Linha'
+                TabOrder = 1
+              end
+            end
+            object ListBoxItem8: TListBoxItem
+              Position.Y = 122.000000000000000000
+              TabOrder = 3
+              object seLinhasPular: TSpinBox
+                Touch.InteractiveGestures = [LongTap, DoubleTap]
+                Align = Right
+                TabOrder = 2
+                Cursor = crIBeam
+                Value = 4.000000000000000000
+                Position.X = 264.000000000000000000
+                Position.Y = 6.000000000000000000
+                Margins.Left = 8.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Size.Width = 166.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+              end
+              object Label9: TLabel
+                Align = Client
+                Margins.Left = 10.000000000000000000
+                Size.Width = 246.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                Text = 'Linhas a Pular'
+                TabOrder = 1
+              end
+            end
           end
         end
-        object ListBoxGroupHeader2: TListBoxGroupHeader
-          Selectable = False
-          TextSettings.HorzAlign = Center
-          StyledSettings = [Family, Size, Style, FontColor]
-          Margins.Left = 10.000000000000000000
-          Margins.Top = 2.000000000000000000
-          Margins.Right = 10.000000000000000000
-          Margins.Bottom = 2.000000000000000000
-          Position.X = 10.000000000000000000
-          Position.Y = 169.000000000000000000
-          Size.Width = 418.000000000000000000
-          Size.Height = 30.000000000000000000
+        object tabConfLista: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 146.000000000000000000
+          Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 5
-          Text = 'Dispositivos e Portas'
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Lista'
+          object lbConfLista: TListBox
+            Align = Client
+            Size.Width = 438.000000000000000000
+            Size.Height = 447.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            ShowScrollBars = False
+            DisableFocusEffect = True
+            DefaultItemStyles.ItemStyle = ''
+            DefaultItemStyles.GroupHeaderStyle = ''
+            DefaultItemStyles.GroupFooterStyle = ''
+            Viewport.Width = 438.000000000000000000
+            Viewport.Height = 447.000000000000000000
+            object ListBoxGroupHeader7: TListBoxGroupHeader
+              Selectable = False
+              TextSettings.HorzAlign = Center
+              StyledSettings = [Family, Size, Style, FontColor]
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 2.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 2.000000000000000000
+              Size.Width = 418.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              Text = 'URL Download Lista'
+            end
+            object lbDownload: TListBoxItem
+              Position.Y = 34.000000000000000000
+              Size.Width = 438.000000000000000000
+              Size.Height = 215.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              object Button1: TButton
+                Align = Bottom
+                Images = ImageList1
+                ImageIndex = 11
+                Margins.Left = 20.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 20.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Position.X = 20.000000000000000000
+                Position.Y = 168.000000000000000000
+                Size.Width = 398.000000000000000000
+                Size.Height = 43.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 5
+                Text = 'Baixar'
+                OnClick = btBaixarListaClick
+              end
+              object recURLDownload: TRectangle
+                Align = Client
+                Fill.Color = claNull
+                Margins.Left = 5.000000000000000000
+                Margins.Right = 5.000000000000000000
+                Size.Width = 428.000000000000000000
+                Size.Height = 164.000000000000000000
+                Size.PlatformDefault = False
+                XRadius = 10.000000000000000000
+                YRadius = 10.000000000000000000
+                object mURLDownload: TMemo
+                  StyleName = 'Rectangle'
+                  Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+                  DataDetectorTypes = []
+                  TextSettings.WordWrap = True
+                  Align = Client
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 4.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 420.000000000000000000
+                  Size.Height = 156.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 0
+                  Viewport.Width = 412.000000000000000000
+                  Viewport.Height = 148.000000000000000000
+                end
+              end
+            end
+          end
         end
-        object lbImpressoras: TListBoxItem
-          Selectable = False
-          Position.Y = 201.000000000000000000
-          Size.Width = 438.000000000000000000
-          Size.Height = 52.000000000000000000
+        object tabConfImpressora: TTabItem
+          CustomIcon = <
+            item
+            end>
+          IsSelected = False
+          Size.Width = 146.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = ''
+          TabOrder = 0
+          Text = 'Impressora'
+          object lbConfImpressora: TListBox
+            Align = Client
+            Size.Width = 438.000000000000000000
+            Size.Height = 447.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 1
+            ShowScrollBars = False
+            DisableFocusEffect = True
+            DefaultItemStyles.ItemStyle = ''
+            DefaultItemStyles.GroupHeaderStyle = ''
+            DefaultItemStyles.GroupFooterStyle = ''
+            Viewport.Width = 438.000000000000000000
+            Viewport.Height = 447.000000000000000000
+            object ListBoxGroupHeader1: TListBoxGroupHeader
+              Selectable = False
+              TextSettings.HorzAlign = Center
+              StyledSettings = [Family, Size, Style, FontColor]
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 2.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 2.000000000000000000
+              Size.Width = 418.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 2
+              Text = 'Modelo da Impressora'
+            end
+            object lbModelos: TListBoxItem
+              Selectable = False
+              Position.Y = 34.000000000000000000
+              Size.Width = 438.000000000000000000
+              Size.Height = 52.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 1
+              object cbxModelo: TComboBox
+                Align = VertCenter
+                Margins.Left = 8.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Position.X = 8.000000000000000000
+                Position.Y = 10.000000000000000000
+                Size.Width = 193.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+              object cbControlePorta: TCheckBox
+                Align = Right
+                IsChecked = True
+                Margins.Left = 8.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Position.X = 318.000000000000000000
+                Size.Width = 112.000000000000000000
+                Size.Height = 52.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Text = 'Controle Porta'
+                TextSettings.WordWrap = True
+              end
+              object cbxPagCodigo: TComboBox
+                Align = Right
+                Hint = 'Pagina de c'#243'digo usada pela Impressora POS'
+                ItemHeight = 13.000000000000000000
+                Margins.Left = 8.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Position.X = 217.000000000000000000
+                Position.Y = 10.000000000000000000
+                Size.Width = 85.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 3
+              end
+            end
+            object ListBoxGroupHeader2: TListBoxGroupHeader
+              Selectable = False
+              TextSettings.HorzAlign = Center
+              StyledSettings = [Family, Size, Style, FontColor]
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 2.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 88.000000000000000000
+              Size.Width = 418.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 3
+              Text = 'Dispositivos e Portas'
+            end
+            object lbImpressoras: TListBoxItem
+              Selectable = False
+              Position.Y = 120.000000000000000000
+              Size.Width = 438.000000000000000000
+              Size.Height = 52.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+              object cbxImpressorasBth: TComboBox
+                Align = VertCenter
+                Margins.Left = 8.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 2.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Position.X = 8.000000000000000000
+                Position.Y = 10.000000000000000000
+                Size.Width = 226.000000000000000000
+                Size.Height = 32.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+              end
+              object btnProcurarBth: TCornerButton
+                Align = Right
+                Images = ImageList1
+                ImageIndex = 12
+                Margins.Left = 8.000000000000000000
+                Margins.Top = 4.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Margins.Bottom = 4.000000000000000000
+                Position.X = 244.000000000000000000
+                Position.Y = 4.000000000000000000
+                Sides = [Top, Left, Bottom, Right]
+                Size.Width = 109.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                StyleLookup = 'cornerbuttonstyle'
+                TabOrder = 1
+                Text = 'Procurar'
+                XRadius = 3.000000000000000000
+                YRadius = 3.000000000000000000
+                OnClick = btnProcurarBthClick
+              end
+              object chbTodasBth: TCheckBox
+                Align = Right
+                IsChecked = True
+                Position.X = 361.000000000000000000
+                Size.Width = 77.000000000000000000
+                Size.Height = 52.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 3
+                Text = 'Todas'
+              end
+            end
+            object ListBoxGroupHeader3: TListBoxGroupHeader
+              Selectable = False
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 2.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 174.000000000000000000
+              Size.Width = 418.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = 'Largura e Espacejamento '
+            end
+            object lbLarguraEspacejamento: TListBoxItem
+              Selectable = False
+              Position.Y = 206.000000000000000000
+              Size.Width = 438.000000000000000000
+              Size.Height = 100.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 5
+              object GridPanelLayout1: TGridPanelLayout
+                Align = Client
+                Size.Width = 438.000000000000000000
+                Size.Height = 100.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = Label2
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = Label3
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = seColunas
+                    Row = 1
+                  end
+                  item
+                    Column = 1
+                    Control = seEspLinhas
+                    Row = 1
+                  end>
+                RowCollection = <
+                  item
+                    Value = 35.064935064935060000
+                  end
+                  item
+                    Value = 64.935064935064940000
+                  end
+                  item
+                    SizeStyle = Auto
+                  end>
+                object Label2: TLabel
+                  Align = Client
+                  AutoSize = True
+                  Size.Width = 219.000000000000000000
+                  Size.Height = 35.064933776855470000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  TextSettings.WordWrap = False
+                  Text = 'Colunas'
+                  TabOrder = 2
+                end
+                object Label3: TLabel
+                  Align = Client
+                  AutoSize = True
+                  Size.Width = 219.000000000000000000
+                  Size.Height = 35.064933776855470000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  TextSettings.WordWrap = False
+                  Text = 'Espa'#231'os'
+                  TabOrder = 3
+                end
+                object seColunas: TSpinBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 0
+                  Cursor = crIBeam
+                  Value = 32.000000000000000000
+                  Margins.Left = 8.000000000000000000
+                  Margins.Top = 4.000000000000000000
+                  Margins.Right = 8.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 203.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object seEspLinhas: TSpinBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 1
+                  Cursor = crIBeam
+                  Margins.Left = 8.000000000000000000
+                  Margins.Top = 4.000000000000000000
+                  Margins.Right = 8.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 203.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                end
+              end
+            end
+            object ListBoxGroupHeader4: TListBoxGroupHeader
+              Selectable = False
+              Margins.Left = 10.000000000000000000
+              Margins.Top = 2.000000000000000000
+              Margins.Right = 10.000000000000000000
+              Margins.Bottom = 2.000000000000000000
+              Position.X = 10.000000000000000000
+              Position.Y = 308.000000000000000000
+              Size.Width = 418.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 6
+              Text = 'C'#243'digos de Barras'
+            end
+            object lbCodBarras: TListBoxItem
+              Selectable = False
+              Position.Y = 340.000000000000000000
+              Size.Width = 438.000000000000000000
+              Size.Height = 74.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 7
+              object GridPanelLayout5: TGridPanelLayout
+                Align = Client
+                Size.Width = 438.000000000000000000
+                Size.Height = 74.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 0
+                ColumnCollection = <
+                  item
+                    Value = 33.333333333333340000
+                  end
+                  item
+                    Value = 33.333333333333340000
+                  end
+                  item
+                    Value = 33.333333333333340000
+                  end>
+                ControlCollection = <
+                  item
+                    Column = 0
+                    Control = Label1
+                    Row = 0
+                  end
+                  item
+                    Column = 1
+                    Control = Label4
+                    Row = 0
+                  end
+                  item
+                    Column = 2
+                    Control = cbHRI
+                    Row = 0
+                  end
+                  item
+                    Column = 0
+                    Control = seBarrasLargura
+                    Row = 1
+                  end
+                  item
+                    Column = 1
+                    Control = seBarrasAltura
+                    Row = 1
+                  end
+                  item
+                    Column = 2
+                    Control = cbSuportaBMP
+                    Row = 1
+                  end>
+                RowCollection = <
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    Value = 50.000000000000000000
+                  end
+                  item
+                    SizeStyle = Auto
+                  end>
+                object Label1: TLabel
+                  Align = Client
+                  AutoSize = True
+                  Size.Width = 146.000000000000000000
+                  Size.Height = 37.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  TextSettings.WordWrap = False
+                  Text = 'Largura'
+                  TabOrder = 4
+                end
+                object Label4: TLabel
+                  Align = Client
+                  AutoSize = True
+                  Size.Width = 146.000000000000000000
+                  Size.Height = 37.000000000000000000
+                  Size.PlatformDefault = False
+                  TextSettings.HorzAlign = Center
+                  TextSettings.WordWrap = False
+                  Text = 'Altura'
+                  TabOrder = 5
+                end
+                object cbHRI: TCheckBox
+                  Align = Client
+                  Margins.Left = 8.000000000000000000
+                  Margins.Right = 8.000000000000000000
+                  Size.Width = 130.000000000000000000
+                  Size.Height = 37.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 3
+                  Text = 'Exibe Numero'
+                  TextSettings.WordWrap = True
+                end
+                object seBarrasLargura: TSpinBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 0
+                  Cursor = crIBeam
+                  Value = 1.000000000000000000
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 4.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 138.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object seBarrasAltura: TSpinBox
+                  Touch.InteractiveGestures = [LongTap, DoubleTap]
+                  Align = Client
+                  TabOrder = 1
+                  Cursor = crIBeam
+                  Margins.Left = 4.000000000000000000
+                  Margins.Top = 4.000000000000000000
+                  Margins.Right = 4.000000000000000000
+                  Margins.Bottom = 4.000000000000000000
+                  Size.Width = 138.000000000000000000
+                  Size.Height = 32.000000000000000000
+                  Size.PlatformDefault = False
+                end
+                object cbSuportaBMP: TCheckBox
+                  Align = Client
+                  IsChecked = True
+                  Margins.Left = 8.000000000000000000
+                  Margins.Right = 8.000000000000000000
+                  Size.Width = 130.000000000000000000
+                  Size.Height = 37.000000000000000000
+                  Size.PlatformDefault = False
+                  TabOrder = 2
+                  Text = 'Suporta BMP'
+                  TextSettings.WordWrap = True
+                end
+              end
+            end
+          end
+        end
+      end
+      object gplConfBotoes: TGridPanelLayout
+        Align = Bottom
+        Position.Y = 544.000000000000000000
+        Size.Width = 438.000000000000000000
+        Size.Height = 47.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        ColumnCollection = <
+          item
+            Value = 50.000000000000000000
+          end
+          item
+            Value = 50.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = btLerConfig
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = btSalvarConfig
+            Row = 0
+          end>
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end
+          item
+            SizeStyle = Auto
+          end>
+        object btLerConfig: TCornerButton
+          Align = Client
+          Images = ImageList1
+          ImageIndex = 1
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Sides = [Top, Left, Bottom, Right]
+          Size.Width = 209.000000000000000000
+          Size.Height = 37.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
-          object cbxImpressorasBth: TComboBox
-            Align = VertCenter
-            Margins.Left = 8.000000000000000000
-            Margins.Top = 4.000000000000000000
-            Margins.Right = 2.000000000000000000
-            Margins.Bottom = 4.000000000000000000
-            Position.X = 8.000000000000000000
-            Position.Y = 10.000000000000000000
-            Size.Width = 226.000000000000000000
-            Size.Height = 32.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 0
-          end
-          object btnProcurarBth: TCornerButton
-            Align = Right
-            Images = ImageList1
-            ImageIndex = 12
-            Margins.Left = 8.000000000000000000
-            Margins.Top = 4.000000000000000000
-            Margins.Right = 8.000000000000000000
-            Margins.Bottom = 4.000000000000000000
-            Position.X = 244.000000000000000000
-            Position.Y = 4.000000000000000000
-            Sides = [Top, Left, Bottom, Right]
-            Size.Width = 109.000000000000000000
-            Size.Height = 44.000000000000000000
-            Size.PlatformDefault = False
-            StyleLookup = 'cornerbuttonstyle'
-            TabOrder = 1
-            Text = 'Procurar'
-            XRadius = 3.000000000000000000
-            YRadius = 3.000000000000000000
-            OnClick = btnProcurarBthClick
-          end
-          object chbTodasBth: TCheckBox
-            Align = Right
-            IsChecked = True
-            Position.X = 361.000000000000000000
-            Size.Width = 77.000000000000000000
-            Size.Height = 52.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 3
-            Text = 'Todas'
-          end
+          Text = 'Ler'
+          XRadius = 3.000000000000000000
+          YRadius = 3.000000000000000000
+          OnClick = btLerConfigClick
         end
-        object ListBoxGroupHeader3: TListBoxGroupHeader
-          Selectable = False
-          Margins.Left = 10.000000000000000000
-          Margins.Top = 2.000000000000000000
-          Margins.Right = 10.000000000000000000
-          Margins.Bottom = 2.000000000000000000
-          Position.X = 10.000000000000000000
-          Position.Y = 255.000000000000000000
-          Size.Width = 418.000000000000000000
-          Size.Height = 30.000000000000000000
+        object btSalvarConfig: TCornerButton
+          Align = Client
+          Images = ImageList1
+          ImageIndex = 0
+          Margins.Left = 5.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 5.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Sides = [Top, Left, Bottom, Right]
+          Size.Width = 209.000000000000000000
+          Size.Height = 37.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 6
-          Text = 'Largura e Espacejamento '
-        end
-        object lbLarguraEspacejamento: TListBoxItem
-          Selectable = False
-          Position.Y = 287.000000000000000000
-          Size.Width = 438.000000000000000000
-          Size.Height = 100.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 7
-          object GridPanelLayout1: TGridPanelLayout
-            Align = Client
-            Size.Width = 438.000000000000000000
-            Size.Height = 100.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 0
-            ColumnCollection = <
-              item
-                Value = 33.333333333333340000
-              end
-              item
-                Value = 33.333333333333340000
-              end
-              item
-                Value = 33.333333333333340000
-              end>
-            ControlCollection = <
-              item
-                Column = 0
-                Control = Label2
-                Row = 0
-              end
-              item
-                Column = 1
-                Control = Label3
-                Row = 0
-              end
-              item
-                Column = 2
-                Control = Label7
-                Row = 0
-              end
-              item
-                Column = 0
-                Control = seColunas
-                Row = 1
-              end
-              item
-                Column = 1
-                Control = seEspLinhas
-                Row = 1
-              end
-              item
-                Column = 2
-                Control = seLinhasPular
-                Row = 1
-              end>
-            RowCollection = <
-              item
-                Value = 35.064935064935060000
-              end
-              item
-                Value = 64.935064935064940000
-              end>
-            object Label2: TLabel
-              Align = Client
-              AutoSize = True
-              Size.Width = 146.000000000000000000
-              Size.Height = 35.064933776855470000
-              Size.PlatformDefault = False
-              TextSettings.HorzAlign = Center
-              TextSettings.WordWrap = False
-              Text = 'Colunas'
-              TabOrder = 3
-            end
-            object Label3: TLabel
-              Align = Client
-              AutoSize = True
-              Size.Width = 146.000000000000000000
-              Size.Height = 35.064933776855470000
-              Size.PlatformDefault = False
-              TextSettings.HorzAlign = Center
-              TextSettings.WordWrap = False
-              Text = 'Espa'#231'os'
-              TabOrder = 4
-            end
-            object Label7: TLabel
-              Align = Client
-              AutoSize = True
-              Size.Width = 146.000000000000000000
-              Size.Height = 35.064933776855470000
-              Size.PlatformDefault = False
-              TextSettings.HorzAlign = Center
-              TextSettings.WordWrap = False
-              Text = 'Linhas Pulo'
-              TabOrder = 5
-            end
-            object seColunas: TSpinBox
-              Touch.InteractiveGestures = [LongTap, DoubleTap]
-              Align = Client
-              TabOrder = 0
-              Cursor = crIBeam
-              Value = 32.000000000000000000
-              Margins.Left = 8.000000000000000000
-              Margins.Top = 4.000000000000000000
-              Margins.Right = 8.000000000000000000
-              Margins.Bottom = 4.000000000000000000
-              Size.Width = 130.000000000000000000
-              Size.Height = 32.000000000000000000
-              Size.PlatformDefault = False
-            end
-            object seEspLinhas: TSpinBox
-              Touch.InteractiveGestures = [LongTap, DoubleTap]
-              Align = Client
-              TabOrder = 1
-              Cursor = crIBeam
-              Margins.Left = 8.000000000000000000
-              Margins.Top = 4.000000000000000000
-              Margins.Right = 8.000000000000000000
-              Margins.Bottom = 4.000000000000000000
-              Size.Width = 130.000000000000000000
-              Size.Height = 32.000000000000000000
-              Size.PlatformDefault = False
-            end
-            object seLinhasPular: TSpinBox
-              Touch.InteractiveGestures = [LongTap, DoubleTap]
-              Align = Client
-              TabOrder = 2
-              Cursor = crIBeam
-              Value = 4.000000000000000000
-              Margins.Left = 8.000000000000000000
-              Margins.Top = 4.000000000000000000
-              Margins.Right = 8.000000000000000000
-              Margins.Bottom = 4.000000000000000000
-              Size.Width = 130.000000000000000000
-              Size.Height = 32.000000000000000000
-              Size.PlatformDefault = False
-            end
-          end
-        end
-        object ListBoxGroupHeader4: TListBoxGroupHeader
-          Selectable = False
-          Margins.Left = 10.000000000000000000
-          Margins.Top = 2.000000000000000000
-          Margins.Right = 10.000000000000000000
-          Margins.Bottom = 2.000000000000000000
-          Position.X = 10.000000000000000000
-          Position.Y = 389.000000000000000000
-          Size.Width = 418.000000000000000000
-          Size.Height = 30.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 9
-          Text = 'C'#243'digos de Barras'
-        end
-        object lbCodBarras: TListBoxItem
-          Selectable = False
-          Position.Y = 421.000000000000000000
-          Size.Width = 438.000000000000000000
-          Size.Height = 74.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 10
-          object GridPanelLayout5: TGridPanelLayout
-            Align = Client
-            Size.Width = 438.000000000000000000
-            Size.Height = 74.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 0
-            ColumnCollection = <
-              item
-                Value = 33.333333333333340000
-              end
-              item
-                Value = 33.333333333333340000
-              end
-              item
-                Value = 33.333333333333340000
-              end>
-            ControlCollection = <
-              item
-                Column = 0
-                Control = Label1
-                Row = 0
-              end
-              item
-                Column = 1
-                Control = Label4
-                Row = 0
-              end
-              item
-                Column = 2
-                Control = cbHRI
-                Row = 0
-              end
-              item
-                Column = 0
-                Control = seBarrasLargura
-                Row = 1
-              end
-              item
-                Column = 1
-                Control = seBarrasAltura
-                Row = 1
-              end
-              item
-                Column = 2
-                Control = cbSuportaBMP
-                Row = 1
-              end>
-            RowCollection = <
-              item
-                Value = 50.000000000000000000
-              end
-              item
-                Value = 50.000000000000000000
-              end
-              item
-                SizeStyle = Auto
-              end>
-            object Label1: TLabel
-              Align = Client
-              AutoSize = True
-              Size.Width = 146.000000000000000000
-              Size.Height = 37.000000000000000000
-              Size.PlatformDefault = False
-              TextSettings.HorzAlign = Center
-              TextSettings.WordWrap = False
-              Text = 'Largura'
-              TabOrder = 4
-            end
-            object Label4: TLabel
-              Align = Client
-              AutoSize = True
-              Size.Width = 146.000000000000000000
-              Size.Height = 37.000000000000000000
-              Size.PlatformDefault = False
-              TextSettings.HorzAlign = Center
-              TextSettings.WordWrap = False
-              Text = 'Altura'
-              TabOrder = 5
-            end
-            object cbHRI: TCheckBox
-              Align = Client
-              Margins.Left = 8.000000000000000000
-              Margins.Right = 8.000000000000000000
-              Size.Width = 130.000000000000000000
-              Size.Height = 37.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 3
-              Text = 'Exibe Numero'
-              TextSettings.WordWrap = True
-            end
-            object seBarrasLargura: TSpinBox
-              Touch.InteractiveGestures = [LongTap, DoubleTap]
-              Align = Client
-              TabOrder = 0
-              Cursor = crIBeam
-              Value = 1.000000000000000000
-              Margins.Left = 4.000000000000000000
-              Margins.Top = 4.000000000000000000
-              Margins.Right = 4.000000000000000000
-              Margins.Bottom = 4.000000000000000000
-              Size.Width = 138.000000000000000000
-              Size.Height = 32.000000000000000000
-              Size.PlatformDefault = False
-            end
-            object seBarrasAltura: TSpinBox
-              Touch.InteractiveGestures = [LongTap, DoubleTap]
-              Align = Client
-              TabOrder = 1
-              Cursor = crIBeam
-              Margins.Left = 4.000000000000000000
-              Margins.Top = 4.000000000000000000
-              Margins.Right = 4.000000000000000000
-              Margins.Bottom = 4.000000000000000000
-              Size.Width = 138.000000000000000000
-              Size.Height = 32.000000000000000000
-              Size.PlatformDefault = False
-            end
-            object cbSuportaBMP: TCheckBox
-              Align = Client
-              IsChecked = True
-              Margins.Left = 8.000000000000000000
-              Margins.Right = 8.000000000000000000
-              Size.Width = 130.000000000000000000
-              Size.Height = 37.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 2
-              Text = 'Suporta BMP'
-              TextSettings.WordWrap = True
-            end
-          end
-        end
-        object lbBotoes: TListBoxItem
-          Selectable = False
-          Position.Y = 495.000000000000000000
-          Size.Width = 438.000000000000000000
-          Size.Height = 50.000000000000000000
-          Size.PlatformDefault = False
-          TabOrder = 8
-          object GridPanelLayout2: TGridPanelLayout
-            Align = Client
-            Size.Width = 438.000000000000000000
-            Size.Height = 50.000000000000000000
-            Size.PlatformDefault = False
-            TabOrder = 0
-            ColumnCollection = <
-              item
-                Value = 50.000000000000000000
-              end
-              item
-                Value = 50.000000000000000000
-              end>
-            ControlCollection = <
-              item
-                Column = 0
-                Control = btLerConfig
-                Row = 0
-              end
-              item
-                Column = 1
-                Control = btSalvarConfig
-                Row = 0
-              end>
-            RowCollection = <
-              item
-                Value = 100.000000000000000000
-              end
-              item
-                SizeStyle = Auto
-              end>
-            object btLerConfig: TCornerButton
-              Align = Client
-              Images = ImageList1
-              ImageIndex = 1
-              Margins.Left = 5.000000000000000000
-              Margins.Top = 5.000000000000000000
-              Margins.Right = 5.000000000000000000
-              Margins.Bottom = 5.000000000000000000
-              Sides = [Top, Left, Bottom, Right]
-              Size.Width = 209.000000000000000000
-              Size.Height = 40.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 0
-              Text = 'Ler'
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
-              OnClick = btLerConfigClick
-            end
-            object btSalvarConfig: TCornerButton
-              Align = Client
-              Images = ImageList1
-              ImageIndex = 0
-              Margins.Left = 5.000000000000000000
-              Margins.Top = 5.000000000000000000
-              Margins.Right = 5.000000000000000000
-              Margins.Bottom = 5.000000000000000000
-              Sides = [Top, Left, Bottom, Right]
-              Size.Width = 209.000000000000000000
-              Size.Height = 40.000000000000000000
-              Size.PlatformDefault = False
-              TabOrder = 1
-              Text = 'Salvar'
-              XRadius = 3.000000000000000000
-              YRadius = 3.000000000000000000
-              OnClick = btSalvarConfigClick
-            end
-          end
+          TabOrder = 1
+          Text = 'Salvar'
+          XRadius = 3.000000000000000000
+          YRadius = 3.000000000000000000
+          OnClick = btSalvarConfigClick
         end
       end
     end
@@ -36971,7 +37120,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
   object BindSourceDB1: TBindSourceDB
     DataSet = FDMemTable1
     ScopeMappings = <>
-    Left = 200
-    Top = 40
+    Left = 232
+    Top = 8
   end
 end

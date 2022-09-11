@@ -66,44 +66,7 @@ type
     tbLista: TToolBar;
     lblInscritos: TLabel;
     ACBrPosPrinter1: TACBrPosPrinter;
-    lbConfig: TListBox;
-    lbImpressoras: TListBoxItem;
-    lbModelos: TListBoxItem;
-    cbxImpressorasBth: TComboBox;
-    btnProcurarBth: TCornerButton;
-    ListBoxGroupHeader2: TListBoxGroupHeader;
-    ListBoxGroupHeader3: TListBoxGroupHeader;
-    lbLarguraEspacejamento: TListBoxItem;
-    GridPanelLayout1: TGridPanelLayout;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label7: TLabel;
-    seColunas: TSpinBox;
-    seEspLinhas: TSpinBox;
-    seLinhasPular: TSpinBox;
-    lbBotoes: TListBoxItem;
-    GridPanelLayout2: TGridPanelLayout;
-    btLerConfig: TCornerButton;
-    btSalvarConfig: TCornerButton;
-    ListBoxGroupHeader4: TListBoxGroupHeader;
-    lbCodBarras: TListBoxItem;
-    GridPanelLayout5: TGridPanelLayout;
-    Label1: TLabel;
-    Label4: TLabel;
-    cbHRI: TCheckBox;
-    seBarrasLargura: TSpinBox;
-    seBarrasAltura: TSpinBox;
     StyleBook1: TStyleBook;
-    chbTodasBth: TCheckBox;
-    cbxModelo: TComboBox;
-    cbControlePorta: TCheckBox;
-    cbxPagCodigo: TComboBox;
-    cbSuportaBMP: TCheckBox;
-    ListBoxGroupHeader5: TListBoxGroupHeader;
-    ListBoxGroupHeader1: TListBoxGroupHeader;
-    lbiURL: TListBoxItem;
-    edtURL: TEdit;
-    btBaixarLista: TButton;
     tabImpressao: TTabItem;
     tbImpressao: TToolBar;
     Label5: TLabel;
@@ -138,6 +101,56 @@ type
     GridPanelLayout3: TGridPanelLayout;
     btImprimir: TButton;
     Button2: TButton;
+    tabsConfig: TTabControl;
+    tabConfImpressora: TTabItem;
+    tabConfLista: TTabItem;
+    tabEtiqueta: TTabItem;
+    lbConfImpressora: TListBox;
+    ListBoxGroupHeader1: TListBoxGroupHeader;
+    lbModelos: TListBoxItem;
+    cbxModelo: TComboBox;
+    cbControlePorta: TCheckBox;
+    cbxPagCodigo: TComboBox;
+    ListBoxGroupHeader2: TListBoxGroupHeader;
+    lbImpressoras: TListBoxItem;
+    cbxImpressorasBth: TComboBox;
+    btnProcurarBth: TCornerButton;
+    chbTodasBth: TCheckBox;
+    ListBoxGroupHeader3: TListBoxGroupHeader;
+    lbLarguraEspacejamento: TListBoxItem;
+    GridPanelLayout1: TGridPanelLayout;
+    Label2: TLabel;
+    Label3: TLabel;
+    seColunas: TSpinBox;
+    seEspLinhas: TSpinBox;
+    ListBoxGroupHeader4: TListBoxGroupHeader;
+    lbCodBarras: TListBoxItem;
+    GridPanelLayout5: TGridPanelLayout;
+    Label1: TLabel;
+    Label4: TLabel;
+    cbHRI: TCheckBox;
+    seBarrasLargura: TSpinBox;
+    seBarrasAltura: TSpinBox;
+    cbSuportaBMP: TCheckBox;
+    lbConfLista: TListBox;
+    ListBoxGroupHeader7: TListBoxGroupHeader;
+    lbDownload: TListBoxItem;
+    Button1: TButton;
+    gplConfBotoes: TGridPanelLayout;
+    btLerConfig: TCornerButton;
+    btSalvarConfig: TCornerButton;
+    mURLDownload: TMemo;
+    recURLDownload: TRectangle;
+    lbEtiqueta: TListBox;
+    ListBoxGroupHeader5: TListBoxGroupHeader;
+    ListBoxItem6: TListBoxItem;
+    cbImpCodBarras: TCheckBox;
+    ListBoxItem7: TListBoxItem;
+    seCaracteresLinha: TSpinBox;
+    Label8: TLabel;
+    ListBoxItem8: TListBoxItem;
+    seLinhasPular: TSpinBox;
+    Label9: TLabel;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -164,7 +177,8 @@ type
 
     function CalcularNomeArqINI: String;
     function CalcularNomeArquivoLista: String;
-    
+    function ColunasTextoImpressao: Integer;
+
     procedure CarregarModelosInternos;
     procedure LerConfiguracao;
     procedure GravarConfiguracao;
@@ -183,7 +197,7 @@ type
 
     procedure BaixarLista(AURL: String);
     procedure LerArquivoCSV;
-    procedure ProcessarTexto(ATexto: String; ALines: TStringList);
+    procedure ProcessarTextoParaImpressao(ATexto: string; ALines: TStringList; MaxLinhas: Integer);
   public
     { Public declarations }
   end;
@@ -194,7 +208,8 @@ var
 implementation
 
 uses
-  System.typinfo, System.IniFiles, System.StrUtils, System.Permissions,
+  System.typinfo, System.IniFiles, System.StrUtils, System.Math,
+  System.Permissions,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes,
   Androidapi.IOUtils, Androidapi.JNI.Widget, FMX.Helpers.Android,
@@ -239,6 +254,7 @@ begin
 
   tabsPrincipal.TabPosition := TTabPosition.None;
   tabsPrincipal.First;
+  tabsConfig.First;
 
   CarregarModelosInternos;
   btnProcurarBthClick(Sender);
@@ -299,19 +315,21 @@ begin
   Result := Ok;
 end;
 
-procedure TEtiquetaEventosForm.ProcessarTexto(ATexto: String;
-  ALines: TStringList);
+procedure TEtiquetaEventosForm.ProcessarTextoParaImpressao(ATexto: string; ALines: TStringList; MaxLinhas: Integer);
 var
   s, sl: string;
 begin
   s := UpperCase(TiraAcentos(ATexto));
   ALines.Clear;
-  ALines.Text := QuebraLinhas(s, 16);
-  if (ALines.Count > 4) then
+  ALines.Text := QuebraLinhas(s, ColunasTextoImpressao);
+  if (ALines.Count > MaxLinhas) then
   begin
     ALines.Clear;
-    ALines.Text := AjustaLinhas(s, 16, 4);
+    ALines.Text := AjustaLinhas(s, ColunasTextoImpressao, MaxLinhas);
   end;
+
+  if (ALines.Count > MaxLinhas) then
+    ALines.Capacity := MaxLinhas;
 end;
 
 procedure TEtiquetaEventosForm.SpeedButton3Click(Sender: TObject);
@@ -364,13 +382,22 @@ begin
 
   ACBrPosPrinter1.Ativar;
   ACBrPosPrinter1.Buffer.Clear;
-  ACBrPosPrinter1.Buffer.Add('</zera><n><e><a>'+PadCenter(edtLinha1.Text,16));
-  ACBrPosPrinter1.Buffer.Add(PadCenter(edtLinha2.Text,16));
-  ACBrPosPrinter1.Buffer.Add('<in>'+PadCenter(edtLinha3.Text,16));
-  ACBrPosPrinter1.Buffer.Add(PadCenter(edtLinha4.Text,16));
-  ACBrPosPrinter1.Buffer.Add('</in>');
-  ACBrPosPrinter1.Buffer.Add('');
+  ACBrPosPrinter1.Buffer.Add('</zera><in><n><e><a>'+PadCenter(edtLinha1.Text, ColunasTextoImpressao));
+  ACBrPosPrinter1.Buffer.Add(PadCenter(edtLinha2.Text, ColunasTextoImpressao));
+
+  if not cbImpCodBarras.IsChecked then
+  begin
+    ACBrPosPrinter1.Buffer.Add('</in>'+PadCenter(edtLinha3.Text, ColunasTextoImpressao));
+    ACBrPosPrinter1.Buffer.Add(PadCenter(edtLinha4.Text, ColunasTextoImpressao));
+  end
+  else
+  begin
+    ACBrPosPrinter1.Buffer.Add('</in>'+PadCenter(edtLinha3.Text, ColunasTextoImpressao));
+    ACBrPosPrinter1.Buffer.Add('</ce><code93>'+edtLinha4.Text.Trim+'</code93>');
+  end;
+
   ACBrPosPrinter1.Imprimir();
+  ACBrPosPrinter1.PularLinhas(Trunc(seLinhasPular.Value));
 end;
 
 procedure TEtiquetaEventosForm.btLerConfigClick(Sender: TObject);
@@ -425,10 +452,10 @@ end;
 
 procedure TEtiquetaEventosForm.btBaixarListaClick(Sender: TObject);
 begin
-  if edtURL.Text.Trim.IsEmpty then
-    edtURL.Text := CURL_LISTA_EXEMPLO;
+  if mURLDownload.Text.Trim.IsEmpty then
+    mURLDownload.Text := CURL_LISTA_EXEMPLO;
 
-  BaixarLista(edtURL.Text);
+  BaixarLista(mURLDownload.Text);
   LerArquivoCSV;
   VoltarParaLista;
 end;
@@ -481,6 +508,11 @@ begin
      cbxModelo.Items.Add( GetEnumName(TypeInfo(TACBrPosPrinterModelo), integer(m) ) );
 
   lbImpressoras.Enabled := True;
+end;
+
+function TEtiquetaEventosForm.ColunasTextoImpressao: Integer;
+begin
+  Result := Trunc(seCaracteresLinha.Value);
 end;
 
 procedure TEtiquetaEventosForm.ConfigurarACBrPosPrinter;
@@ -573,7 +605,7 @@ begin
 
   INI := TIniFile.Create(ArqINI);
   try
-    INI.WriteString('Lista','URL',edtURL.Text);
+    INI.WriteString('Lista','URL',mURLDownload.Text);
     INI.WriteInteger('PosPrinter','Modelo', cbxModelo.ItemIndex);
     INI.WriteInteger('PosPrinter','PaginaDeCodigo',cbxPagCodigo.ItemIndex);
     INI.WriteBool('PosPrinter','BMP',cbSuportaBMP.IsChecked);
@@ -582,11 +614,14 @@ begin
 
     INI.WriteInteger('PosPrinter','Colunas', Trunc(seColunas.Value) );
     INI.WriteInteger('PosPrinter','EspacoEntreLinhas', Trunc(seEspLinhas.Value) );
-    INI.WriteInteger('PosPrinter','LinhasPular', Trunc(seLinhasPular.Value) );
     INI.WriteBool('PosPrinter','ControlePorta',cbControlePorta.IsChecked);
     INI.WriteInteger('PosPrinter.Barras','Largura',Trunc(seBarrasLargura.Value));
     INI.WriteInteger('PosPrinter.Barras','Altura',Trunc(seBarrasAltura.Value));
     INI.WriteBool('PosPrinter.Barras','HRI',cbHRI.IsChecked);
+
+    INI.WriteBool('Etiqueta','CodBarras', cbImpCodBarras.IsChecked);
+    INI.WriteInteger('Etiqueta','Caracteres', ColunasTextoImpressao);
+    INI.WriteInteger('Etiqueta','LinhasPular', Trunc(seLinhasPular.Value) );
   finally
     INI.Free ;
   end ;
@@ -684,6 +719,11 @@ end;
 procedure TEtiquetaEventosForm.IrParaImpressao;
 begin
   tabsPrincipal.SetActiveTabWithTransition(tabImpressao, TTabTransition.Slide);
+  edtLinha4.Enabled := not cbImpCodBarras.IsChecked;
+  if not edtLinha4.Enabled then
+    edtLinha4.TextAlign := TTextAlign.Center
+  else
+   edtLinha4.TextAlign := TTextAlign.Leading;
 end;
 
 procedure TEtiquetaEventosForm.LerArquivoCSV;
@@ -764,18 +804,22 @@ begin
 
   INI := TIniFile.Create(ArqINI);
   try
-    edtURL.Text := INI.ReadString('Lista','URL', '');
+    mURLDownload.Text := INI.ReadString('Lista','URL', '');
+
     cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', -1);
     cbSuportaBMP.IsChecked := INI.ReadBool('Modelo','BMP', True);
     cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo', -1);
     cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(INI.ReadString('PosPrinter','Porta',''));
     seColunas.Value := INI.ReadInteger('PosPrinter','Colunas', 32);
     seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas', 0);
-    seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular', 5);
     cbControlePorta.IsChecked := INI.ReadBool('PosPrinter','ControlePorta', True);
     seBarrasLargura.Value := INI.ReadInteger('Barras','Largura', ACBrPosPrinter1.ConfigBarras.LarguraLinha);
     seBarrasAltura.Value := INI.ReadInteger('Barras','Altura', ACBrPosPrinter1.ConfigBarras.Altura);
-    cbHRI.IsChecked  := INI.ReadBool('Barras','HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
+    cbHRI.IsChecked := INI.ReadBool('Barras','HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
+
+    cbImpCodBarras.IsChecked := INI.ReadBool('Etiqueta','CodBarras', True);
+    seCaracteresLinha.Value := INI.ReadInteger('Etiqueta','Caracteres', 16);
+    seLinhasPular.Value := INI.ReadInteger('Etiqueta','LinhasPular', 2);
   finally
     INI.Free ;
   end;
@@ -814,6 +858,7 @@ procedure TEtiquetaEventosForm.ListView1ItemClick(const Sender: TObject;
 var
   SL: TStringList;
   s: String;
+  LinEmpresa: Integer;
 begin
   if not Assigned(AItem) then
     Exit;
@@ -823,18 +868,28 @@ begin
   SL := TStringList.Create;
   try
     s := (AItem.View.FindDrawable('TextNome') as TListItemText).Text;
-    ProcessarTexto(s, SL);
+    ProcessarTextoParaImpressao(s, SL, 2);
     if SL.Count > 0 then
       edtLinha1.Text := SL[0];
     if SL.Count > 1 then
       edtLinha2.Text := SL[1];
 
+    LinEmpresa := ifThen(cbImpCodBarras.IsChecked, 1, 2);
     s := (AItem.View.FindDrawable('TextEmpresa') as TListItemText).Text;
-    ProcessarTexto(s, SL);
+    ProcessarTextoParaImpressao(s, SL, LinEmpresa);
     if SL.Count > 0 then
       edtLinha3.Text := SL[0];
-    if SL.Count > 1 then
-      edtLinha4.Text := SL[1];
+
+    if (LinEmpresa > 1) then
+    begin
+      if (SL.Count > 1) then
+        edtLinha4.Text := SL[1];
+    end
+    else
+    begin
+      s := (AItem.View.FindDrawable('TextInscricao') as TListItemText).Text;
+      edtLinha4.Text := s;
+    end;
 
     IrParaImpressao;
   finally

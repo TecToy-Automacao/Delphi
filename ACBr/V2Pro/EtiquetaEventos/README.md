@@ -4,8 +4,9 @@
 Esse projeto permite a impressão de Etiquetas para Eventos (crachás) de forma Simples e rápida em um equipamento V2Pro da TecToy
 
 ## Modo de Funcionamento
-A lista de participantes do evento, pode/deve ser previamente importada no aplicativo, de maneira que ele funcionará, mesmo quando estiver off-line.
-O aplicativo exibirá em sua tela principal, a lista com todos os participantes do evento, caso a mesma já tenha sido previamente importada.
+A lista de participantes do evento, pode/deve ser previamente importada no aplicativo, de maneira que ele funcionará, mesmo quando estiver off-line.  
+O aplicativo exibirá em sua tela principal, a lista com todos os participantes do evento, caso a mesma já tenha sido previamente importada.  
+A lista de usuários será exibida em ordem alfabética, pelo Nome do Usuário.  
 O usuário pode digitar na janela de Filtro, dados do participante, como Nome, Empresa ou número da inscrição... O aplicativo aplicará o filtro de forma dinâmica.
 
 Ainda é possível, escanear um QRCode, com o voucher do participante... Esse QRCode deve conter o número da inscrição, e após a leitura do mesmo, o aplicativo exibirá o participante, caso encontre-o na lista.  
@@ -28,7 +29,7 @@ Atualmente, nessa versão, a impressão irá remover a acentuação e cedilha do
 A etiqueta conterá os seguintes itens:
 - Nome do Participante
 - Nomo na Empresa
-- QRCode, com o número da inscrição
+- Cod.Barras com o número da inscrição (Code93)
 
 ## Exemplo de Etiqueta Impressa
 Veja na figura abaixo, um Crachá usado no Evento **TecToy na Estrada**. A Caneta na foto, é utilizada para dar uma noção de perspectiva e tamanho
@@ -77,4 +78,4 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 | **Versão** | **Data** | **Autor** | **Mudanças** |  
 | --- | --- | --- | --- |  
 | 0.9 | 01/08/2022 | DSA | Primeira Versão |  
-| 1.0 | 11/09/2022 | DSA | Adição de Impressão do QRCode |  
+| 1.0 | 11/09/2022 | DSA | Impressão com Cod.Barras Code93 |  
