@@ -23,7 +23,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     Size.Height = 640.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 0
+    TabIndex = 2
     TabOrder = 0
     TabPosition = Bottom
     OnChange = tabsPrincipalChange
@@ -40,7 +40,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 6
       Size.Width = 109.000000000000000000
       Size.Height = 49.000000000000000000
@@ -394,7 +394,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 5
       Size.Width = 109.000000000000000000
       Size.Height = 49.000000000000000000
@@ -36941,7 +36941,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     FieldDefs = <
       item
         Name = 'fdIncricao'
-        DataType = ftInteger
+        DataType = ftString
+        Size = 30
       end
       item
         Name = 'fdNome'

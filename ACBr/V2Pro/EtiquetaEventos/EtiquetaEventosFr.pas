@@ -1,3 +1,35 @@
+{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:                                                 }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
 {$I ACBr.inc}
 
 unit EtiquetaEventosFr;
@@ -19,6 +51,9 @@ uses
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Data.Bind.DBScope, 
   ACBrUtil.FilesIO, FMX.Media, FMX.Objects, FMX.SearchBox;
+
+const
+  CURL_LISTA_EXEMPLO = 'https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv';
 
 type
   TEtiquetaEventosForm = class(TForm)
@@ -128,7 +163,7 @@ type
     FSearchBox: TSearchBox;
 
     function CalcularNomeArqINI: String;
-    function CalcularNomeLista: String;
+    function CalcularNomeArquivoLista: String;
     
     procedure CarregarModelosInternos;
     procedure LerConfiguracao;
@@ -207,9 +242,6 @@ begin
 
   CarregarModelosInternos;
   btnProcurarBthClick(Sender);
-  if cbxImpressorasBth.Items.Count > 0 then
-    cbxImpressorasBth.ItemIndex := 0;
-
   cbxPagCodigo.Items.Clear ;
   For p := Low(TACBrPosPaginaCodigo) to High(TACBrPosPaginaCodigo) do
     cbxPagCodigo.Items.Add( GetEnumName(TypeInfo(TACBrPosPaginaCodigo), integer(p) ) ) ;
@@ -304,14 +336,16 @@ var
   NomeArq: string;
   MS: TMemoryStream;
 begin
-  NomeArq := CalcularNomeLista;
+  NomeArq := CalcularNomeArquivoLista;
   if FileExists(NomeArq) then
     DeleteFile(NomeArq);
 
   MS := TMemoryStream.Create;
   try
     if HttpGetBinary(AURL, MS) then
-      MS.SaveToFile(NomeArq);
+      MS.SaveToFile(NomeArq)
+    else
+      Toast('Erro ao baixar arquivo de: ' + sLineBreak + AURL);
   finally
     MS.Free;
   end;
@@ -391,6 +425,9 @@ end;
 
 procedure TEtiquetaEventosForm.btBaixarListaClick(Sender: TObject);
 begin
+  if edtURL.Text.Trim.IsEmpty then
+    edtURL.Text := CURL_LISTA_EXEMPLO;
+
   BaixarLista(edtURL.Text);
   LerArquivoCSV;
   VoltarParaLista;
@@ -406,7 +443,7 @@ begin
   Result := ApplicationPath + 'ACBrPosPrinter.ini';
 end;
 
-function TEtiquetaEventosForm.CalcularNomeLista: String;
+function TEtiquetaEventosForm.CalcularNomeArquivoLista: String;
 begin
   Result := ApplicationPath+'lista.csv';
 end;
@@ -651,56 +688,77 @@ end;
 
 procedure TEtiquetaEventosForm.LerArquivoCSV;
 var
-  NomeArq, s, fnome, fempresa: string;
+  NomeArq, Lin: string;
   SL: TStringList;
-  i,p1,p2, finscr: Integer;
+  i, Erros: Integer;
+  Sep: Char;
+  Campos: TSplitResult;
 begin
-  NomeArq := CalcularNomeLista;
-  
+  NomeArq := CalcularNomeArquivoLista;
   if not FileExists(NomeArq) then
+  begin
+    Toast('Arquivo com Lista não encontrado');
     Exit;
-  
+  end;
+
+  Sep := ' ';
+  Erros := 0;
+
   FDMemTable1.Close;
   FDMemTable1.CreateDataSet;
   FDMemTable1.Open;
-  
+
   BindSourceDB1.DataSource.Enabled := False;
   SL := TStringList.Create;
   try
     SL.LoadFromFile(NomeArq);
     for i := 0 to SL.Count-1 do
-    begin     
-      s := SL[i]+',';
-      p1 := pos(',',s);
-      finscr := StrToIntDef(copy(s, 1, p1-1), 0);
-      if (finscr > 0) then
+    begin
+      Lin := SL[i];
+      if (Sep = ' ') then
       begin
-        p2 := PosEx(',', s, p1+1);
-        fnome := copy(s, p1+1, p2-p1-1);
-          
-        p1 := p2;
-        p2 := PosEx(',', s, p1+1);
-        fempresa := copy(s, p1+1, p2-p1-1);
+        Sep := ',';
+        Campos := Split(Sep, Lin);
+        if (Length(Campos) = 0) then
+        begin
+          Sep := ';';
+          Campos := Split(Sep, Lin);
+        end;
+        if (Length(Campos) = 0) then
+        begin
+          Sep := '|';
+          Campos := Split(Sep, Lin);
+        end;
+      end
+      else
+        Campos := Split(Sep, Lin);
 
+      if (Length(Campos) >= 3) then
+      begin
         FDMemTable1.Append;
-        FDMemTable1.FieldByName('fdIncricao').AsInteger := finscr;
-        FDMemTable1.FieldByName('fdNome').AsString := fnome;
-        FDMemTable1.FieldByName('fdEmpresa').AsString := fempresa;
+        FDMemTable1.FieldByName('fdIncricao').AsString := Campos[0];
+        FDMemTable1.FieldByName('fdNome').AsString := Campos[1];
+        FDMemTable1.FieldByName('fdEmpresa').AsString := Campos[2];
         FDMemTable1.Post;
-      end;
-    end;      
+      end
+      else
+        Inc(Erros);
+    end;
   finally
     SL.Free;
     BindSourceDB1.DataSource.Enabled := True;
   end;
   
-  Toast(IntToStr(FDMemTable1.RecordCount)+' registros');
+  Toast(IntToStr(FDMemTable1.RecordCount)+' registros incluidos');
+  if (Erros > 0) then
+    Toast(IntToStr(erros)+' erros encontrados');
 end;
 
 procedure TEtiquetaEventosForm.LerConfiguracao;
 Var
-  ArqINI : String ;
-  INI : TIniFile ;
+  ArqINI: String;
+  INI: TIniFile;
+  i: Integer;
 begin
   ArqINI := CalcularNomeArqINI;
 
@@ -709,8 +767,8 @@ begin
     edtURL.Text := INI.ReadString('Lista','URL', '');
     cbxModelo.ItemIndex := INI.ReadInteger('PosPrinter','Modelo', -1);
     cbSuportaBMP.IsChecked := INI.ReadBool('Modelo','BMP', True);
-    cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo', Integer(ACBrPosPrinter1.PaginaDeCodigo));
-    cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(INI.ReadString('PosPrinter','Porta',ACBrPosPrinter1.Porta));
+    cbxPagCodigo.ItemIndex := Ini.ReadInteger('PosPrinter','PaginaDeCodigo', -1);
+    cbxImpressorasBth.ItemIndex := cbxImpressorasBth.Items.IndexOf(INI.ReadString('PosPrinter','Porta',''));
     seColunas.Value := INI.ReadInteger('PosPrinter','Colunas', 32);
     seEspLinhas.Value := INI.ReadInteger('PosPrinter','EspacoEntreLinhas', 0);
     seLinhasPular.Value := INI.ReadInteger('PosPrinter','LinhasPular', 5);
@@ -720,6 +778,26 @@ begin
     cbHRI.IsChecked  := INI.ReadBool('Barras','HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
   finally
     INI.Free ;
+  end;
+
+  if (cbxImpressorasBth.ItemIndex < 0) then
+    if cbxImpressorasBth.Items.Count > 0 then
+      cbxImpressorasBth.ItemIndex := 0;
+
+  if (cbxPagCodigo.ItemIndex < 0) then
+    if cbxPagCodigo.Items.Count > 0 then
+      cbxPagCodigo.ItemIndex := 0;
+
+  if (cbxModelo.ItemIndex < 0) then
+  begin
+    for i := 0 to cbxModelo.Count-1 do
+    begin
+      if (cbxModelo.Items[i] = 'ppEscSunmi') then
+      begin
+        cbxModelo.ItemIndex := i;
+        break;
+      end;
+    end;
   end;
 end;
 
