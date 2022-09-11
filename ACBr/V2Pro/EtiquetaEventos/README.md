@@ -1,13 +1,22 @@
-# Impressão de Etiquetas para Eventos com TecToy V2Pro
-Esse projeto permite a impressão de Etiquetas de forma Simples e rápida em um equipamento V2Pro da TecToy
+# Etiquetas Eventos V2Pro
 
-- As etiquetas devem ter o tamanho 60x40mm, e devem ser térmicas
-- A lista de inscritos pode ser importada de uma lista. 
-- O aplicativo permite também a impressão de etiquetas avulsas.
+## Descrição do Projeto
+Esse projeto permite a impressão de Etiquetas para Eventos (crachás) de forma Simples e rápida em um equipamento V2Pro da TecToy
 
-Após selecionar um membro da lista, os Dados da etiqueta podem ser editados, antes da Impressão.
+## Modo de Funcionamento
+A lista de participantes do evento, pode/deve ser previamente importada no aplicativo, de maneira que ele funcionará, mesmo quando estiver off-line.
+Após selecionar um membro da lista de inscritos, os Dados da etiqueta podem ser editados, antes da Impressão.
+O aplicativo também permite a impressão de etiquetas de forma avulsa, informando todos os dados de um novo participante, diretamente na interface do programa
 
-## A etiqueta conterá os seguintes itens:
+A importação da lista de inscritos usará um endereço em nuvem (no formato http), para baixar um arquivo em formato específico (ver abaixo)
+Após o download do arquivo, o aplicativo exibirá o número de inscritos baixados, e os exibirá na tela principal do aplicativo
+
+## Características da Etiqueta
+- O Rolo de Etiquetas deve ser térmico
+- As etiquetas devem ter o tamanho 60x40mm
+
+## Layout da Etiqueta
+A etiqueta conterá os seguintes itens:
 - Nome do Participante
 - Nomo na Empresa
 - QRCode, com o número da inscrição
@@ -26,3 +35,7 @@ Inscricao3,nome_participante3,nome_empresa3
 InscricaoN,nome_participanteN,nome_empresaN
 
 
+## Histórico
+| **Versão** | **Data** | **Autor** | **Mudanças** |
+| 0.9 | 01/08/2022 | DSA | Primeira Versão |
+| 1.0 | 11/09/2022 | DSA | Adição de Impressão do QRCode |
