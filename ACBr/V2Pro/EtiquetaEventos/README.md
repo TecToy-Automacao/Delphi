@@ -74,6 +74,9 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 - Se abrir em versões mais recentes do Delphi, não esqueça de atualizar as Bibliotecas 
 	![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/DelphiAndroid_RevertSystemFilesToDefault.png)
 
+## Download do APK
+[APK Compilado](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/apk/EtiquetaEventos.apk)
+
 ## Histórico
 | **Versão** | **Data** | **Autor** | **Mudanças** |  
 | --- | --- | --- | --- |  
