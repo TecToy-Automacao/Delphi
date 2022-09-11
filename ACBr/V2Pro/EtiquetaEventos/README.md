@@ -47,6 +47,14 @@ Você pode ver um exemplo de arquivo, [nesse link](https://raw.githubusercontent
 Um exemplo de Endereço válido, para baixar o arquivo acima, direto no aplicativo, seria:  
 https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv
 
+## Como abrir o Projeto
+- **Importante**, esse projeto depende dos componentes do **[Projeto ACBr](https://projetoacbr.com.br/)**
+- Se você precisa de mais informações de como baixar e instalar os componentes do ACBr em sua IDE, por favor leia com atenção as intruções dessa página:  
+	https://projetoacbr.com.br/fontes/
+- Esse projeto foi compilado em Delphi 10.3.3
+- Se abrir em versões mais recentes do Delphi, não esqueça de atualizar as Bibliotecas 
+	![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/DelphiAndroid_RevertSystemFilesToDefault.png)
+
 ## Histórico
 | **Versão** | **Data** | **Autor** | **Mudanças** |  
 | --- | --- | --- | --- |  
