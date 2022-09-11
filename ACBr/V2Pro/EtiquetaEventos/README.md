@@ -5,13 +5,20 @@ Esse projeto permite a impressão de Etiquetas para Eventos (crachás) de forma 
 
 ## Modo de Funcionamento
 A lista de participantes do evento, pode/deve ser previamente importada no aplicativo, de maneira que ele funcionará, mesmo quando estiver off-line.
-Após selecionar um membro da lista de inscritos, os Dados da etiqueta podem ser editados ou conferidos, antes da Impressão.
-O aplicativo também permite a impressão de etiquetas de forma avulsa, informando todos os dados de um novo participante, diretamente na interface do programa
+O aplicativo exibirá em sua tela principal, a lista com todos os participantes do evento, caso a mesma já tenha sido previamente importada.
+O usuário pode digitar na janela de Filtro, dados do participante, como Nome, Empresa ou número da inscrição... O aplicativo aplicará o filtro de forma dinâmica.
 
-A importação da lista de inscritos usará um endereço em nuvem (no formato http), para baixar um arquivo em formato específico (ver abaixo)
-Após o download do arquivo, o aplicativo exibirá o número de inscritos encontrados no arquivo, e os exibirá na tela principal do aplicativo
+Ainda é possível, escanear um QRCode, com o voucher do participante... Esse QRCode deve conter o número da inscrição, e após a leitura do mesmo, o aplicativo exibirá o participante, caso encontre-o na lista.  
 
-Atualmente, nessa versão a impressão irá remover a acentuação e cedilha dos Nomes dos incritos, e usará sempre letras MAIÚSCULAS.
+Após selecionar um membro da lista de inscritos, o aplicativo altenará para a tela de impressão da Etiqueta.
+Nessa Tela, é possível editar ou conferir, antes da Impressão, os dados a serem impressos.  
+
+O aplicativo também permite a impressão de etiquetas de forma avulsa, informando todos os dados de um novo participante, diretamente na interface do programa.
+
+A importação da lista de inscritos usará um endereço em nuvem (no formato http), para baixar um arquivo em formato específico (ver abaixo).  
+Após o download do arquivo, o aplicativo exibirá o número de inscritos encontrados no arquivo, e os exibirá na tela principal do aplicativo.
+
+Atualmente, nessa versão, a impressão irá remover a acentuação e cedilha dos Nomes dos incritos, e usará sempre letras MAIÚSCULAS.
 
 ## Características da Etiqueta
 - O Rolo de Etiquetas deve ser térmico
@@ -46,6 +53,13 @@ Você pode ver um exemplo de arquivo, [nesse link](https://raw.githubusercontent
 
 Um exemplo de Endereço válido, para baixar o arquivo acima, direto no aplicativo, seria:  
 https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv
+
+## Configurando o aplicativo
+- Clique no icone de Ferramenta, no canto esquerdo superior, do aplicativo
+	-- Digite o endereço da URL, de onde baixar a lista (link direto)
+	-- Clique no botão "Baixar"
+	-- Observe as mensagens de sucesso ou falha, na importação da lista
+	
 
 ## Como abrir o Projeto
 - **Importante**, esse projeto depende dos componentes do **[Projeto ACBr](https://projetoacbr.com.br/)**
