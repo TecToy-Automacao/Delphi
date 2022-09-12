@@ -5,7 +5,7 @@ Esse pretende criar uma classe, que permitirá aplicações Delphi, acessar fác
 
 Equipamentos com duas telas, são um grande diferencial para aplicações de Ponto de Venda, permitindo às aplicações exibir o Total da Venda, Promoções, Imagens do Produto Vendido, QRCode para pagamento, etc
 
-- Exemplo de equipamento com 2 Telas
+- Exemplo de equipamento com 2 Telas  
 	https://tectoyautomacao.com.br/produtos/terminais-pdv/pdv-desktop-t2s
 	https://tectoyautomacao.com.br/produtos/terminais-pdv/pos-desktop-d2-mini
 
