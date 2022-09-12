@@ -1,0 +1,121 @@
+object ServiceGeral: TServiceGeral
+  Left = 0
+  Top = 0
+  ClientHeight = 441
+  ClientWidth = 624
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object memPedidos: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 96
+    Top = 40
+    object memPedidosID: TIntegerField
+      FieldName = 'ID'
+    end
+    object memPedidosNOME_CLIENTE: TStringField
+      FieldName = 'NOME_CLIENTE'
+      Size = 50
+    end
+    object memPedidosID_GARCOM: TIntegerField
+      FieldName = 'ID_GARCOM'
+    end
+    object memPedidosID_MESA: TIntegerField
+      FieldName = 'ID_MESA'
+    end
+    object memPedidosTOTAL_PEDIDO: TFloatField
+      FieldName = 'TOTAL_PEDIDO'
+      OnGetText = memPedidosTOTAL_PEDIDOGetText
+    end
+  end
+  object memItensPedido: TFDMemTable
+    FieldDefs = <>
+    IndexDefs = <>
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    StoreDefs = True
+    Left = 232
+    Top = 40
+    object memItensPedidoID: TIntegerField
+      FieldName = 'ID'
+      Visible = False
+    end
+    object memItensPedidoID_PEDIDO: TIntegerField
+      FieldName = 'ID_PEDIDO'
+      Visible = False
+    end
+    object memItensPedidoQTDE: TIntegerField
+      FieldName = 'QTDE'
+    end
+    object memItensPedidoID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object memItensPedidoID_COMANDA: TIntegerField
+      FieldName = 'ID_COMANDA'
+    end
+    object memItensPedidoID_MESA: TIntegerField
+      FieldName = 'ID_MESA'
+    end
+    object memItensPedidoVALOR_UNITARIO: TFloatField
+      FieldName = 'VALOR_UNITARIO'
+      OnGetText = memItensPedidoVALOR_UNITARIOGetText
+    end
+    object memItensPedidoNOME: TStringField
+      FieldName = 'NOME'
+      ProviderFlags = []
+      Size = 30
+    end
+    object memItensPedidoTOTAL_ITEM: TFloatField
+      FieldName = 'TOTAL_ITEM'
+      OnGetText = memItensPedidoTOTAL_ITEMGetText
+    end
+  end
+  object MemProdutos: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 96
+    Top = 136
+    object MemProdutosID: TIntegerField
+      FieldName = 'ID'
+    end
+    object MemProdutosNOME: TStringField
+      FieldName = 'NOME'
+      Size = 30
+    end
+    object MemProdutosDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Size = 100
+    end
+    object MemProdutosVLR_UNITARIO: TFloatField
+      FieldName = 'VLR_UNITARIO'
+      OnGetText = MemProdutosVLR_UNITARIOGetText
+    end
+    object MemProdutosCODBAR: TStringField
+      FieldName = 'CODBAR'
+      Size = 30
+    end
+  end
+end
