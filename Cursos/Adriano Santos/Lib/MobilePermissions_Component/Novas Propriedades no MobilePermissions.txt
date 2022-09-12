@@ -1,0 +1,30 @@
+Standard
+	Call companion app
+	Flashlight(obsolete)
+	NFC preferred payment info
+	Query all packages
+	Read precise phone state
+	ReadGServices                   (retirar)
+	Request password completity
+	Subscribed feeds read (obsolete)
+	Use fingerprint (deprecated)
+	Write user dictionary (obsolete)
+Dangerous
+	Access Background location (prioridade)
+	Access media location
+	Access mock location (obsolete)
+	Activity recognition
+	Authenticate accounts (obsolete)
+	Read history bookmarks (obsolete)
+	Read profile (obsolete)
+	Read under dictionary (obsolete)
+	Subscribed feeds write (obsolete)
+	Use credentials (obsolete)
+	Write history bookmarks (obsolete)
+	Write profile (obsolete)
+	Write SMS (obsolete)
+	Write social stream (obsolete)
+Signature
+	Bind carrier messaging service (deprecated)
+	Manage external storage
+	
