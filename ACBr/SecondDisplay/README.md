@@ -6,8 +6,8 @@ Esse pretende criar uma classe, que permitirá aplicações Delphi, acessar fác
 Equipamentos com duas telas, são um grande diferencial para aplicações de Ponto de Venda, permitindo às aplicações exibir o Total da Venda, Promoções, Imagens do Produto Vendido, QRCode para pagamento, etc
 
 - Exemplo de equipamento com 2 Telas  
-	https://tectoyautomacao.com.br/produtos/terminais-pdv/pdv-desktop-t2s
-	https://tectoyautomacao.com.br/produtos/terminais-pdv/pos-desktop-d2-mini
+	https://tectoyautomacao.com.br/produtos/terminais-pdv/pdv-desktop-t2s  
+	https://tectoyautomacao.com.br/produtos/terminais-pdv/pos-desktop-d2-mini  
 
 ## Como Funciona
 Esse componente depende da biblioteca *Lib\SecondDisplay.jar*, que deverá ser anexada em sua aplicação. O código fonte dessa bibliteca, também está aberto, e ela pode ser modificada ou extendida...  
