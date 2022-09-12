@@ -1,5 +1,9 @@
 # Etiquetas Eventos V2Pro
 
+## Sobre o V2Pro
+Trata-se de um SmartPOS, com Impressora, que suporta Bobinas com Etiquetas térmicas
+Saiba mais em: https://tectoyautomacao.com.br/produtos/terminais-moveis/pdv-portatil-v2-pro
+
 ## Descrição do Projeto
 Esse projeto permite a impressão de Etiquetas para Eventos (crachás) de forma Simples e rápida em um equipamento V2Pro da TecToy
 
@@ -20,6 +24,8 @@ A importação da lista de inscritos usará um endereço em nuvem (no formato ht
 Após o download do arquivo, o aplicativo exibirá o número de inscritos encontrados no arquivo, e os exibirá na tela principal do aplicativo.
 
 Atualmente, nessa versão, a impressão irá remover a acentuação e cedilha dos Nomes dos incritos, e usará sempre letras MAIÚSCULAS.
+
+Nota: Apesar do V2Pro possuir um Scanner com suporte a códigos 2D, no momento, essa aplicação utiliza a câmera traseira do equipamento, para leitura do QRCode
 
 ## Características da Etiqueta
 - O Rolo de Etiquetas deve ser térmico
