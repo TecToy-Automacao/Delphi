@@ -93,7 +93,6 @@ type
     CameraComponent1: TCameraComponent;
     tabCamera: TTabItem;
     SpeedButton3: TSpeedButton;
-    imgCamera: TImage;
     ToolBar1: TToolBar;
     Label6: TLabel;
     SpeedButton4: TSpeedButton;
@@ -153,6 +152,7 @@ type
     GridPanelLayout2: TGridPanelLayout;
     btLimparLista: TButton;
     btBaixarLista: TButton;
+    imgCamera: TImage;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -507,18 +507,17 @@ begin
   procedure
   begin
     CameraComponent1.SampleBufferToBitmap(imgCamera.Bitmap, True);
-    if (fScanInProgress) then
+    if (FScanInProgress) then
       Exit;
 
-    inc(fFrameTake);
-    if (fFrameTake mod 4 <> 0) then
+    inc(FFrameTake);
+    if (FFrameTake mod 4 <> 0) then
       Exit;
 
-    if Assigned(fScanBitmap) then
-      FreeAndNil(fScanBitmap);
-
-    fScanBitmap := TBitmap.Create();
-    fScanBitmap.Assign(imgCamera.Bitmap);
+    if Assigned(FScanBitmap) then
+      FreeAndNil(FScanBitmap);
+    FScanBitmap := TBitmap.Create();
+    FScanBitmap.Assign(imgCamera.Bitmap);
 
     ParseImage();
   end);
@@ -665,13 +664,11 @@ begin
       ReadResult: TReadResult;
       ScanManager: TScanManager;
     begin
-      fScanInProgress := True;
-      ScanManager := TScanManager.Create(TBarcodeFormat.Auto, nil);
-
+      FScanInProgress := True;
+      ScanManager := TScanManager.Create(TBarcodeFormat.QR_CODE, nil);
       try
-
         try
-          ReadResult := ScanManager.Scan(fScanBitmap);
+          ReadResult := ScanManager.Scan(FScanBitmap);
         except
           on E: Exception do
           begin
@@ -690,9 +687,7 @@ begin
             i: Integer;
           begin
             if (Length(lblScanStatus.Text) > 10) then
-            begin
               lblScanStatus.Text := 'Lendo';
-            end;
 
             lblScanStatus.Text := lblScanStatus.Text + '.';
             if (ReadResult <> nil) then
@@ -711,11 +706,10 @@ begin
           FreeAndNil(ReadResult);
 
         ScanManager.Free;
-        fScanInProgress := false;
+        FScanInProgress := False;
       end;
 
     end).Start();
-
 end;
 
 procedure TEtiquetaEventosForm.IniciarCamera;
@@ -724,9 +718,9 @@ begin
     Exit;
 
   PararCamera;
-  CameraComponent1.Quality := FMX.Media.TVideoCaptureQuality.MediumQuality;
-  CameraComponent1.Kind := FMX.Media.TCameraKind.BackCamera;
-  CameraComponent1.FocusMode := FMX.Media.TFocusMode.ContinuousAutoFocus;
+  CameraComponent1.Quality := TVideoCaptureQuality.MediumQuality;
+  CameraComponent1.Kind := TCameraKind.BackCamera;
+  CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus;
   CameraComponent1.Active := True;
   lblScanStatus.Text := 'Lendo';
 end;

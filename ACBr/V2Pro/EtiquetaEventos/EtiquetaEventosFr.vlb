@@ -8,9 +8,6 @@ Coordinates=779,771,123,33
 [Label6]
 Coordinates=0,424,46,51
 
-[imgCamera]
-Coordinates=633,78,70,51
-
 [lbImpressoras]
 Coordinates=779,826,84,33
 
@@ -277,5 +274,5 @@ Coordinates=779,155,88,51
 Coordinates=1139,496,137,33
 
 []
-Coordinates=71,251,53,51
+Coordinates=633,78,70,51
 

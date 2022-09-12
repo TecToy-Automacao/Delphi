@@ -3,8 +3,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
   Top = 0
   ActiveControl = tabImpressao
   Caption = 'ACBrPosPrinter Android Teste'
-  ClientHeight = 640
-  ClientWidth = 517
+  ClientHeight = 487
+  ClientWidth = 394
   Position = Designed
   StyleBook = StyleBook1
   FormFactor.Width = 320
@@ -19,30 +19,30 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     Align = Client
     FullSize = True
     Images = ImageList1
-    Size.Width = 517.000000000000000000
-    Size.Height = 640.000000000000000000
+    Size.Width = 394.000000000000000000
+    Size.Height = 487.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 1
+    TabIndex = 3
     TabOrder = 0
     TabPosition = Bottom
     OnChange = tabsPrincipalChange
     Sizes = (
-      517s
-      591s
-      517s
-      591s
-      517s
-      591s
-      517s
-      591s)
+      394s
+      438s
+      394s
+      438s
+      394s
+      438s
+      394s
+      438s)
     object tabLista: TTabItem
       CustomIcon = <
         item
         end>
       IsSelected = False
       ImageIndex = 6
-      Size.Width = 129.000000000000000000
+      Size.Width = 98.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -51,14 +51,14 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       ExplicitSize.cx = 8.000000000000000000
       ExplicitSize.cy = 8.000000000000000000
       object tbLista: TToolBar
-        Size.Width = 517.000000000000000000
+        Size.Width = 394.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object lblInscritos: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -71,7 +71,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             Images = ImageList1
             ImageIndex = 5
             Margins.Left = 5.000000000000000000
-            Position.X = 469.000000000000000000
+            Position.X = 346.000000000000000000
             Size.Width = 48.000000000000000000
             Size.Height = 48.000000000000000000
             Size.PlatformDefault = False
@@ -87,8 +87,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         FooterAppearanceClassName = 'TListHeaderObjects'
         AlternatingColors = True
         Align = Client
-        Size.Width = 517.000000000000000000
-        Size.Height = 474.000000000000000000
+        Size.Width = 394.000000000000000000
+        Size.Height = 321.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         ItemAppearance.ItemHeight = 80
@@ -164,8 +164,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 4.000000000000000000
         Position.X = 10.000000000000000000
-        Position.Y = 532.000000000000000000
-        Size.Width = 497.000000000000000000
+        Position.Y = 379.000000000000000000
+        Size.Width = 374.000000000000000000
         Size.Height = 55.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
@@ -177,9 +177,9 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 10
-      Size.Width = 129.000000000000000000
+      Size.Width = 98.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -188,14 +188,14 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       ExplicitSize.cx = 152.000000000000000000
       ExplicitSize.cy = 49.000000000000000000
       object tbImpressao: TToolBar
-        Size.Width = 517.000000000000000000
+        Size.Width = 394.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object Label5: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -217,18 +217,18 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       end
       object ListBox1: TListBox
         Align = Client
-        Size.Width = 517.000000000000000000
-        Size.Height = 543.000000000000000000
+        Size.Width = 394.000000000000000000
+        Size.Height = 390.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         DisableFocusEffect = True
         DefaultItemStyles.ItemStyle = ''
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
-        Viewport.Width = 517.000000000000000000
-        Viewport.Height = 543.000000000000000000
+        Viewport.Width = 394.000000000000000000
+        Viewport.Height = 390.000000000000000000
         object ListBoxGroupHeader6: TListBoxGroupHeader
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -236,7 +236,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         end
         object ListBoxItem1: TListBoxItem
           Position.Y = 30.000000000000000000
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 4
@@ -252,7 +252,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 501.000000000000000000
+            Size.Width = 378.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TextPrompt = 'LINHA 1'
@@ -262,7 +262,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         end
         object ListBoxItem2: TListBoxItem
           Position.Y = 81.000000000000000000
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 3
@@ -278,7 +278,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 501.000000000000000000
+            Size.Width = 378.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TextPrompt = 'LINHA 2'
@@ -288,7 +288,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         end
         object ListBoxItem3: TListBoxItem
           Position.Y = 132.000000000000000000
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 2
@@ -304,7 +304,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 501.000000000000000000
+            Size.Width = 378.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TextPrompt = 'LINHA 3'
@@ -314,7 +314,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         end
         object ListBoxItem4: TListBoxItem
           Position.Y = 183.000000000000000000
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -330,7 +330,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             Margins.Top = 4.000000000000000000
             Margins.Right = 8.000000000000000000
             Margins.Bottom = 4.000000000000000000
-            Size.Width = 501.000000000000000000
+            Size.Width = 378.000000000000000000
             Size.Height = 32.000000000000000000
             Size.PlatformDefault = False
             TextPrompt = 'LINHA 4'
@@ -341,13 +341,13 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         object ListBoxItem5: TListBoxItem
           Selectable = False
           Position.Y = 234.000000000000000000
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 95.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 5
           object GridPanelLayout3: TGridPanelLayout
             Align = Client
-            Size.Width = 517.000000000000000000
+            Size.Width = 394.000000000000000000
             Size.Height = 95.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 39
@@ -384,7 +384,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Top = 10.000000000000000000
               Margins.Right = 10.000000000000000000
               Margins.Bottom = 10.000000000000000000
-              Size.Width = 288.153839111328100000
+              Size.Width = 212.461532592773400000
               Size.Height = 75.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 39
@@ -399,7 +399,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Top = 10.000000000000000000
               Margins.Right = 10.000000000000000000
               Margins.Bottom = 10.000000000000000000
-              Size.Width = 168.846160888671900000
+              Size.Width = 121.538467407226600000
               Size.Height = 75.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 40
@@ -416,7 +416,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         end>
       IsSelected = False
       ImageIndex = 5
-      Size.Width = 129.000000000000000000
+      Size.Width = 98.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -425,14 +425,14 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       ExplicitSize.cx = 8.000000000000000000
       ExplicitSize.cy = 8.000000000000000000
       object tbconfig: TToolBar
-        Size.Width = 517.000000000000000000
+        Size.Width = 394.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         object lblTituloConfig: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -454,26 +454,26 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       end
       object tabsConfig: TTabControl
         Align = Client
-        Size.Width = 517.000000000000000000
-        Size.Height = 496.000000000000000000
+        Size.Width = 394.000000000000000000
+        Size.Height = 343.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 49.000000000000000000
         TabIndex = 1
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
-          517s
-          447s
-          517s
-          447s
-          517s
-          447s)
+          394s
+          294s
+          394s
+          294s
+          394s
+          294s)
         object tabEtiqueta: TTabItem
           CustomIcon = <
             item
             end>
           IsSelected = False
-          Size.Width = 172.000000000000000000
+          Size.Width = 131.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -483,8 +483,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           ExplicitSize.cy = 49.000000000000000000
           object lbEtiqueta: TListBox
             Align = Client
-            Size.Width = 517.000000000000000000
-            Size.Height = 447.000000000000000000
+            Size.Width = 394.000000000000000000
+            Size.Height = 294.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             ShowScrollBars = False
@@ -492,8 +492,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 517.000000000000000000
-            Viewport.Height = 447.000000000000000000
+            Viewport.Width = 394.000000000000000000
+            Viewport.Height = 294.000000000000000000
             object ListBoxGroupHeader5: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -504,7 +504,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 10.000000000000000000
               Position.Y = 2.000000000000000000
-              Size.Width = 497.000000000000000000
+              Size.Width = 374.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -518,7 +518,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 IsChecked = True
                 Margins.Left = 8.000000000000000000
                 Margins.Right = 8.000000000000000000
-                Size.Width = 501.000000000000000000
+                Size.Width = 378.000000000000000000
                 Size.Height = 44.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 2
@@ -535,7 +535,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 TabOrder = 0
                 Cursor = crIBeam
                 Value = 16.000000000000000000
-                Position.X = 343.000000000000000000
+                Position.X = 220.000000000000000000
                 Position.Y = 6.000000000000000000
                 Margins.Left = 8.000000000000000000
                 Margins.Top = 4.000000000000000000
@@ -548,7 +548,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               object Label8: TLabel
                 Align = Client
                 Margins.Left = 10.000000000000000000
-                Size.Width = 325.000000000000000000
+                Size.Width = 202.000000000000000000
                 Size.Height = 44.000000000000000000
                 Size.PlatformDefault = False
                 Text = 'Caracteres por Linha'
@@ -564,7 +564,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 TabOrder = 2
                 Cursor = crIBeam
                 Value = 4.000000000000000000
-                Position.X = 343.000000000000000000
+                Position.X = 220.000000000000000000
                 Position.Y = 6.000000000000000000
                 Margins.Left = 8.000000000000000000
                 Margins.Top = 4.000000000000000000
@@ -577,7 +577,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               object Label9: TLabel
                 Align = Client
                 Margins.Left = 10.000000000000000000
-                Size.Width = 325.000000000000000000
+                Size.Width = 202.000000000000000000
                 Size.Height = 44.000000000000000000
                 Size.PlatformDefault = False
                 Text = 'Linhas a Pular'
@@ -591,7 +591,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             item
             end>
           IsSelected = True
-          Size.Width = 172.000000000000000000
+          Size.Width = 131.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -601,8 +601,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           ExplicitSize.cy = 49.000000000000000000
           object lbConfLista: TListBox
             Align = Client
-            Size.Width = 517.000000000000000000
-            Size.Height = 447.000000000000000000
+            Size.Width = 394.000000000000000000
+            Size.Height = 294.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             ShowScrollBars = False
@@ -610,8 +610,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 517.000000000000000000
-            Viewport.Height = 447.000000000000000000
+            Viewport.Width = 394.000000000000000000
+            Viewport.Height = 294.000000000000000000
             object ListBoxGroupHeader7: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -622,7 +622,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 10.000000000000000000
               Position.Y = 2.000000000000000000
-              Size.Width = 497.000000000000000000
+              Size.Width = 374.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -630,7 +630,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             end
             object lbDownload: TListBoxItem
               Position.Y = 34.000000000000000000
-              Size.Width = 517.000000000000000000
+              Size.Width = 394.000000000000000000
               Size.Height = 215.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -639,7 +639,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 Fill.Color = claNull
                 Margins.Left = 5.000000000000000000
                 Margins.Right = 5.000000000000000000
-                Size.Width = 507.000000000000000000
+                Size.Width = 384.000000000000000000
                 Size.Height = 152.000000000000000000
                 Size.PlatformDefault = False
                 XRadius = 10.000000000000000000
@@ -654,18 +654,18 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 499.000000000000000000
+                  Size.Width = 376.000000000000000000
                   Size.Height = 144.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 0
-                  Viewport.Width = 491.000000000000000000
+                  Viewport.Width = 368.000000000000000000
                   Viewport.Height = 136.000000000000000000
                 end
               end
               object GridPanelLayout2: TGridPanelLayout
                 Align = Bottom
                 Position.Y = 152.000000000000000000
-                Size.Width = 517.000000000000000000
+                Size.Width = 394.000000000000000000
                 Size.Height = 63.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 37
@@ -702,7 +702,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 10.000000000000000000
                   Margins.Right = 10.000000000000000000
                   Margins.Bottom = 10.000000000000000000
-                  Size.Width = 168.846160888671900000
+                  Size.Width = 121.538467407226600000
                   Size.Height = 43.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 39
@@ -717,7 +717,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 10.000000000000000000
                   Margins.Right = 20.000000000000000000
                   Margins.Bottom = 10.000000000000000000
-                  Size.Width = 278.153839111328100000
+                  Size.Width = 202.461532592773400000
                   Size.Height = 43.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 5
@@ -733,7 +733,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             item
             end>
           IsSelected = False
-          Size.Width = 173.000000000000000000
+          Size.Width = 132.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
@@ -743,8 +743,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           ExplicitSize.cy = 49.000000000000000000
           object lbConfImpressora: TListBox
             Align = Client
-            Size.Width = 517.000000000000000000
-            Size.Height = 447.000000000000000000
+            Size.Width = 394.000000000000000000
+            Size.Height = 294.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             ShowScrollBars = False
@@ -752,8 +752,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             DefaultItemStyles.ItemStyle = ''
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
-            Viewport.Width = 517.000000000000000000
-            Viewport.Height = 447.000000000000000000
+            Viewport.Width = 394.000000000000000000
+            Viewport.Height = 294.000000000000000000
             object ListBoxGroupHeader1: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -764,7 +764,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 10.000000000000000000
               Position.Y = 2.000000000000000000
-              Size.Width = 497.000000000000000000
+              Size.Width = 374.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 2
@@ -773,7 +773,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             object lbModelos: TListBoxItem
               Selectable = False
               Position.Y = 34.000000000000000000
-              Size.Width = 517.000000000000000000
+              Size.Width = 394.000000000000000000
               Size.Height = 52.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 1
@@ -785,7 +785,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 Margins.Bottom = 4.000000000000000000
                 Position.X = 8.000000000000000000
                 Position.Y = 10.000000000000000000
-                Size.Width = 272.000000000000000000
+                Size.Width = 149.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -795,7 +795,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 IsChecked = True
                 Margins.Left = 8.000000000000000000
                 Margins.Right = 8.000000000000000000
-                Position.X = 397.000000000000000000
+                Position.X = 274.000000000000000000
                 Size.Width = 112.000000000000000000
                 Size.Height = 52.000000000000000000
                 Size.PlatformDefault = False
@@ -811,7 +811,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 Margins.Top = 4.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Position.X = 296.000000000000000000
+                Position.X = 173.000000000000000000
                 Position.Y = 10.000000000000000000
                 Size.Width = 85.000000000000000000
                 Size.Height = 32.000000000000000000
@@ -829,7 +829,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 10.000000000000000000
               Position.Y = 88.000000000000000000
-              Size.Width = 497.000000000000000000
+              Size.Width = 374.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 3
@@ -838,7 +838,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             object lbImpressoras: TListBoxItem
               Selectable = False
               Position.Y = 120.000000000000000000
-              Size.Width = 517.000000000000000000
+              Size.Width = 394.000000000000000000
               Size.Height = 52.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 0
@@ -850,7 +850,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 Margins.Bottom = 4.000000000000000000
                 Position.X = 8.000000000000000000
                 Position.Y = 10.000000000000000000
-                Size.Width = 305.000000000000000000
+                Size.Width = 182.000000000000000000
                 Size.Height = 32.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -863,7 +863,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 Margins.Top = 4.000000000000000000
                 Margins.Right = 8.000000000000000000
                 Margins.Bottom = 4.000000000000000000
-                Position.X = 323.000000000000000000
+                Position.X = 200.000000000000000000
                 Position.Y = 4.000000000000000000
                 Sides = [Top, Left, Bottom, Right]
                 Size.Width = 109.000000000000000000
@@ -879,7 +879,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               object chbTodasBth: TCheckBox
                 Align = Right
                 IsChecked = True
-                Position.X = 440.000000000000000000
+                Position.X = 317.000000000000000000
                 Size.Width = 77.000000000000000000
                 Size.Height = 52.000000000000000000
                 Size.PlatformDefault = False
@@ -895,7 +895,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 10.000000000000000000
               Position.Y = 174.000000000000000000
-              Size.Width = 497.000000000000000000
+              Size.Width = 374.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 4
@@ -904,13 +904,13 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             object lbLarguraEspacejamento: TListBoxItem
               Selectable = False
               Position.Y = 206.000000000000000000
-              Size.Width = 517.000000000000000000
+              Size.Width = 394.000000000000000000
               Size.Height = 100.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 5
               object GridPanelLayout1: TGridPanelLayout
                 Align = Client
-                Size.Width = 517.000000000000000000
+                Size.Width = 394.000000000000000000
                 Size.Height = 100.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -955,7 +955,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 object Label2: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 258.500000000000000000
+                  Size.Width = 197.000000000000000000
                   Size.Height = 35.064933776855470000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -966,7 +966,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 object Label3: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 258.500000000000000000
+                  Size.Width = 197.000000000000000000
                   Size.Height = 35.064933776855470000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -984,7 +984,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 242.500000000000000000
+                  Size.Width = 181.000000000000000000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -997,7 +997,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 8.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 242.500000000000000000
+                  Size.Width = 181.000000000000000000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1011,7 +1011,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Margins.Bottom = 2.000000000000000000
               Position.X = 10.000000000000000000
               Position.Y = 308.000000000000000000
-              Size.Width = 497.000000000000000000
+              Size.Width = 374.000000000000000000
               Size.Height = 30.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 6
@@ -1020,13 +1020,13 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             object lbCodBarras: TListBoxItem
               Selectable = False
               Position.Y = 340.000000000000000000
-              Size.Width = 517.000000000000000000
+              Size.Width = 394.000000000000000000
               Size.Height = 74.000000000000000000
               Size.PlatformDefault = False
               TabOrder = 7
               object GridPanelLayout5: TGridPanelLayout
                 Align = Client
-                Size.Width = 517.000000000000000000
+                Size.Width = 394.000000000000000000
                 Size.Height = 74.000000000000000000
                 Size.PlatformDefault = False
                 TabOrder = 0
@@ -1084,7 +1084,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 object Label1: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 172.333328247070300000
+                  Size.Width = 131.333328247070300000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1095,7 +1095,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 object Label4: TLabel
                   Align = Client
                   AutoSize = True
-                  Size.Width = 172.333328247070300000
+                  Size.Width = 131.333328247070300000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TextSettings.HorzAlign = Center
@@ -1107,7 +1107,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Align = Client
                   Margins.Left = 8.000000000000000000
                   Margins.Right = 8.000000000000000000
-                  Size.Width = 156.333343505859400000
+                  Size.Width = 115.333343505859400000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 3
@@ -1124,7 +1124,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 164.333328247070300000
+                  Size.Width = 123.333328247070300000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1137,7 +1137,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   Margins.Top = 4.000000000000000000
                   Margins.Right = 4.000000000000000000
                   Margins.Bottom = 4.000000000000000000
-                  Size.Width = 164.333328247070300000
+                  Size.Width = 123.333328247070300000
                   Size.Height = 32.000000000000000000
                   Size.PlatformDefault = False
                 end
@@ -1146,7 +1146,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                   IsChecked = True
                   Margins.Left = 8.000000000000000000
                   Margins.Right = 8.000000000000000000
-                  Size.Width = 156.333343505859400000
+                  Size.Width = 115.333343505859400000
                   Size.Height = 37.000000000000000000
                   Size.PlatformDefault = False
                   TabOrder = 2
@@ -1160,8 +1160,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       end
       object gplConfBotoes: TGridPanelLayout
         Align = Bottom
-        Position.Y = 544.000000000000000000
-        Size.Width = 517.000000000000000000
+        Position.Y = 391.000000000000000000
+        Size.Width = 394.000000000000000000
         Size.Height = 47.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
@@ -1199,7 +1199,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 5.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 248.500000000000000000
+          Size.Width = 187.000000000000000000
           Size.Height = 37.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 0
@@ -1217,7 +1217,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           Margins.Right = 5.000000000000000000
           Margins.Bottom = 5.000000000000000000
           Sides = [Top, Left, Bottom, Right]
-          Size.Width = 248.500000000000000000
+          Size.Width = 187.000000000000000000
           Size.Height = 37.000000000000000000
           Size.PlatformDefault = False
           TabOrder = 1
@@ -1232,9 +1232,9 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 3
-      Size.Width = 130.000000000000000000
+      Size.Width = 100.000000000000000000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       StyleLookup = ''
@@ -1242,28 +1242,15 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       Text = 'Camera'
       ExplicitSize.cx = 102.000000000000000000
       ExplicitSize.cy = 49.000000000000000000
-      object imgCamera: TImage
-        MultiResBitmap.Height = 117
-        MultiResBitmap.Width = 117
-        MultiResBitmap.LoadSize = 1
-        MultiResBitmap = <
-          item
-          end>
-        Align = Client
-        MarginWrapMode = Center
-        Size.Width = 517.000000000000000000
-        Size.Height = 512.000000000000000000
-        Size.PlatformDefault = False
-      end
       object ToolBar1: TToolBar
-        Size.Width = 517.000000000000000000
+        Size.Width = 394.000000000000000000
         Size.Height = 48.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         object Label6: TLabel
           Align = Contents
           StyledSettings = [Family, Size, Style]
-          Size.Width = 517.000000000000000000
+          Size.Width = 394.000000000000000000
           Size.Height = 48.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = 'toollabel'
@@ -1285,12 +1272,30 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       end
       object lblScanStatus: TLabel
         Align = Bottom
-        Position.Y = 560.000000000000000000
-        Size.Width = 517.000000000000000000
+        Position.Y = 407.000000000000000000
+        Size.Width = 394.000000000000000000
         Size.Height = 31.000000000000000000
         Size.PlatformDefault = False
         TextSettings.HorzAlign = Center
-        TabOrder = 2
+        TabOrder = 1
+      end
+      object imgCamera: TImage
+        MultiResBitmap.Height = 117
+        MultiResBitmap.Width = 117
+        MultiResBitmap.LoadSize = 1
+        MultiResBitmap = <
+          item
+          end>
+        Align = Client
+        MarginWrapMode = Original
+        Margins.Left = 10.000000000000000000
+        Margins.Top = 5.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Margins.Bottom = 5.000000000000000000
+        Size.Width = 374.000000000000000000
+        Size.Height = 349.000000000000000000
+        Size.PlatformDefault = False
+        WrapMode = Center
       end
     end
   end
@@ -36226,7 +36231,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 0
-    Left = 328
+    Left = 336
   end
   object ImageList1: TImageList
     Source = <
