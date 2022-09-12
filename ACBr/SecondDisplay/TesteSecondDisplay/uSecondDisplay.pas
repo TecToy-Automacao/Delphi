@@ -10,8 +10,8 @@ uses
 
 type
   TFormSecondDisplay = class(TForm)
-  private
     Tela02: TACBrSecondDisplayLayout;
+  private
     { Private declarations }
   public
     Procedure ShowLayout(aLayout: TControl);
@@ -24,13 +24,14 @@ var
 implementation
 
 {$R *.fmx}
+
 { TForm3 }
 
 procedure TFormSecondDisplay.ShowLayout(aLayout: TControl);
 begin
-  aLayout.Width := Tela02.Width;
-  aLayout.Height := Tela02.Height;
-  aLayout.Parent := Tela02;
+  aLayout.Width := Self.Tela02.Width;
+  aLayout.Height := Self.Tela02.Height;
+  aLayout.Parent := Self.Tela02;
   aLayout.Align := TAlignLayout.Contents;
   aLayout.BringToFront;
   Tela02.Show;
@@ -39,7 +40,7 @@ end;
 procedure TFormSecondDisplay.HideLayout(aLayout: TControl);
 begin
   aLayout.Parent := Nil;
-  Tela02.Clear;
+  Self.Tela02.Clear;
 end;
 
 end.

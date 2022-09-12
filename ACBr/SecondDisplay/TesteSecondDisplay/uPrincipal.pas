@@ -3,10 +3,13 @@ unit uPrincipal;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Controls.Presentation,
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation,
   FMX.StdCtrls, FMX.Objects, FMX.Layouts,
-  uFrameVendaProduto;
+  uFrameVendaProduto, FireDAC.Stan.Def, FireDAC.FMXUI.Wait,
+  FireDAC.Phys.IBWrapper, FireDAC.Stan.Intf, FireDAC.Phys, FireDAC.Phys.IBBase;
 
 type
   TForm2 = class(TForm)
@@ -22,7 +25,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
   private
-    FrameVendaProduto : TFrameVendaProduto;
+    FrameVendaProduto: TFrameVendaProduto;
   public
     { Public declarations }
   end;
@@ -32,45 +35,41 @@ var
 
 implementation
 
-
 {$R *.fmx}
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-FrameVendaProduto := TFrameVendaProduto.Create(Self);
-Image1.Visible := False;
-Image2.Visible := False;
+  FrameVendaProduto := TFrameVendaProduto.Create(Self);
+  Image1.Visible := False;
+  Image2.Visible := False;
 end;
-
-
-
 
 procedure TForm2.Button1Click(Sender: TObject);
 begin
-FrameVendaProduto.Show;
+  FrameVendaProduto.Show;
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
 begin
-FrameVendaProduto.Imagem           := Image1.Bitmap;
-FrameVendaProduto.Descricao        := 'Alexa';
-FrameVendaProduto.Quantidade       := 1;
-FrameVendaProduto.ValorUnitario    := 356.99;
-FrameVendaProduto.TotalVenda       := 356.99;
+  FrameVendaProduto.Imagem := Image1.Bitmap;
+  FrameVendaProduto.Descricao := 'Alexa';
+  FrameVendaProduto.Quantidade := 1;
+  FrameVendaProduto.ValorUnitario := 356.99;
+  FrameVendaProduto.TotalVenda := 356.99;
 end;
 
 procedure TForm2.Button3Click(Sender: TObject);
 begin
-FrameVendaProduto.Imagem           := Image2.Bitmap;
-FrameVendaProduto.Descricao        := 'Mintendo Switch';
-FrameVendaProduto.Quantidade       := 1;
-FrameVendaProduto.ValorUnitario    := 2600.00;
-FrameVendaProduto.TotalVenda       := 2956.99;
+  FrameVendaProduto.Imagem := Image2.Bitmap;
+  FrameVendaProduto.Descricao := 'Mintendo Switch';
+  FrameVendaProduto.Quantidade := 1;
+  FrameVendaProduto.ValorUnitario := 2600.00;
+  FrameVendaProduto.TotalVenda := 2956.99;
 end;
 
 procedure TForm2.Button4Click(Sender: TObject);
 begin
-FrameVendaProduto.Hide;
+  FrameVendaProduto.Hide;
 end;
 
 end.

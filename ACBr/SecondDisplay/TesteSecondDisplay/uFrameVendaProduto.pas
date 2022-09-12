@@ -3,8 +3,10 @@ unit uFrameVendaProduto;
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants, 
-  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls, FMX.Objects, FMX.Layouts;
+  System.SysUtils, System.Types, System.UITypes, System.Classes,
+  System.Variants,
+  FMX.Types, FMX.Graphics, FMX.Controls, FMX.Forms, FMX.Dialogs, FMX.StdCtrls,
+  FMX.Objects, FMX.Layouts;
 
 type
   TFrameVendaProduto = class(TFrame)
@@ -30,65 +32,63 @@ type
   public
     Procedure Show;
     Procedure Hide;
-    property Imagem        : TBitmap Read GetImagem      Write SetImagem;
-    property Descricao     : String  Read FDescricao     Write SetDescricao;
-    property Quantidade    : Single  Read FQuantidade    Write SetQuantidade;
-    property ValorUnitario : Double  Read FValorUnitario Write SetValorUnitario;
-    property TotalVenda    : Double  Read FTotalVenda    Write SetTotalVenda;
+    property Imagem: TBitmap Read GetImagem Write SetImagem;
+    property Descricao: String Read FDescricao Write SetDescricao;
+    property Quantidade: Single Read FQuantidade Write SetQuantidade;
+    property ValorUnitario: Double Read FValorUnitario Write SetValorUnitario;
+    property TotalVenda: Double Read FTotalVenda Write SetTotalVenda;
   end;
 
 implementation
 
 Uses
-   uSecondDisplay;
-
+  uSecondDisplay;
 
 {$R *.fmx}
-
 { TFrame1 }
 
 function TFrameVendaProduto.GetImagem: TBitmap;
 begin
-Result := ImagemProduto.Bitmap;
+  Result := ImagemProduto.Bitmap;
 end;
 
 procedure TFrameVendaProduto.SetDescricao(const Value: String);
 begin
-FDescricao            := Value;
-DescricaoProduto.Text := Value;
+  FDescricao := Value;
+  DescricaoProduto.Text := Value;
 end;
 
 procedure TFrameVendaProduto.SetImagem(const Value: TBitmap);
 begin
-ImagemProduto.Bitmap.Assign(Value);
+  ImagemProduto.Bitmap.Assign(Value);
 end;
 
 procedure TFrameVendaProduto.SetQuantidade(const Value: Single);
 begin
-FQuantidade := Value;
-QuantidadeProduto.Text := FormatFloat('###,##0.000 X', Value);
+  FQuantidade := Value;
+  QuantidadeProduto.Text := FormatFloat('###,##0.000 X', Value);
 end;
 
 procedure TFrameVendaProduto.SetTotalVenda(const Value: Double);
 begin
-FTotalVenda := Value;
-Total.Text := 'R$ '+FormatFloat('#,###,##0.00', Value).Trim;
+  FTotalVenda := Value;
+  Total.Text := 'R$ ' + FormatFloat('#,###,##0.00', Value).Trim;
 end;
 
 procedure TFrameVendaProduto.SetValorUnitario(const Value: Double);
 begin
-FValorUnitario := Value;
-PrecoUnitario.Text := FormatFloat('R$ #,###,##0.00', Value);
+  FValorUnitario := Value;
+  PrecoUnitario.Text := FormatFloat('R$ #,###,##0.00', Value);
 end;
 
 procedure TFrameVendaProduto.Show;
 begin
-FormSecondDisplay.ShowLayout(Self);
+  FormSecondDisplay.ShowLayout(Self);
 end;
 
 procedure TFrameVendaProduto.Hide;
 begin
-FormSecondDisplay.HideLayout(Self);
+  FormSecondDisplay.HideLayout(Self);
 end;
 
 end.

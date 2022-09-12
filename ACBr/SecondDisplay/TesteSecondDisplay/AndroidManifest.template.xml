@@ -8,9 +8,6 @@
     <uses-sdk android:minSdkVersion="%minSdkVersion%" android:targetSdkVersion="%targetSdkVersion%" />
 <%uses-permission%>
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
-    <queries>
-<%queries-child-elements%>
-    </queries>
     <application
         android:persistent="%persistent%"
         android:restoreAnyVersion="%restoreAnyVersion%"
@@ -20,8 +17,7 @@
         android:icon="%icon%"
         android:theme="%theme%"
         android:hardwareAccelerated="%hardwareAccelerated%"
-        android:resizeableActivity="false"
-        android:requestLegacyExternalStorage="true">
+        android:resizeableActivity="false">
 <%provider%>
 <%application-meta-data%>
 <%uses-libraries%>
