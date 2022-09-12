@@ -1,7 +1,6 @@
 inherited ServicePedidos: TServicePedidos
   Height = 233
   Width = 370
-  PixelsPerInch = 96
   object memPedidos: TFDMemTable
     FieldDefs = <>
     IndexDefs = <>
