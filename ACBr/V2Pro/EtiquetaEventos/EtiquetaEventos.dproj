@@ -326,7 +326,6 @@
             <Deployment Version="3">
                 <DeployFile LocalName="Android\Release\libEtiquetaEventos.so" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="Android64\Release\libEtiquetaEventos.so" Configuration="Release" Class="ProjectOutput"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Configuration="Debug" Class="Android_SplashImage960"/>
                 <DeployFile LocalName="so\libssl.so" Configuration="Release" Class="File">
                     <Platform Name="Android">
                         <RemoteDir>.\assets\internal\</RemoteDir>
@@ -336,7 +335,6 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_470x320.png" Configuration="Debug" Class="Android_SplashImage470"/>
                 <DeployFile LocalName="Android64\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_192_192.png" Configuration="Debug" Class="Android_LauncherIcon192"/>
                 <DeployFile LocalName="img\logos\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
@@ -362,9 +360,12 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Configuration="Debug" Class="Android_SplashImage640"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png" Configuration="Debug" Class="Android_LauncherIcon144"/>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_426x320.png" Configuration="Debug" Class="Android_SplashImage426"/>
+                <DeployFile LocalName="Android\Debug\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
+                    <Platform Name="Android">
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Android\Release\strings.xml" Configuration="Release" Class="Android_Strings"/>
                 <DeployFile LocalName="Android\Release\styles-v21.xml" Configuration="Release" Class="AndroidSplashStylesV21"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_960x720.png" Configuration="Debug" Class="Android_SplashImage960"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_36x36.png" Configuration="Debug" Class="Android_NotificationIcon36"/>
@@ -372,11 +373,7 @@
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470"/>
                 <DeployFile LocalName="Android64\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21"/>
-                <DeployFile LocalName="Android\Debug\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef">
-                    <Platform Name="Android">
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_426x320.png" Configuration="Debug" Class="Android_SplashImage426"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
@@ -385,7 +382,12 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="Android\Release\splash_image_def.xml" Configuration="Release" Class="AndroidSplashImageDef"/>
-                <DeployFile LocalName="Android\Release\strings.xml" Configuration="Release" Class="Android_Strings"/>
+                <DeployFile LocalName="Android\Release\libEtiquetaEventos.so" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Android">
+                        <RemoteName>libEtiquetaEventos.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Debug" Class="Android_NotificationIcon48"/>
                 <DeployFile LocalName="Android64\Release\strings.xml" Configuration="Release" Class="Android_Strings"/>
@@ -395,17 +397,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libssl.so" Configuration="Debug" Class="File"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Debug" Class="Android_NotificationIcon48"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
-                <DeployFile LocalName="Win32\Release\EtiquetaEventos.exe" Configuration="Release" Class="ProjectOutput"/>
-                <DeployFile LocalName="Android\Release\libEtiquetaEventos.so" Configuration="Release" Class="ProjectOutput">
-                    <Platform Name="Android">
-                        <RemoteName>libEtiquetaEventos.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Android64\Debug\libEtiquetaEventos.so" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72"/>
                 <DeployFile LocalName="Android\Release\styles-v21.xml" Configuration="Release" Class="AndroidSplashStylesV21">
                     <Platform Name="Android">
@@ -413,25 +404,29 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libcrypto.so" Configuration="Release" Class="File"/>
                 <DeployFile LocalName="img\logos\ACBr_96_96.png" Configuration="Release" Class="Android_NotificationIcon96">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Win32\Release\EtiquetaEventos.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="img\logos\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144">
                     <Platform Name="Android">
                         <RemoteName>ic_launcher.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="Android64\Debug\libEtiquetaEventos.so" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployFile LocalName="img\logos\ACBr_470_320.png" Configuration="Release" Class="Android_SplashImage470">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libssl.so" Configuration="Release" Class="File"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Configuration="Debug" Class="Android_SplashImage426"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libcrypto.so" Configuration="Debug" Class="File"/>
                 <DeployFile LocalName="Android\Debug\strings.xml" Configuration="Debug" Class="Android_Strings">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
@@ -476,18 +471,11 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_48x48.png" Configuration="Debug" Class="Android_LauncherIcon48"/>
                 <DeployFile LocalName="so\libcrypto.so" Configuration="Debug" Class="File">
                     <Platform Name="Android">
                         <RemoteDir>.\assets\internal\</RemoteDir>
                         <RemoteName>libcrypto.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="$(BDS)\lib\android\release\mips\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeMipsFile">
-                    <Platform Name="Android">
-                        <RemoteName>libEtiquetaEventos.so</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -505,12 +493,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\lib\android\release\armeabi\libnative-activity.so" Configuration="Release" Class="AndroidLibnativeArmeabiFile">
-                    <Platform Name="Android">
-                        <RemoteName>libEtiquetaEventos.so</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470"/>
                 <DeployFile LocalName="Android64\Debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_426_320.png" Configuration="Debug" Class="Android_SplashImage426"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_144_144.png" Configuration="Release" Class="Android_LauncherIcon144"/>
@@ -529,28 +512,29 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
                 <DeployFile LocalName="Android\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21">
                     <Platform Name="Android">
                         <RemoteName>styles.xml</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_72x72.png" Configuration="Debug" Class="Android_LauncherIcon72"/>
                 <DeployFile LocalName="All Platforms\Release\EtiquetaEventos" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="Android\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_72x72.png" Configuration="Debug" Class="Android_LauncherIcon72"/>
                 <DeployFile LocalName="Android\Debug\EtiquetaEventos.classes" Configuration="Debug" Class="AndroidClasses"/>
                 <DeployFile LocalName="Android64\Debug\splash_image_def.xml" Configuration="Debug" Class="AndroidSplashImageDef"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libssl.so" Configuration="Debug" Class="File"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_24x24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
                 <DeployFile LocalName="Android\Release\splash_image_def.xml" Configuration="Release" Class="AndroidSplashImageDef">
                     <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libcrypto.so" Configuration="Debug" Class="File"/>
                 <DeployFile LocalName="Android\Debug\libEtiquetaEventos.so" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Android">
                         <RemoteName>libEtiquetaEventos.so</RemoteName>
@@ -559,8 +543,15 @@
                 </DeployFile>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\acbrmono.bmp" Configuration="Debug" Class="File"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_640_480.png" Configuration="Debug" Class="Android_SplashImage640"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libssl.so" Configuration="Release" Class="File"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_144_144.png" Configuration="Debug" Class="Android_LauncherIcon144"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_96x96.png" Configuration="Debug" Class="Android_LauncherIcon96"/>
+                <DeployFile LocalName="$(BDS)\lib\android\debug\mips\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeMipsFile">
+                    <Platform Name="Android">
+                        <RemoteName>libEtiquetaEventos.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Android\Debug\classes.dex" Configuration="Debug" Class="AndroidClassesDexFile"/>
                 <DeployFile LocalName="img\logos\ACBr_72_72.png" Configuration="Release" Class="Android_NotificationIcon72">
                     <Platform Name="Android">
@@ -573,6 +564,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="$(BDS)\lib\android\debug\armeabi\libnative-activity.so" Configuration="Debug" Class="AndroidLibnativeArmeabiFile">
+                    <Platform Name="Android">
+                        <RemoteName>libEtiquetaEventos.so</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_960_720.png" Configuration="Debug" Class="Android_SplashImage960"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_SplashImage_640x480.png" Configuration="Debug" Class="Android_SplashImage640"/>
                 <DeployFile LocalName="Android\Release\styles.xml" Configuration="Release" Class="AndroidSplashStyles"/>
                 <DeployFile LocalName="img\logos\ACBr_36_36.png" Configuration="Release" Class="Android_NotificationIcon36">
@@ -581,7 +579,6 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36"/>
                 <DeployFile LocalName="img\logos\ACBr_36_36.png" Configuration="Debug" Class="Android_NotificationIcon36">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
@@ -598,8 +595,7 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_192x192.png" Configuration="Release" Class="Android_LauncherIcon192"/>
-                <DeployFile LocalName="Android\Debug\EtiquetaEventos.classes" Configuration="Debug" Class="AndroidClasses"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_426_320.png" Configuration="Debug" Class="Android_SplashImage426"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_48_48.png" Configuration="Debug" Class="Android_NotificationIcon48"/>
                 <DeployFile LocalName="img\logos\ACBr_470_320.png" Configuration="Debug" Class="Android_SplashImage470">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
@@ -609,6 +605,7 @@
                 <DeployFile LocalName="Android\Debug\styles-v21.xml" Configuration="Debug" Class="AndroidSplashStylesV21"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_72_72.png" Configuration="Release" Class="Android_NotificationIcon72"/>
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_48_48.png" Configuration="Release" Class="Android_NotificationIcon48"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_96_96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_NotificationIcon_96x96.png" Configuration="Debug" Class="Android_NotificationIcon96"/>
                 <DeployFile LocalName="so\libcrypto.so" Configuration="Release" Class="File">
                     <Platform Name="Android">
@@ -617,9 +614,15 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_192_192.png" Configuration="Debug" Class="Android_LauncherIcon192"/>
                 <DeployFile LocalName="img\logos\ACBr_24_24.png" Configuration="Release" Class="Android_NotificationIcon24">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="$(NDKBasePath)\prebuilt\android-arm\gdbserver\gdbserver" Configuration="Debug" Class="AndroidGDBServer">
+                    <Platform Name="Android">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -631,6 +634,7 @@
                     </Platform>
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\bin\Artwork\Android\FM_LauncherIcon_192x192.png" Configuration="Debug" Class="Android_LauncherIcon192"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_640_480.png" Configuration="Debug" Class="Android_SplashImage640"/>
                 <DeployFile LocalName="img\logos\ACBr_426_320.png" Configuration="Release" Class="Android_SplashImage426">
                     <Platform Name="Android">
                         <RemoteName>splash_image.png</RemoteName>
@@ -649,8 +653,8 @@
                 <DeployFile LocalName="..\..\..\..\Fontes\Imagens\Android\ACBr_960_720.png" Configuration="Release" Class="Android_SplashImage960"/>
                 <DeployFile LocalName="Android64\Release\splash_image_def.xml" Configuration="Release" Class="AndroidSplashImageDef"/>
                 <DeployFile LocalName="Android\Release\AndroidManifest.xml" Configuration="Release" Class="ProjectAndroidManifest"/>
-                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\Fontes\Imagens\Android\Quadrado\ACBr_24_24.png" Configuration="Debug" Class="Android_NotificationIcon24"/>
                 <DeployFile LocalName="Android64\Release\styles.xml" Configuration="Release" Class="AndroidSplashStyles"/>
+                <DeployFile LocalName="C:\Pascal\Comp\ACBr\trunk2\DLLs\Android\OpenSSL\openssl-1.0.2u\arm-linux-androideabi\Dynamic\libcrypto.so" Configuration="Release" Class="File"/>
                 <DeployFile LocalName="img\logos\ACBr_72_72.png" Configuration="Debug" Class="Android_NotificationIcon72">
                     <Platform Name="Android">
                         <RemoteName>ic_notification.png</RemoteName>

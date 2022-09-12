@@ -44,11 +44,11 @@ O Arquivo deve estar no formato .CSV (TXT formatado), com as seguintes definiç�
 - O separador de linha, geralmente será o caractere LF (Linux), mas também pode ser CR+LF (Windows)
 
 ## Exemplo de Arquivo
-Inscricao1,nome_participante1,nome_empresa1  
-Inscricao2,nome_participante2,nome_empresa2  
-Inscricao3,nome_participante3,nome_empresa3  
+Inscricao1,nome_participante1,nome_empresa1,cargo1  
+Inscricao2,nome_participante2,nome_empresa2,cargo2  
+Inscricao3,nome_participante3,nome_empresa3,cargo3  
 ...  
-InscricaoN,nome_participanteN,nome_empresaN  
+InscricaoN,nome_participanteN,nome_empresaN,cargoN  
 
 Você pode ver um exemplo de arquivo, [nesse link](https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv)
 

@@ -135,7 +135,6 @@ type
     lbConfLista: TListBox;
     ListBoxGroupHeader7: TListBoxGroupHeader;
     lbDownload: TListBoxItem;
-    Button1: TButton;
     gplConfBotoes: TGridPanelLayout;
     btLerConfig: TCornerButton;
     btSalvarConfig: TCornerButton;
@@ -151,6 +150,9 @@ type
     ListBoxItem8: TListBoxItem;
     seLinhasPular: TSpinBox;
     Label9: TLabel;
+    GridPanelLayout2: TGridPanelLayout;
+    btLimparLista: TButton;
+    btBaixarLista: TButton;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -168,12 +170,14 @@ type
     procedure SpeedButton3Click(Sender: TObject);
     procedure btQRCodeClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure btLimparListaClick(Sender: TObject);
   private
     FVKService: IFMXVirtualKeyboardService;
     FScanInProgress: Boolean;
     FFrameTake: Integer;
     FScanBitmap: TBitmap;
     FSearchBox: TSearchBox;
+    FLinhasNome: Integer;
 
     function CalcularNomeArqINI: String;
     function CalcularNomeArquivoLista: String;
@@ -197,7 +201,7 @@ type
 
     procedure BaixarLista(AURL: String);
     procedure LerArquivoCSV;
-    procedure ProcessarTextoParaImpressao(ATexto: string; ALines: TStringList; MaxLinhas: Integer);
+    procedure PrepararTextoParaImpressao(ATexto: string; ALines: TStringList; MaxLinhas: Integer);
   public
     { Public declarations }
   end;
@@ -251,6 +255,7 @@ begin
   FScanInProgress := False;
   FScanBitmap := Nil;
   FFrameTake := 0;
+  FLinhasNome:= 0;
 
   tabsPrincipal.TabPosition := TTabPosition.None;
   tabsPrincipal.First;
@@ -315,12 +320,15 @@ begin
   Result := Ok;
 end;
 
-procedure TEtiquetaEventosForm.ProcessarTextoParaImpressao(ATexto: string; ALines: TStringList; MaxLinhas: Integer);
+procedure TEtiquetaEventosForm.PrepararTextoParaImpressao(ATexto: string; ALines: TStringList; MaxLinhas: Integer);
 var
   s, sl: string;
 begin
-  s := UpperCase(TiraAcentos(ATexto));
   ALines.Clear;
+  if (MaxLinhas < 1) then
+    Exit;
+
+  s := UpperCase(TiraAcentos(ATexto));
   ALines.Text := QuebraLinhas(s, ColunasTextoImpressao);
   if (ALines.Count > MaxLinhas) then
   begin
@@ -345,6 +353,7 @@ end;
 procedure TEtiquetaEventosForm.VoltarParaLista;
 begin
   PararCamera;
+  FLinhasNome := 0;
   ACBrPosPrinter1.Desativar;
   tabsPrincipal.SetActiveTabWithTransition(tabLista, TTabTransition.Slide);
 end;
@@ -370,6 +379,10 @@ begin
 end;
 
 procedure TEtiquetaEventosForm.btImprimirClick(Sender: TObject);
+var
+  s: String;
+  SL: TStringList;
+  i: Integer;
 begin
   if edtLinha1.Text.IsEmpty and
      edtLinha2.Text.IsEmpty and
@@ -380,29 +393,40 @@ begin
   if not ACBrPosPrinter1.Ativo then
     ConfigurarACBrPosPrinter;
 
-  ACBrPosPrinter1.Ativar;
-  ACBrPosPrinter1.Buffer.Clear;
-  ACBrPosPrinter1.Buffer.Add('</zera><in><n><e><a>'+PadCenter(edtLinha1.Text, ColunasTextoImpressao));
-  ACBrPosPrinter1.Buffer.Add(PadCenter(edtLinha2.Text, ColunasTextoImpressao));
+  SL := TStringList.Create;
+  try
+    SL.Add(PadCenter(edtLinha1.Text.Trim, ColunasTextoImpressao));
+    SL.Add(PadCenter(edtLinha2.Text.Trim, ColunasTextoImpressao));
+    SL.Add(PadCenter(edtLinha3.Text.Trim, ColunasTextoImpressao));
+    if not cbImpCodBarras.IsChecked then
+      SL.Add(PadCenter(edtLinha4.Text.Trim, ColunasTextoImpressao))
+    else
+      SL.Add('</ce><code93>'+edtLinha4.Text.Trim+'</code93>');
 
-  if not cbImpCodBarras.IsChecked then
-  begin
-    ACBrPosPrinter1.Buffer.Add('</in>'+PadCenter(edtLinha3.Text, ColunasTextoImpressao));
-    ACBrPosPrinter1.Buffer.Add(PadCenter(edtLinha4.Text, ColunasTextoImpressao));
-  end
-  else
-  begin
-    ACBrPosPrinter1.Buffer.Add('</in>'+PadCenter(edtLinha3.Text, ColunasTextoImpressao));
-    ACBrPosPrinter1.Buffer.Add('</ce><code93>'+edtLinha4.Text.Trim+'</code93>');
+    FLinhasNome := max(min(FLinhasNome, 2), 1);
+    SL[0] := '<in>'+SL[0];
+    SL[FLinhasNome] := '</in>'+ SL[FLinhasNome];
+
+    SL[0] := '</zera><n><e><a>'+SL[0]; // Zera, Liga Negrito, Expandido, Altura Dupla
+
+    for i := 1 to Trunc(seLinhasPular.Value) do
+      SL.Add('');
+
+    ACBrPosPrinter1.Ativar;
+    ACBrPosPrinter1.Imprimir(SL.Text);
+  finally
+    SL.Free;
   end;
-
-  ACBrPosPrinter1.Imprimir();
-  ACBrPosPrinter1.PularLinhas(Trunc(seLinhasPular.Value));
 end;
 
 procedure TEtiquetaEventosForm.btLerConfigClick(Sender: TObject);
 begin
   LerConfiguracao;
+end;
+
+procedure TEtiquetaEventosForm.btLimparListaClick(Sender: TObject);
+begin
+  mURLDownload.Lines.Clear;
 end;
 
 procedure TEtiquetaEventosForm.btnBackClick(Sender: TObject);
@@ -463,6 +487,7 @@ end;
 procedure TEtiquetaEventosForm.Button2Click(Sender: TObject);
 begin
   LimparEditsImpressao;
+  FLinhasNome := 0;
 end;
 
 function TEtiquetaEventosForm.CalcularNomeArqINI: String;
@@ -719,11 +744,6 @@ end;
 procedure TEtiquetaEventosForm.IrParaImpressao;
 begin
   tabsPrincipal.SetActiveTabWithTransition(tabImpressao, TTabTransition.Slide);
-  edtLinha4.Enabled := not cbImpCodBarras.IsChecked;
-  if not edtLinha4.Enabled then
-    edtLinha4.TextAlign := TTextAlign.Center
-  else
-   edtLinha4.TextAlign := TTextAlign.Leading;
 end;
 
 procedure TEtiquetaEventosForm.LerArquivoCSV;
@@ -778,7 +798,11 @@ begin
         FDMemTable1.Append;
         FDMemTable1.FieldByName('fdIncricao').AsString := Campos[0];
         FDMemTable1.FieldByName('fdNome').AsString := Campos[1];
-        FDMemTable1.FieldByName('fdEmpresa').AsString := Campos[2];
+        if Length(Campos) > 2 then
+          FDMemTable1.FieldByName('fdEmpresa').AsString := Campos[2];
+        if Length(Campos) > 3 then
+          FDMemTable1.FieldByName('fdCargo').AsString := Campos[3];
+
         FDMemTable1.Post;
       end
       else
@@ -856,45 +880,89 @@ end;
 procedure TEtiquetaEventosForm.ListView1ItemClick(const Sender: TObject;
   const AItem: TListViewItem);
 var
-  SL: TStringList;
+  slFinal, slNome, slEmpresa, slCargo: TStringList;
   s: String;
-  LinEmpresa: Integer;
+  i, LinBarra, MaxLins: Integer;
+
+  function LinhasTotal: Integer;
+  begin
+    Result := slNome.Count + slEmpresa.Count + slCargo.Count;
+  end;
+
+  procedure SetCount(sl: TStringList; NewCount: Integer);
+  begin
+    while (sl.Count > 0) and (sl.Count > NewCount) do
+      sl.Delete(sl.Count-1);
+  end;
+
 begin
   if not Assigned(AItem) then
     Exit;
 
   FSearchBox.Text := '';
+  FLinhasNome := 0;
+  LinBarra := IfThen(cbImpCodBarras.IsChecked, 1, 0);
+  MaxLins := 4 - LinBarra;
   LimparEditsImpressao;
-  SL := TStringList.Create;
+  slFinal := TStringList.Create;
+  slNome := TStringList.Create;
+  slEmpresa := TStringList.Create;
+  slCargo := TStringList.Create;
   try
     s := (AItem.View.FindDrawable('TextNome') as TListItemText).Text;
-    ProcessarTextoParaImpressao(s, SL, 2);
-    if SL.Count > 0 then
-      edtLinha1.Text := SL[0];
-    if SL.Count > 1 then
-      edtLinha2.Text := SL[1];
+    i := pos(' ', s);
+    if (i > 0) then           // Acha o primeiro nome
+      s := copy(s, 1, i-1);
+    PrepararTextoParaImpressao(s, slNome, 2);
 
-    LinEmpresa := ifThen(cbImpCodBarras.IsChecked, 1, 2);
     s := (AItem.View.FindDrawable('TextEmpresa') as TListItemText).Text;
-    ProcessarTextoParaImpressao(s, SL, LinEmpresa);
-    if SL.Count > 0 then
-      edtLinha3.Text := SL[0];
+    PrepararTextoParaImpressao(s, slEmpresa, 2);
 
-    if (LinEmpresa > 1) then
-    begin
-      if (SL.Count > 1) then
-        edtLinha4.Text := SL[1];
-    end
-    else
+    s := (AItem.View.FindDrawable('TextCargo') as TListItemText).Text;
+    PrepararTextoParaImpressao(s, slCargo, 1);
+
+    if (LinhasTotal > MaxLins) then
+      SetCount(slCargo, min(slCargo.Count, 1));
+    if (LinhasTotal > MaxLins) then
+      SetCount(slEmpresa, min(slEmpresa.Count, 2));
+    if (LinhasTotal > MaxLins) then
+      SetCount(slNome, min(slNome.Count, 2));
+    if (LinhasTotal > MaxLins) then
+      SetCount(slEmpresa, min(slEmpresa.Count, 1));
+
+    FLinhasNome := slNome.Count;
+    slFinal.Clear;
+    slFinal.AddStrings(slNome);
+    slFinal.AddStrings(slEmpresa);
+    slFinal.AddStrings(slCargo);
+
+    if (slFinal.Count > 0) then
+      edtLinha1.Text := slFinal[0];
+    if (slFinal.Count > 1) then
+      edtLinha2.Text := slFinal[1];
+    if (slFinal.Count > 2) then
+      edtLinha3.Text := slFinal[2];
+    if (slFinal.Count > 3) then
+      edtLinha4.Text := slFinal[3];
+
+    if cbImpCodBarras.IsChecked then
     begin
       s := (AItem.View.FindDrawable('TextInscricao') as TListItemText).Text;
       edtLinha4.Text := s;
     end;
 
-    IrParaImpressao;
+    if cbImpCodBarras.IsChecked then
+      edtLinha4.TextAlign := TTextAlign.Center
+    else
+      edtLinha4.TextAlign := TTextAlign.Leading;
   finally
-    SL.Free;
+    slFinal.Free;
+    slNome.Free;
+    slEmpresa.Free;
+    slCargo.Free;
   end;
+
+  IrParaImpressao;
 end;
 
 end.
