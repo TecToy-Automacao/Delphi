@@ -1,11 +1,11 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{77CB1345-BEDE-4CC9-A228-7462D08B8FAD}</ProjectGuid>
+        <ProjectGuid>{8D44251D-E15E-4D9F-A867-D232528F369B}</ProjectGuid>
         <ProjectVersion>19.4</ProjectVersion>
         <FrameworkType>FMX</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
-        <Platform Condition="'$(Platform)'==''">Android64</Platform>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>168979</TargetedPlatforms>
         <AppType>Application</AppType>
         <MainSource>MonitorPreparo.dpr</MainSource>
@@ -262,8 +262,6 @@
             <Form>ViewMonitorProducao</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="routers\Cozinha.Routers.pas"/>
-        <DCCReference Include="routers\Cozinha.Routers.Consts.pas"/>
         <DCCReference Include="views\Components\Cozinha.Components.Item001.pas">
             <Form>ComponentItem001</Form>
             <FormType>fmx</FormType>

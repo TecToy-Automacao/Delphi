@@ -109,7 +109,7 @@ begin
   LResponse :=
     TRequest.New.BaseURL(Format('%s:%s/', [C_BaseURL, C_Porta]))
       .Resource('pedidos/producao')
-      .BasicAuthentication('admin', '123456')
+      .BasicAuthentication(C_Usuario, C_Senha)
       .ContentType('application/json')
       .Get;
 
