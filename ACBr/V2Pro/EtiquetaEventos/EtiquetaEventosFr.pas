@@ -142,7 +142,6 @@ type
     lbEtiqueta: TListBox;
     ListBoxGroupHeader5: TListBoxGroupHeader;
     ListBoxItem6: TListBoxItem;
-    cbImpCodBarras: TCheckBox;
     ListBoxItem7: TListBoxItem;
     seCaracteresLinha: TSpinBox;
     Label8: TLabel;
@@ -153,6 +152,11 @@ type
     btLimparLista: TButton;
     btBaixarLista: TButton;
     imgCamera: TImage;
+    ListBoxGroupHeader8: TListBoxGroupHeader;
+    cbImpCodBarras: TCheckBox;
+    ListBoxItem9: TListBoxItem;
+    cbLeitorIntegrado: TCheckBox;
+    tiStart: TTimer;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -171,6 +175,8 @@ type
     procedure btQRCodeClick(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure btLimparListaClick(Sender: TObject);
+    procedure tiStartTimer(Sender: TObject);
+    procedure ListView1SearchChange(Sender: TObject);
   private
     FVKService: IFMXVirtualKeyboardService;
     FScanInProgress: Boolean;
@@ -278,6 +284,7 @@ begin
 
   LerConfiguracao;
   LerArquivoCSV;
+  tiStart.Enabled := True;
 end;
 
 function TEtiquetaEventosForm.PedirPermissoes: Boolean;
@@ -350,12 +357,19 @@ begin
   ACBrPosPrinter1.Desativar;
 end;
 
+procedure TEtiquetaEventosForm.tiStartTimer(Sender: TObject);
+begin
+  tiStart.Enabled := False;
+  VoltarParaLista;
+end;
+
 procedure TEtiquetaEventosForm.VoltarParaLista;
 begin
   PararCamera;
   FLinhasNome := 0;
   ACBrPosPrinter1.Desativar;
   tabsPrincipal.SetActiveTabWithTransition(tabLista, TTabTransition.Slide);
+  FSearchBox.SetFocus;
 end;
 
 procedure TEtiquetaEventosForm.BaixarLista(AURL: String);
@@ -589,13 +603,13 @@ begin
     if (tabsPrincipal.ActiveTab = tabCamera) then
     begin
       PararCamera;
-      tabsPrincipal.First;
+      VoltarParaLista;
       Key := 0;
     end;
 
     if (tabsPrincipal.ActiveTab = tabImpressao) then
     begin
-      tabsPrincipal.First;
+      VoltarParaLista;
       Key := 0;
     end;
   end;
@@ -644,6 +658,7 @@ begin
     INI.WriteBool('PosPrinter.Barras','HRI',cbHRI.IsChecked);
 
     INI.WriteBool('Etiqueta','CodBarras', cbImpCodBarras.IsChecked);
+    INI.WriteBool('Etiqueta','LeitorIntegrado', cbLeitorIntegrado.IsChecked);
     INI.WriteInteger('Etiqueta','Caracteres', ColunasTextoImpressao);
     INI.WriteInteger('Etiqueta','LinhasPular', Trunc(seLinhasPular.Value) );
   finally
@@ -836,6 +851,7 @@ begin
     cbHRI.IsChecked := INI.ReadBool('Barras','HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
 
     cbImpCodBarras.IsChecked := INI.ReadBool('Etiqueta','CodBarras', True);
+    cbLeitorIntegrado.IsChecked := INI.ReadBool('Etiqueta','LeitorIntegrado', True);
     seCaracteresLinha.Value := INI.ReadInteger('Etiqueta','Caracteres', 16);
     seLinhasPular.Value := INI.ReadInteger('Etiqueta','LinhasPular', 2);
   finally
@@ -861,6 +877,10 @@ begin
       end;
     end;
   end;
+
+  btQRCode.Visible := not cbLeitorIntegrado.IsChecked;
+  if (tabsPrincipal.ActiveTab = tabLista) then
+    FSearchBox.SetFocus;
 end;
 
 procedure TEtiquetaEventosForm.LimparEditsImpressao;
@@ -904,9 +924,6 @@ begin
   slCargo := TStringList.Create;
   try
     s := (AItem.View.FindDrawable('TextNome') as TListItemText).Text;
-    i := pos(' ', s);
-    if (i > 0) then           // Acha o primeiro nome
-      s := copy(s, 1, i-1);
     PrepararTextoParaImpressao(s, slNome, 2);
 
     s := (AItem.View.FindDrawable('TextEmpresa') as TListItemText).Text;
@@ -918,9 +935,14 @@ begin
     if (LinhasTotal > MaxLins) then
       SetCount(slCargo, min(slCargo.Count, 1));
     if (LinhasTotal > MaxLins) then
-      SetCount(slEmpresa, min(slEmpresa.Count, 2));
-    if (LinhasTotal > MaxLins) then
-      SetCount(slNome, min(slNome.Count, 2));
+    begin
+      SetCount(slNome, min(slNome.Count, 1));
+      i := PosLast(' ',slNome[0]);
+      if (i = 0) then
+        i := Length(slNome[0]);
+      s := copy(slNome[0], 1, i);
+      slNome.Text := s;
+    end;
     if (LinhasTotal > MaxLins) then
       SetCount(slEmpresa, min(slEmpresa.Count, 1));
 
@@ -957,6 +979,15 @@ begin
   end;
 
   IrParaImpressao;
+end;
+
+procedure TEtiquetaEventosForm.ListView1SearchChange(Sender: TObject);
+var
+  s: string;
+begin
+  s := FSearchBox.Text;
+  if StrIsNumber(s) then
+    FSearchBox.Text := IntToStr(StrToInt64(s));
 end;
 
 end.

@@ -146,9 +146,6 @@ Coordinates=959,826,79,33
 [StyleBook1]
 Coordinates=959,881,70,33
 
-[cbImpCodBarras]
-Coordinates=456,386,97,51
-
 [tabConfig]
 Coordinates=959,936,62,33
 
@@ -274,5 +271,5 @@ Coordinates=779,155,88,51
 Coordinates=1139,496,137,33
 
 []
-Coordinates=633,78,70,51
+Coordinates=456,386,97,51
 

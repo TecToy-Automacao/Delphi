@@ -3,7 +3,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
   Top = 0
   ActiveControl = tabImpressao
   Caption = 'ACBrPosPrinter Android Teste'
-  ClientHeight = 487
+  ClientHeight = 568
   ClientWidth = 394
   Position = Designed
   StyleBook = StyleBook1
@@ -20,27 +20,27 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     FullSize = True
     Images = ImageList1
     Size.Width = 394.000000000000000000
-    Size.Height = 487.000000000000000000
+    Size.Height = 568.000000000000000000
     Size.PlatformDefault = False
     TabHeight = 49.000000000000000000
-    TabIndex = 3
+    TabIndex = 0
     TabOrder = 0
     TabPosition = Bottom
     OnChange = tabsPrincipalChange
     Sizes = (
       394s
-      438s
+      519s
       394s
-      438s
+      519s
       394s
-      438s
+      519s
       394s
-      438s)
+      519s)
     object tabLista: TTabItem
       CustomIcon = <
         item
         end>
-      IsSelected = False
+      IsSelected = True
       ImageIndex = 6
       Size.Width = 98.000000000000000000
       Size.Height = 49.000000000000000000
@@ -88,7 +88,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         AlternatingColors = True
         Align = Client
         Size.Width = 394.000000000000000000
-        Size.Height = 321.000000000000000000
+        Size.Height = 402.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         ItemAppearance.ItemHeight = 80
@@ -153,6 +153,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         ItemAppearanceObjects.FooterObjects.Text.PlaceOffset.X = 22.000000000000000000
         CanSwipeDelete = False
         OnItemClick = ListView1ItemClick
+        OnSearchChange = ListView1SearchChange
         SearchVisible = True
       end
       object btQRCode: TButton
@@ -164,7 +165,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 4.000000000000000000
         Position.X = 10.000000000000000000
-        Position.Y = 379.000000000000000000
+        Position.Y = 460.000000000000000000
         Size.Width = 374.000000000000000000
         Size.Height = 55.000000000000000000
         Size.PlatformDefault = False
@@ -218,7 +219,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       object ListBox1: TListBox
         Align = Client
         Size.Width = 394.000000000000000000
-        Size.Height = 390.000000000000000000
+        Size.Height = 471.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         DisableFocusEffect = True
@@ -226,12 +227,12 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         DefaultItemStyles.GroupHeaderStyle = ''
         DefaultItemStyles.GroupFooterStyle = ''
         Viewport.Width = 394.000000000000000000
-        Viewport.Height = 390.000000000000000000
+        Viewport.Height = 471.000000000000000000
         object ListBoxGroupHeader6: TListBoxGroupHeader
           Size.Width = 394.000000000000000000
           Size.Height = 30.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 0
+          TabOrder = 4
           Text = 'Linhas a Imprimir'
         end
         object ListBoxItem1: TListBoxItem
@@ -239,7 +240,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 4
+          TabOrder = 0
           object edtLinha1: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = VertCenter
@@ -265,7 +266,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 3
+          TabOrder = 1
           object edtLinha2: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = VertCenter
@@ -317,7 +318,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           Size.Width = 394.000000000000000000
           Size.Height = 51.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 1
+          TabOrder = 3
           object edtLinha4: TEdit
             Touch.InteractiveGestures = [LongTap, DoubleTap]
             Align = VertCenter
@@ -350,7 +351,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             Size.Width = 394.000000000000000000
             Size.Height = 95.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 39
+            TabOrder = 4
             ColumnCollection = <
               item
                 Value = 38.461538461538460000
@@ -455,36 +456,36 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       object tabsConfig: TTabControl
         Align = Client
         Size.Width = 394.000000000000000000
-        Size.Height = 343.000000000000000000
+        Size.Height = 424.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 49.000000000000000000
-        TabIndex = 1
+        TabIndex = 0
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
           394s
-          294s
+          375s
           394s
-          294s
+          375s
           394s
-          294s)
+          375s)
         object tabEtiqueta: TTabItem
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 131.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
           StyleLookup = ''
           TabOrder = 0
-          Text = 'Etiqueta'
+          Text = 'Diversos'
           ExplicitSize.cx = 146.000000000000000000
           ExplicitSize.cy = 49.000000000000000000
           object lbEtiqueta: TListBox
             Align = Client
             Size.Width = 394.000000000000000000
-            Size.Height = 294.000000000000000000
+            Size.Height = 375.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             ShowScrollBars = False
@@ -493,7 +494,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
             Viewport.Width = 394.000000000000000000
-            Viewport.Height = 294.000000000000000000
+            Viewport.Height = 375.000000000000000000
             object ListBoxGroupHeader5: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -584,13 +585,39 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
                 TabOrder = 1
               end
             end
+            object ListBoxGroupHeader8: TListBoxGroupHeader
+              TextSettings.HorzAlign = Center
+              StyledSettings = [Family, Size, Style, FontColor]
+              Position.Y = 166.000000000000000000
+              Size.Width = 394.000000000000000000
+              Size.Height = 30.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 4
+              Text = 'Scanner'
+            end
+            object ListBoxItem9: TListBoxItem
+              Position.Y = 196.000000000000000000
+              TabOrder = 5
+              object cbLeitorIntegrado: TCheckBox
+                Align = Client
+                IsChecked = True
+                Margins.Left = 8.000000000000000000
+                Margins.Right = 8.000000000000000000
+                Size.Width = 378.000000000000000000
+                Size.Height = 44.000000000000000000
+                Size.PlatformDefault = False
+                TabOrder = 1
+                Text = 'Usar Leitor Integrado'
+                TextSettings.WordWrap = True
+              end
+            end
           end
         end
         object tabConfLista: TTabItem
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 131.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
@@ -602,7 +629,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           object lbConfLista: TListBox
             Align = Client
             Size.Width = 394.000000000000000000
-            Size.Height = 294.000000000000000000
+            Size.Height = 375.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             ShowScrollBars = False
@@ -611,7 +638,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
             Viewport.Width = 394.000000000000000000
-            Viewport.Height = 294.000000000000000000
+            Viewport.Height = 375.000000000000000000
             object ListBoxGroupHeader7: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -744,7 +771,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           object lbConfImpressora: TListBox
             Align = Client
             Size.Width = 394.000000000000000000
-            Size.Height = 294.000000000000000000
+            Size.Height = 375.000000000000000000
             Size.PlatformDefault = False
             TabOrder = 1
             ShowScrollBars = False
@@ -753,7 +780,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             DefaultItemStyles.GroupHeaderStyle = ''
             DefaultItemStyles.GroupFooterStyle = ''
             Viewport.Width = 394.000000000000000000
-            Viewport.Height = 294.000000000000000000
+            Viewport.Height = 375.000000000000000000
             object ListBoxGroupHeader1: TListBoxGroupHeader
               Selectable = False
               TextSettings.HorzAlign = Center
@@ -1160,7 +1187,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       end
       object gplConfBotoes: TGridPanelLayout
         Align = Bottom
-        Position.Y = 391.000000000000000000
+        Position.Y = 472.000000000000000000
         Size.Width = 394.000000000000000000
         Size.Height = 47.000000000000000000
         Size.PlatformDefault = False
@@ -1232,7 +1259,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       CustomIcon = <
         item
         end>
-      IsSelected = True
+      IsSelected = False
       ImageIndex = 3
       Size.Width = 100.000000000000000000
       Size.Height = 49.000000000000000000
@@ -1272,7 +1299,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       end
       object lblScanStatus: TLabel
         Align = Bottom
-        Position.Y = 407.000000000000000000
+        Position.Y = 488.000000000000000000
         Size.Width = 394.000000000000000000
         Size.Height = 31.000000000000000000
         Size.PlatformDefault = False
@@ -1293,7 +1320,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         Margins.Right = 10.000000000000000000
         Margins.Bottom = 5.000000000000000000
         Size.Width = 374.000000000000000000
-        Size.Height = 349.000000000000000000
+        Size.Height = 430.000000000000000000
         Size.PlatformDefault = False
         WrapMode = Center
       end
@@ -37204,6 +37231,13 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     DataSet = FDMemTable1
     ScopeMappings = <>
     Left = 232
+    Top = 8
+  end
+  object tiStart: TTimer
+    Enabled = False
+    Interval = 300
+    OnTimer = tiStartTimer
+    Left = 16
     Top = 8
   end
 end
