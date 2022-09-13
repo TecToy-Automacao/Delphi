@@ -176,13 +176,13 @@ type
     procedure Button2Click(Sender: TObject);
     procedure btLimparListaClick(Sender: TObject);
     procedure tiStartTimer(Sender: TObject);
-    procedure ListView1SearchChange(Sender: TObject);
   private
     FVKService: IFMXVirtualKeyboardService;
     FScanInProgress: Boolean;
     FFrameTake: Integer;
     FScanBitmap: TBitmap;
     FSearchBox: TSearchBox;
+    FSairClick: TDateTime;
     FLinhasNome: Integer;
 
     function CalcularNomeArqINI: String;
@@ -219,6 +219,7 @@ implementation
 
 uses
   System.typinfo, System.IniFiles, System.StrUtils, System.Math,
+  System.DateUtils,
   System.Permissions,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes,
@@ -262,6 +263,7 @@ begin
   FScanBitmap := Nil;
   FFrameTake := 0;
   FLinhasNome:= 0;
+  FSairClick := 0;
 
   tabsPrincipal.TabPosition := TTabPosition.None;
   tabsPrincipal.First;
@@ -367,6 +369,9 @@ procedure TEtiquetaEventosForm.VoltarParaLista;
 begin
   PararCamera;
   FLinhasNome := 0;
+  if Assigned(FSearchBox) then
+    FSearchBox.Text := '';
+
   ACBrPosPrinter1.Desativar;
   tabsPrincipal.SetActiveTabWithTransition(tabLista, TTabTransition.Slide);
   FSearchBox.SetFocus;
@@ -580,6 +585,8 @@ begin
 end;
 
 procedure TEtiquetaEventosForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+var
+  t: Int64;
 begin
   if Key = vkHardwareBack then
   begin
@@ -598,6 +605,7 @@ begin
       GravarConfiguracao;
       tabsPrincipal.First;
       Key := 0;
+      Exit;
     end;
 
     if (tabsPrincipal.ActiveTab = tabCamera) then
@@ -605,12 +613,30 @@ begin
       PararCamera;
       VoltarParaLista;
       Key := 0;
+      Exit;
     end;
 
     if (tabsPrincipal.ActiveTab = tabImpressao) then
     begin
       VoltarParaLista;
       Key := 0;
+      Exit;
+    end;
+
+    if Assigned(FSearchBox) and (not FSearchBox.Text.IsEmpty) then
+    begin
+      VoltarParaLista;
+      Key := 0;
+      Exit;
+    end;
+
+    t := MilliSecondsBetween(FSairClick, now);
+    if (t > 2000) then
+    begin
+      FSairClick := Now;
+      Toast('Clicar novamente para Sair');
+      Key := 0;
+      Exit;
     end;
   end;
 end;
@@ -979,15 +1005,6 @@ begin
   end;
 
   IrParaImpressao;
-end;
-
-procedure TEtiquetaEventosForm.ListView1SearchChange(Sender: TObject);
-var
-  s: string;
-begin
-  s := FSearchBox.Text;
-  if StrIsNumber(s) then
-    FSearchBox.Text := IntToStr(StrToInt64(s));
 end;
 
 end.

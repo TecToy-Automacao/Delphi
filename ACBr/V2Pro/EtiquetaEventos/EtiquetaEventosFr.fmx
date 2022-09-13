@@ -153,7 +153,6 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         ItemAppearanceObjects.FooterObjects.Text.PlaceOffset.X = 22.000000000000000000
         CanSwipeDelete = False
         OnItemClick = ListView1ItemClick
-        OnSearchChange = ListView1SearchChange
         SearchVisible = True
       end
       object btQRCode: TButton
@@ -36244,6 +36243,13 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     Left = 312
     Top = 8
   end
+  object tiStart: TTimer
+    Enabled = False
+    Interval = 300
+    OnTimer = tiStartTimer
+    Left = 16
+    Top = 8
+  end
   object GestureManager1: TGestureManager
     Sensitivity = 80.000000000000000000
     Left = 192
@@ -37231,13 +37237,6 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     DataSet = FDMemTable1
     ScopeMappings = <>
     Left = 232
-    Top = 8
-  end
-  object tiStart: TTimer
-    Enabled = False
-    Interval = 300
-    OnTimer = tiStartTimer
-    Left = 16
     Top = 8
   end
 end
