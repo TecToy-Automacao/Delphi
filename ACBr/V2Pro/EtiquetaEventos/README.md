@@ -72,6 +72,15 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 	- Espaços
 - Clique em "Salvar" e retorne a tela principal
 	
+## Usando o Scanner do V2Pro
+O V2Pro tem um poderoso Scanner, que lê muito rapidamente códigos de Barras 1D e 2D.. As imagens abaixo, mostram como você pode configurar o seu V2Pro, para fazer uso desse Scanner, em qualquer aplicação
+
+![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings1.png)
+![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings2.png)
+![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings3.png)
+![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings4.png)
+![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings5.png)
+
 ## Como abrir o Projeto no Delphi
 - **Importante**, esse projeto depende dos componentes do **[Projeto ACBr](https://projetoacbr.com.br/)**
 - Se você precisa de mais informações de como baixar e instalar os componentes do ACBr em sua IDE, por favor leia com atenção as intruções dessa página:  
