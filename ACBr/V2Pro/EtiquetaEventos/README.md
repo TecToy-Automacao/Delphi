@@ -1,7 +1,7 @@
 # Etiquetas Eventos V2Pro
 
 ## Sobre o V2Pro
-Trata-se de um SmartPOS, com Impressora, que suporta Bobinas com Etiquetas térmicas
+Trata-se de um SmartPOS, com Impressora, que suporta Bobinas com Etiquetas térmicas  
 Saiba mais em: https://tectoyautomacao.com.br/produtos/terminais-moveis/pdv-portatil-v2-pro
 
 ## Descrição do Projeto
