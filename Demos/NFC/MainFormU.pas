@@ -360,6 +360,7 @@ procedure TMainForm.OnNewNfcIntent(Intent: JIntent);
 var
   TagParcel: JParcelable;
   Tag: JTag;
+  s: string;
 begin
   Log.d('TMainForm.OnNewIntent');
   TAndroidHelper.Activity.setIntent(Intent);
@@ -378,10 +379,19 @@ begin
     procedure(const Msg: string)
     begin
       Memo1.Lines.Text := Msg;
-      Memo1.Lines.Add('');
-      Memo1.Lines.Add('Lido em: '+FormatDateTime('dd/mm - hh:nn:ss.zzz', Now));
-
+      Memo1.Lines.Insert(0, '');
+      Memo1.Lines.Insert(0, 'Lido em: '+FormatDateTime('dd/mm - hh:nn:ss.zzz', Now));
     end);
+
+  if (Tag <> nil) then
+  begin
+    s := GetTagRTD_TEXT(Tag);
+    if (not s.IsEmpty) then
+      Memo1.Lines.Add('RTD_TEXT: '+s);
+    s := GetTagRTD_URI(Tag);
+    if (not s.IsEmpty) then
+      Memo1.Lines.Add('RTD_URI: '+s);
+  end;
 end;
 
 end.

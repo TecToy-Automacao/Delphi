@@ -6,10 +6,37 @@ uses
   Androidapi.JNIBridge,
   Androidapi.JNI.Nfc;
 
+const
+  NFCA_Type = 'android.nfc.tech.NfcA';
+  NFCB_Type = 'android.nfc.tech.NfcB';
+  NFCF_Type = 'android.nfc.tech.NfcF';
+  NFCV_Type = 'android.nfc.tech.NfcV';
+  NFCNDef_Type = 'android.nfc.tech.Ndef';
+  NFCIsoDep_Type = 'android.nfc.tech.IsoDep';
+  MandatoryAndroidTechs: array[0..5] of string = (
+    NFCA_Type,
+    NFCB_Type,
+    NFCF_Type,
+    NFCV_Type,
+    NFCNDef_Type,
+    NFCIsoDep_Type);
+
 type
   TTextLogger = reference to procedure(const Msg: string);
 
+function DecodeText_RTD(RecordBytes: TJavaArray<Byte>): string;
+function DecodeURI_RTD(RecordBytes: TJavaArray<Byte>): string;
+function EncodeText_RTD(const Msg: string): JNdefRecord;
+function RTDPayloadToString(JRecordType: TJavaArray<Byte>; Payload : TJavaArray<Byte>): String;
+
 function HandleNfcTag(Tag: JTag; AddMsg: TTextLogger): string;
+
+function TagHastTechType(Tag: JTag; const ATechType: String): Boolean;
+
+function GetTagRTD(Tag: JTag; RTD: TJavaArray<Byte>): string;
+function GetTagRTD_TEXT(Tag: JTag): string;
+function GetTagRTD_URI(Tag: JTag): string;
+function GetTagRTD_SMART_POSTER(Tag: JTag): string;
 
 function DumpNFC_A(Tag: JTag): string;
 function DumpNFC_B(Tag: JTag): string;
@@ -18,7 +45,7 @@ function DumpNFC_V(Tag: JTag): string;
 function DumpNDef(Tag: JTag): string;
 function DumpIsoDep(Tag: JTag): string;
 
-function WriteTagText(const Msg: string; Tag: JTag): Boolean;
+function WriteTagText(const Msg: string; Tag: JTag; const URI: string): Boolean;
 
 //Make a string by concatenating together all hex values of each byte
 function JavaBytesToString(Bytes: TJavaArray<Byte>; Separator: string = '-'): string;
@@ -40,6 +67,127 @@ uses
   Androidapi.JNI.JavaTypes,
   Androidapi.JNI.Nfc.Tech;
 
+function MatchingRecordType(A, B: TJavaArray<Byte>): Boolean;
+var
+  I: Integer;
+begin
+  Result := A.Length = B.Length;
+  if Result then
+    for I := 0 to Pred(A.Length) do
+    begin
+      Result := A.Items[I] = B.Items[I];
+      if not Result then
+        Break;
+    end;
+end;
+
+function DecodeText_RTD(RecordBytes: TJavaArray<Byte>): string;
+var
+  Status: Byte;
+  I: Integer;
+  IANA_Len: Byte;
+  IANA: string; //ISO/IANA language code
+  UTF16: Boolean; //if False the string is in UTF8
+  Bytes: TBytes;
+begin
+  if RecordBytes.Length < 2 then
+    Exit;
+  Status := RecordBytes.Items[0];
+  IANA_Len := Status and $3F;
+  UTF16 := (Status and $80) > 0;
+  for I := 1 to IANA_Len do
+    IANA := IANA + Char(RecordBytes.Items[I]);
+  SetLength(Bytes, RecordBytes.Length - IANA_Len - 1);
+  for I := Succ(IANA_Len) to Pred(RecordBytes.Length) do
+    Bytes[I - Succ(IANA_Len)] := RecordBytes.Items[I];
+  if UTF16 then
+    Result := TEncoding.Unicode.GetString(Bytes)
+  else
+    Result := TEncoding.UTF8.GetString(Bytes);
+end;
+
+//NDEF specifications can be found and downloaded from here: http://members.nfc-forum.org/specs/spec_list
+
+function DecodeURI_RTD(RecordBytes: TJavaArray<Byte>): string;
+var
+  ID: Byte;
+  I: Integer;
+begin
+  if RecordBytes.Length < 2 then
+    Exit;
+  ID := RecordBytes.Items[0];
+  for I := 1 to Pred(RecordBytes.Length) do
+  begin
+    Result := Result + Char(RecordBytes.Items[I]);
+  end;
+  case ID of
+    1: Result := 'http://www.' + Result;
+    2: Result := 'https://www.' + Result;
+    3: Result := 'http://' + Result;
+    4: Result := 'https://' + Result;
+    5: Result := 'tel:' + Result;
+    6: Result := 'mailto:' + Result;
+    7: Result := 'ftp://anonymous:anonymous@' + Result;
+    8: Result := 'ftp://ftp.' + Result;
+    9: Result := 'ftps://' + Result;
+    10: Result := 'sftp://' + Result;
+    11: Result := 'smb://' + Result;
+    12: Result := 'nfs://' + Result;
+    13: Result := 'ftp://' + Result;
+    14: Result := 'dav://' + Result;
+    15: Result := 'news:' + Result;
+    16: Result := 'telnet://' + Result;
+    17: Result := 'imap:' + Result;
+    18: Result := 'rtsp://' + Result;
+    19: Result := 'urn:' + Result;
+    20: Result := 'pop:' + Result;
+    21: Result := 'sip:' + Result;
+    22: Result := 'sips:' + Result;
+    23: Result := 'tftp:' + Result;
+    24: Result := 'btspp://' + Result;
+    25: Result := 'btl2cap://' + Result;
+    26: Result := 'btgoep://' + Result;
+    27: Result := 'tcpobex://' + Result;
+    28: Result := 'irdaobex://' + Result;
+    29: Result := 'file://' + Result;
+    30: Result := 'urn:epc:id:' + Result;
+    31: Result := 'urn:epc:tag:' + Result;
+    32: Result := 'urn:epc:pat:' + Result;
+    33: Result := 'urn:epc:raw:' + Result;
+    34: Result := 'urn:epc:' + Result;
+    35: Result := 'urn:nfc:' + Result;
+  end;
+end;
+
+function EncodeText_RTD(const Msg: string): JNdefRecord;
+var
+  JMsg: JString;
+  JMsgBytes: TJavaArray<Byte>;
+  JMsgLen: Integer;
+  JLang: JString;
+  JLangBytes: TJavaArray<Byte>;
+  JLangLen: Byte;
+  JPayload: TJavaArray<Byte>;
+  I: Integer;
+begin
+  JMsg := StringToJString(Msg);
+  JMsgBytes := JMsg.getBytes;
+  JMsgLen := JMsgBytes.Length;
+  JLang := StringToJString('en');
+  JLangBytes := JLang.getBytes(StringToJString('US-ASCII'));
+  JLangLen := JLangBytes.Length;
+  JPayload := TJavaArray<Byte>.Create(1 + JMsgLen + JLangLen);
+  // Set status byte (see NDEF spec for actual bits)
+  JPayload.Items[0] := JLangLen;
+  // Copy lang bytes and msg bytes into payload
+  for I := 0 to Pred(JLangLen) do
+    JPayload.Items[I + 1] := JLangBytes.Items[I];
+  for I := 0 to Pred(JMsgLen) do
+    JPayload.Items[I + 1 + JLangLen] := JMsgBytes.Items[I];
+  Result := TJNdefRecord.JavaClass.init(TJNdefRecordTNF_WELL_KNOWN, TJNdefRecord.JavaClass.RTD_TEXT,
+    TJavaArray<Byte>.Create(0), JPayload);
+end;
+
 function HandleNfcTag(Tag: JTag; AddMsg: TTextLogger): string;
 var
   I: Integer;
@@ -48,20 +196,6 @@ var
   JTechType: JString;
   TechType: String;
   TagTechList: TStrings;
-const
-  NFCA_Type = 'android.nfc.tech.NfcA';
-  NFCB_Type = 'android.nfc.tech.NfcB';
-  NFCF_Type = 'android.nfc.tech.NfcF';
-  NFCV_Type = 'android.nfc.tech.NfcV';
-  NFCNDef_Type = 'android.nfc.tech.Ndef';
-  NFCIsoDep_Type = 'android.nfc.tech.IsoDep';
-  MandatoryAndroidTechs: array[0..5] of string = (
-    NFCA_Type,
-    NFCB_Type,
-    NFCF_Type,
-    NFCV_Type,
-    NFCNDef_Type,
-    NFCIsoDep_Type);
 begin
   if Tag <> nil then
   begin
@@ -107,6 +241,115 @@ begin
       TagTechList.Free;
     end;
   end;
+end;
+
+function RTDPayloadToString(JRecordType: TJavaArray<Byte>; Payload : TJavaArray<Byte>): String;
+begin
+  if MatchingRecordType(JRecordType, TJNdefRecord.JavaClass.RTD_TEXT) then
+    Result := DecodeText_RTD(Payload)
+  else
+  if MatchingRecordType(JRecordType, TJNdefRecord.JavaClass.RTD_URI) then
+    Result := DecodeURI_RTD(Payload)
+  else
+  if MatchingRecordType(JRecordType, TJNdefRecord.JavaClass.RTD_SMART_POSTER) then
+    // TODO: Haven't pulled out the smart poster URI yet
+    Result := JavaBytesToText(Payload);
+end;
+
+function TagHastTechType(Tag: JTag; const ATechType: String): Boolean;
+var
+  JTagTechList: TJavaObjectArray<JString>;
+  JTechType: JString;
+  TechType: String;
+  TagTechList: TStringList;
+  I: Integer;
+begin
+  Result := False;
+  if (Tag = nil) then
+    Exit;
+
+  // Examine the tag
+  JTagTechList := Tag.getTechList;
+  if (JTagTechList <> nil) then
+  begin
+    TagTechList := TStringList.Create;
+    try
+      begin
+        for I := 0 to Pred(JTagTechList.Length) do
+        begin
+          JTechType := JTagTechList.Items[I];
+          if (JTechType <> nil) then
+          begin
+            TechType := JStringToString(JTechType);
+            TagTechList.Add(TechType);
+          end;
+        end;
+      end;
+
+      Result := (TagTechList.IndexOf(ATechType) >= 0);
+    finally
+      TagTechList.Free;
+    end;
+  end;
+end;
+
+function GetTagRTD(Tag: JTag; RTD: TJavaArray<Byte>): string;
+var
+  JNDefTag: JNdef;
+  JNDefMsg: JNdefMessage;
+  JNDefMsgRecords: TJavaObjectArray<JNdefRecord>;
+  JNDefMsgRecord: JNdefRecord;
+  JRecordType: TJavaArray<Byte>;
+  I: Integer;
+begin
+  Result := '';
+  if (Tag = nil) then
+    Exit;
+
+  if not TagHastTechType(Tag, NFCNDef_Type) then
+    Exit;
+
+  JNDefTag := TJNdef.JavaClass.get(Tag);
+  JNDefMsg := JNDefTag.getCachedNdefMessage;
+  if (JNDefMsg <> nil) then
+  begin
+    JNDefMsgRecords := JNDefMsg.getRecords;
+    if (JNDefMsgRecords <> nil) then
+    begin
+      for I := 0 to Pred(JNDefMsgRecords.Length) do
+      begin
+        // This does not work as expected - presumably a bug
+        //JNDefMsgRecord := JNDefMsgRecords.Items[I];
+        // So instead we wrap up the raw object ID manually
+        JNDefMsgRecord := TJNdefRecord.Wrap(JNDefMsgRecords.GetRawItem(I));
+        case JNDefMsgRecord.getTnf of
+          TJNdefRecordTNF_WELL_KNOWN:
+          begin
+            // NFC Record Type Definition technical spec.s are at http://members.nfc-forum.org/specs/spec_list
+            JRecordType := JNDefMsgRecord.getType;
+
+            if MatchingRecordType(JRecordType, RTD) then
+              Result := RTDPayloadToString(JRecordType, JNDefMsgRecord.getPayload);
+          end;
+        end;
+      end;
+    end;
+  end;
+end;
+
+function GetTagRTD_TEXT(Tag: JTag): string;
+begin
+  Result := GetTagRTD(Tag, TJNdefRecord.JavaClass.RTD_TEXT);
+end;
+
+function GetTagRTD_URI(Tag: JTag): string;
+begin
+  Result := GetTagRTD(Tag, TJNdefRecord.JavaClass.RTD_URI);
+end;
+
+function GetTagRTD_SMART_POSTER(Tag: JTag): string;
+begin
+  Result  := GetTagRTD(Tag, TJNdefRecord.JavaClass.RTD_SMART_POSTER);
 end;
 
 function DumpNFC_A(Tag: JTag): string;
@@ -162,127 +405,6 @@ begin
   // Data Storage Format ID
   Result := Result + Format('DSF ID: %x%s', [JVTag.getDsfId, LineFeed]);
   Result := Result + Format('Response flags: %x%s', [JVTag.getResponseFlags, LineFeed]);
-end;
-
-function MatchingRecordType(A, B: TJavaArray<Byte>): Boolean;
-var
-  I: Integer;
-begin
-  Result := A.Length = B.Length;
-  if Result then
-    for I := 0 to Pred(A.Length) do
-    begin
-      Result := A.Items[I] = B.Items[I];
-      if not Result then
-        Break;
-    end;
-end;
-
-//NDEF specifications can be found and downloaded from here: http://members.nfc-forum.org/specs/spec_list
-
-function DecodeURI(RecordBytes: TJavaArray<Byte>): string;
-var
-  ID: Byte;
-  I: Integer;
-begin
-  if RecordBytes.Length < 2 then
-    Exit;
-  ID := RecordBytes.Items[0];
-  for I := 1 to Pred(RecordBytes.Length) do
-  begin
-    Result := Result + Char(RecordBytes.Items[I]);
-  end;
-  case ID of
-    1: Result := 'http://www.' + Result;
-    2: Result := 'https://www.' + Result;
-    3: Result := 'http://' + Result;
-    4: Result := 'https://' + Result;
-    5: Result := 'tel:' + Result;
-    6: Result := 'mailto:' + Result;
-    7: Result := 'ftp://anonymous:anonymous@' + Result;
-    8: Result := 'ftp://ftp.' + Result;
-    9: Result := 'ftps://' + Result;
-    10: Result := 'sftp://' + Result;
-    11: Result := 'smb://' + Result;
-    12: Result := 'nfs://' + Result;
-    13: Result := 'ftp://' + Result;
-    14: Result := 'dav://' + Result;
-    15: Result := 'news:' + Result;
-    16: Result := 'telnet://' + Result;
-    17: Result := 'imap:' + Result;
-    18: Result := 'rtsp://' + Result;
-    19: Result := 'urn:' + Result;
-    20: Result := 'pop:' + Result;
-    21: Result := 'sip:' + Result;
-    22: Result := 'sips:' + Result;
-    23: Result := 'tftp:' + Result;
-    24: Result := 'btspp://' + Result;
-    25: Result := 'btl2cap://' + Result;
-    26: Result := 'btgoep://' + Result;
-    27: Result := 'tcpobex://' + Result;
-    28: Result := 'irdaobex://' + Result;
-    29: Result := 'file://' + Result;
-    30: Result := 'urn:epc:id:' + Result;
-    31: Result := 'urn:epc:tag:' + Result;
-    32: Result := 'urn:epc:pat:' + Result;
-    33: Result := 'urn:epc:raw:' + Result;
-    34: Result := 'urn:epc:' + Result;
-    35: Result := 'urn:nfc:' + Result;
-  end;
-end;
-
-function DecodeText(RecordBytes: TJavaArray<Byte>): string;
-var
-  Status: Byte;
-  I: Integer;
-  IANA_Len: Byte;
-  IANA: string; //ISO/IANA language code
-  UTF16: Boolean; //if False the string is in UTF8
-  Bytes: TBytes;
-begin
-  if RecordBytes.Length < 2 then
-    Exit;
-  Status := RecordBytes.Items[0];
-  IANA_Len := Status and $3F;
-  UTF16 := (Status and $80) > 0;
-  for I := 1 to IANA_Len do
-    IANA := IANA + Char(RecordBytes.Items[I]);
-  SetLength(Bytes, RecordBytes.Length - IANA_Len - 1);
-  for I := Succ(IANA_Len) to Pred(RecordBytes.Length) do
-    Bytes[I - Succ(IANA_Len)] := RecordBytes.Items[I];
-  if UTF16 then
-    Result := TEncoding.Unicode.GetString(Bytes)
-  else
-    Result := TEncoding.UTF8.GetString(Bytes);
-end;
-
-function EncodeText(const Msg: string): JNdefRecord;
-var
-  JMsg: JString;
-  JMsgBytes: TJavaArray<Byte>;
-  JMsgLen: Integer;
-  JLang: JString;
-  JLangBytes: TJavaArray<Byte>;
-  JLangLen: Byte;
-  JPayload: TJavaArray<Byte>;
-  I: Integer;
-begin
-  JMsg := StringToJString(Msg);
-  JMsgBytes := JMsg.getBytes;
-  JMsgLen := JMsgBytes.Length;
-  JLang := StringToJString('en');
-  JLangBytes := JLang.getBytes(StringToJString('US-ASCII'));
-  JLangLen := JLangBytes.Length;
-  JPayload := TJavaArray<Byte>.Create(1 + JMsgLen + JLangLen);
-  // Set status byte (see NDEF spec for actual bits)
-  JPayload.Items[0] := JLangLen;
-  // Copy lang bytes and msg bytes into payload
-  for I := 0 to Pred(JLangLen) do
-    JPayload.Items[I + 1] := JLangBytes.Items[I];
-  for I := 0 to Pred(JMsgLen) do
-    JPayload.Items[I + 1 + JLangLen] := JMsgBytes.Items[I];
-  Result := TJNdefRecord.JavaClass.init(TJNdefRecordTNF_WELL_KNOWN, TJNdefRecord.JavaClass.RTD_TEXT,
-    TJavaArray<Byte>.Create(0), JPayload);
 end;
 
 function DumpNDef(Tag: JTag): string;
@@ -344,10 +466,10 @@ begin
             // NFC Record Type Definition technical spec.s are at http://members.nfc-forum.org/specs/spec_list
             JRecordType := JNDefMsgRecord.getType;
             if MatchingRecordType(JRecordType, TJNdefRecord.JavaClass.RTD_TEXT) then
-              Result := Result + Format('  RTD_TEXT: %s%s', [DecodeText(JNDefMsgRecord.getPayload), LineFeed])
+              Result := Result + Format('  RTD_TEXT: %s%s', [DecodeText_RTD(JNDefMsgRecord.getPayload), LineFeed])
             else
             if MatchingRecordType(JRecordType, TJNdefRecord.JavaClass.RTD_URI) then
-              Result := Result + Format('  RTD_URI: %s%s', [DecodeURI(JNDefMsgRecord.getPayload), LineFeed])
+              Result := Result + Format('  RTD_URI: %s%s', [DecodeURI_RTD(JNDefMsgRecord.getPayload), LineFeed])
             else
             if MatchingRecordType(JRecordType, TJNdefRecord.JavaClass.RTD_SMART_POSTER) then
               // TODO: Haven't pulled out the smart poster URI yet
@@ -420,7 +542,7 @@ begin
   end;
 end;
 
-function WriteTagText(const Msg: string; Tag: JTag): Boolean;
+function WriteTagText(const Msg: string; Tag: JTag; const URI: string): Boolean;
 var
   NDef: JNdef;
   NDefMsg: JNdefMessage;
@@ -436,8 +558,8 @@ begin
       begin
         // Make a list of 2 NDEF records, one with some text and one with a URL
         NDefRecords := TJavaObjectArray<JNdefRecord>.Create(2);
-        NDefRecords.Items[0] := EncodeText(Msg);
-        NDefRecords.Items[1] := TJNdefRecord.JavaClass.createUri(StringToJString('http://blong.com'));
+        NDefRecords.Items[0] := EncodeText_RTD(Msg);
+        NDefRecords.Items[1] := TJNdefRecord.JavaClass.createUri(StringToJString(URI));
         NDefMsg := TJNdefMessage.JavaClass.init(NDefRecords);
         NDef.writeNdefMessage(NDefMsg);
         NDef.close;
