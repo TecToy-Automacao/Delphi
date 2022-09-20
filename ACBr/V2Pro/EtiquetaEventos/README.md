@@ -75,11 +75,11 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 ## Usando o Scanner do V2Pro
 O V2Pro tem um poderoso Scanner, que lê muito rapidamente códigos de Barras 1D e 2D.. As imagens abaixo, mostram como você pode configurar o seu V2Pro, para fazer uso desse Scanner, em qualquer aplicação
 
-![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings1.png)
-![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings2.png)
-![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings3.png)
-![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings4.png)
-![DelphiAndroid_RevertSystemFilesToDefault](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings5.png)
+![Tela_V2Pro_ScannerSettings1](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings1.png)
+![Tela_V2Pro_ScannerSettings2](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings2.png)
+![Tela_V2Pro_ScannerSettings3](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings3.png)
+![Tela_V2Pro_ScannerSettings4](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings4.png)
+![Tela_V2Pro_ScannerSettings5](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings5.png)
 
 ## Como abrir o Projeto no Delphi
 - **Importante**, esse projeto depende dos componentes do **[Projeto ACBr](https://projetoacbr.com.br/)**
