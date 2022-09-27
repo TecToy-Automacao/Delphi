@@ -4,6 +4,15 @@
 Esse projeto demonstra como vencer todas as etapas do Desafio do Hackthon que foi apresentado no **Dia do ACBr 2022**
 ![ScreenShot](https://github.com/Projeto-ACBr-Oficial/ACBrLab/blob/main/Pascal/Hackthon/img/ScreenShot_Hackthon1.png)
 
+## Você aprende nesse Demo
+Estudando os fontes desse projeto você terá exemplo de como efetuar as seguintes tarefas:
+- Ler uma Tag NFC, sob demanda
+- Consumir uma API Rest
+- Decodificar uma String de Base64
+- Descompactar uma String em Zip (ZipFile, PKZip)
+- Imprimir usando Bluetooh
+- Imprimir um QRCode usando Esc\Pos
+
 
 ## Project Deployment
 Observe que adicionamos as bibliotecas do `OpenSSL`, no Deploy do Projeto
