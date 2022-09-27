@@ -13,7 +13,7 @@ Estudando os fontes desse projeto você terá exemplo de como efetuar as seguint
 - Imprimir um QRCode usando Esc\Pos
 
 ## Screenshot
-![ScreenShot](https://github.com/Projeto-ACBr-Oficial/ACBrLab/blob/main/Pascal/Hackthon/img/ScreenShot_Hackthon1.png)
+![ScreenShot](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/Hackthon_DiaDoACBr_2022/img/ScreenShot_Hackthon1.png)
 
 ## Project Deployment
 Observe que adicionamos as bibliotecas do `OpenSSL`, no Deploy do Projeto
@@ -57,7 +57,7 @@ Após converter de Base64 para binário, o conteúdo do Stream será um dado com
 ## 3 – Descompactando
 Para saber o que deve ser feito com esse Stream, os times devem prestar atenção no cabeçalho do Stream, que dá a compreender que trata-se de um conteúdo Zipado.
 Exemplo:  
-![DicaConteudoZip](https://github.com/Projeto-ACBr-Oficial/ACBrLab/blob/main/Pascal/Hackthon/img/DicaConteudoZip.png)
+![DicaConteudoZip](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/Hackthon_DiaDoACBr_2022/img/DicaConteudoZip.png)
 
 A aplicação deverá usar o Stream obtido por HTTP, no passo 2, decodificar de Base64, e descompactar o mesmo, para obter a String legível com instruções para o próximo passo.  
 Exemplo de Conteúdo final:
