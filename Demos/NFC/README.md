@@ -11,3 +11,6 @@ http://blong.com/Articles/Delphi10NFC/NFC.htm
 ## Testes
 Utilizamos um V2Pro da TecToy, para nossos testes
 https://tectoyautomacao.com.br/produtos/terminais-moveis/pdv-portatil-v2-pro
+
+## Screenshot
+![ScreenShot](https://github.com/TecToy-Automacao/Delphi/blob/main/Demos/NFC/img/ScreenShot1.png)
