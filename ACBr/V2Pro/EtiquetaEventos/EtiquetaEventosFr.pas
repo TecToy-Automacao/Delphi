@@ -807,6 +807,13 @@ begin
   SL := TStringList.Create;
   try
     SL.LoadFromFile(NomeArq);
+
+    if (SL.Count < 1) then
+    begin
+      Toast('Erro ao ler arquivo (arquivo vazio)');
+      Exit;
+    end;
+
     for i := 0 to SL.Count-1 do
     begin
       Lin := SL[i];
@@ -847,7 +854,13 @@ begin
     SL.Free;
     BindSourceDB1.DataSource.Enabled := True;
   end;
-  
+
+  if (FDMemTable1.RecordCount < 1) then
+  begin
+    Toast('Erro ao ler arquivo (nenhum registro válido)');
+    Exit;
+  end;
+
   Toast(IntToStr(FDMemTable1.RecordCount)+' registros incluidos');
   if (Erros > 0) then
     Toast(IntToStr(erros)+' erros encontrados');
