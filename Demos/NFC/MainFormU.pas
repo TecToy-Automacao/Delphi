@@ -10,6 +10,9 @@
   </intent-filter>
 
   Saiba mais em: http://blong.com/Articles/Delphi10NFC/NFC.htm#ACTION_NDEF_DISCOVERED
+
+  Ao mudar a versão do Delphi, sempre reverta as Libraries do Android para Default, Assim como o Deployment.
+
 }
 
 unit MainFormU;
@@ -17,9 +20,11 @@ unit MainFormU;
 interface
 
 uses
+  {$If Defined(Android)}
   Androidapi.JNI.Nfc,
   Androidapi.JNI.GraphicsContentViewText,
   Androidapi.JNI.App,
+  {$ENDIF}
   System.Messaging,
   System.SysUtils, System.Types, System.UITypes, System.Classes,
   System.Variants,
@@ -27,7 +32,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Layouts, FMX.ListBox, NFCHelper,
   FMX.Edit, FMX.Controls.Presentation, FMX.ScrollBox, FMX.Memo,
-  System.ImageList, FMX.ImgList;
+  System.ImageList, FMX.ImgList, FMX.Memo.Types;
 
 ResourceString
   CERROR_NO_NFC_ADAPTER = 'Nenhum Adaptador NFC encontrado';
@@ -52,9 +57,11 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
+    {$If Defined(Android)}
     FNfcAdapter: JNfcAdapter;
     FNFCSettingsChecked: Boolean;
     FPendingIntent: JPendingIntent;
+    {$ENDIF}
 
     FAppEvents: IFMXApplicationEventService;
 
@@ -62,8 +69,7 @@ type
     procedure EnableForegroundDispatch;
     procedure DisableForegroundDispatch;
 
-    function ApplicationEventHandler(AAppEvent: TApplicationEvent;
-      AContext: TObject): Boolean;
+    function ApplicationEventHandler(AAppEvent: TApplicationEvent; AContext: TObject): Boolean;
 
     function AskPermissions: Boolean;
     function IsNFCEnabledByUser: Boolean;
@@ -81,15 +87,17 @@ implementation
 {$R *.fmx}
 
 uses
-  System.TypInfo,
-  System.Permissions,
+  {$If Defined(Android)}
   FMX.Platform.Android,
   Androidapi.Helpers,
   Androidapi.JNIBridge,
   Androidapi.JNI,
   Androidapi.JNI.JavaTypes,
   Androidapi.JNI.Os,
-  Androidapi.JNI.Widget;
+  Androidapi.JNI.Widget,
+  {$EndIf}
+  System.TypInfo,
+  System.Permissions;
 
 { TMainForm }
 
@@ -97,9 +105,7 @@ procedure Toast(const AMsg: string; ShortDuration: Boolean = True);
 var
   ToastLength: Integer;
 begin
-{$IFNDEF ANDROID}
-  TDialogServiceAsync.ShowMessage(AMsg);
-{$ELSE}
+{$If Defined(Android)}
   if ShortDuration then
     ToastLength := TJToast.JavaClass.LENGTH_SHORT
   else
@@ -108,6 +114,8 @@ begin
   TJToast.JavaClass.makeText(SharedActivityContext, StrToJCharSequence(AMsg),
     ToastLength).show;
   Application.ProcessMessages;
+{$ELSE}
+  TDialogServiceAsync.ShowMessage(AMsg);
 {$ENDIF}
 end;
 
@@ -129,6 +137,7 @@ begin
     FAppEvents.SetApplicationEventHandler(ApplicationEventHandler);
   end;
 
+  {$If Defined(Android)}
   // Subscribe to the FMX message that is sent when onNewIntent is called
   // with an intent containing any of these 3 intent actions.
   // Support for this was added in Delphi 10 Seattle.
@@ -148,13 +157,17 @@ begin
   ClassIntent := TJIntent.JavaClass.init(TAndroidHelper.Context, TAndroidHelper.Activity.getClass);
   ClassIntent.addFlags(TJIntent.JavaClass.FLAG_ACTIVITY_SINGLE_TOP);
   FPendingIntent := TJPendingIntent.JavaClass.getActivity(TAndroidHelper.Context, 0, ClassIntent, 0);
+  {$EndIf}
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
+{$If Defined(Android)}
 var
   Intent: JIntent;
+{$EndIf}
 begin
   Log.d('OnActivate');
+  {$If Defined(Android)}
   Intent := TAndroidHelper.Activity.getIntent;
 
   // Verificando se a aplicação foi Ativada, por Intent relacionado ao NFC
@@ -164,6 +177,7 @@ begin
     // Chama o Evento que cuida da leitura da Tag de NFC do Intent
     OnNewNfcIntent(Intent);
   end;
+{$EndIf}
 end;
 
 function TMainForm.AskPermissions: Boolean;
@@ -171,9 +185,9 @@ Var
   Ok: Boolean;
 begin
   Ok := True;
-  {$IfDef ANDROID}
+  {$If Defined(Android)}
   PermissionsService.RequestPermissions( [JStringToString(TJManifest_permission.JavaClass.NFC)],
-      {$IfDef DELPHI28_UP}
+      {$If CompilerVersion >= 35}       // 35 = Delphi 11 Alexandria - https://delphidabbler.com/notes/version-numbers
       procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
       {$Else}
       procedure(const APermissions: TArray<string>; const AGrantResults: TArray<TPermissionStatus>)
@@ -192,8 +206,7 @@ begin
               Break;
             end;
         end;
-      end );
-
+      end);
   if not OK then
     Toast('Erro ao obter permissões para NFC');
   {$EndIf}
@@ -243,17 +256,22 @@ end;
 
 procedure TMainForm.DisableForegroundDispatch;
 begin
+  {$If Defined(Android)}
   if (FNfcAdapter <> Nil) then
     FNfcAdapter.disableForegroundDispatch(TAndroidHelper.Activity)
+  {$EndIf}
 end;
 
 procedure TMainForm.EnableForegroundDispatch;
+{$If Defined(Android)}
 var
   PEnv: PJniEnv;
   AdapterClass: JNIClass;
   NfcAdapterObject, PendingIntentObject: JNIObject;
   MethodID: JNIMethodID;
+{$EndIf}
 begin
+  {$If Defined(Android)}
   if (FNfcAdapter = Nil) then
     Exit;
 
@@ -277,6 +295,7 @@ begin
   // Finally call the target Java method
   PEnv^.CallVoidMethodA(PEnv, NfcAdapterObject, MethodID,
     PJNIValue(ArgsToJNIValues([JavaContext, PendingIntentObject, nil, nil])));
+  {$EndIf}
 end;
 
 function TMainForm.ApplicationEventHandler(AAppEvent: TApplicationEvent;
@@ -293,6 +312,7 @@ begin
       end;
     TApplicationEvent.BecameActive:
       begin
+        {$If Defined(Android)}
         if (FNfcAdapter <> nil) then
         begin
           if not FNfcAdapter.isEnabled then
@@ -314,7 +334,8 @@ begin
             if IsNFCEnabledByUser then
               EnableForegroundDispatch;
           end;
-        end
+        end;
+        {$EndIf}
       end;
 
     TApplicationEvent.WillBecomeInactive:
@@ -333,9 +354,12 @@ begin
 end;
 
 procedure TMainForm.HandleIntentMessage(const Sender: TObject; const M: TMessage);
+{$If Defined(Android)}
 var
   Intent: JIntent;
+{$EndIf}
 begin
+  {$If Defined(Android)}
   if M is TMessageReceivedNotification then
   begin
     Intent := TMessageReceivedNotification(M).Value;
@@ -349,6 +373,7 @@ begin
       end;
     end;
   end;
+  {$EndIf}
 end;
 
 function TMainForm.IsNFCEnabledByUser: Boolean;
@@ -357,12 +382,15 @@ begin
 end;
 
 procedure TMainForm.OnNewNfcIntent(Intent: JIntent);
+{$If Defined(Android)}
 var
   TagParcel: JParcelable;
   Tag: JTag;
   s: string;
+{$EndIf}
 begin
   Log.d('TMainForm.OnNewIntent');
+  {$If Defined(Android)}
   TAndroidHelper.Activity.setIntent(Intent);
   Log.d('Intent action = %s', [JStringToString(Intent.getAction)]);
 
@@ -392,6 +420,7 @@ begin
     if (not s.IsEmpty) then
       Memo1.Lines.Add('RTD_URI: '+s);
   end;
+  {$EndIf}
 end;
 
 end.
