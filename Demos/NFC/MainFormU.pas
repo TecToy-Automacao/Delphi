@@ -46,15 +46,23 @@ type
     Memo1: TMemo;
     tbLista: TToolBar;
     lbAvisoNFC: TLabel;
-    GridPanelLayout1: TGridPanelLayout;
+    gplAtivar: TGridPanelLayout;
     btAlternarNFC: TButton;
-    btLimpar: TButton;
+    gplGravar: TGridPanelLayout;
+    btConfirmarGravar: TButton;
     ImageList1: TImageList;
+    btGravar: TButton;
+    btLimpar: TButton;
+    edtTextoGravar: TEdit;
+    btCancelarGravar: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure btAlternarNFCClick(Sender: TObject);
     procedure btLimparClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btGravarClick(Sender: TObject);
+    procedure btCancelarGravarClick(Sender: TObject);
+    procedure btConfirmarGravarClick(Sender: TObject);
   private
     { Private declarations }
     {$If Defined(Android)}
@@ -158,6 +166,8 @@ begin
   ClassIntent.addFlags(TJIntent.JavaClass.FLAG_ACTIVITY_SINGLE_TOP);
   FPendingIntent := TJPendingIntent.JavaClass.getActivity(TAndroidHelper.Context, 0, ClassIntent, 0);
   {$EndIf}
+
+  gplGravar.Visible := False;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
@@ -219,6 +229,54 @@ begin
   ChangeNFCStatus((btAlternarNFC.Tag = 0));
 end;
 
+procedure TMainForm.btCancelarGravarClick(Sender: TObject);
+begin
+  gplGravar.Visible := False;
+end;
+
+procedure TMainForm.btConfirmarGravarClick(Sender: TObject);
+{$If Defined(Android)}
+var
+  TagParcel: JParcelable;
+  Tag: JTag;
+  Intent: JIntent;
+{$EndIf}
+begin
+  if (FNfcAdapter = nil) then
+  begin
+    Toast(CERROR_NO_NFC_ADAPTER);
+    Exit;
+  end;
+
+  if not IsNFCEnabledByUser then
+    Exit;
+
+  {$If Defined(Android)}
+  Intent := TAndroidHelper.Activity.getIntent;
+  TagParcel := Intent.getParcelableExtra(TJNfcAdapter.JavaClass.EXTRA_TAG);
+  if TagParcel <> nil then
+  begin
+    Log.d('Wrapping tag from the parcel');
+    Tag := TJTag.Wrap(TagParcel);
+    if not WriteTagText(edtTextoGravar.Text, Tag, 'https://projetoacbr.com.br') then
+      Toast('Error connecting to tag')
+    else
+    begin
+      Memo1.Lines.Add('');
+      Memo1.Lines.Add('=======================');
+      Memo1.Lines.Add(edtTextoGravar.Text);
+      Memo1.Lines.Add('Gravado com sucesso ');
+      Memo1.Lines.Add('=======================');
+    end;
+  end;
+  {$EndIf}
+end;
+
+procedure TMainForm.btGravarClick(Sender: TObject);
+begin
+  gplGravar.Visible := True;
+end;
+
 procedure TMainForm.btLimparClick(Sender: TObject);
 begin
   Memo1.Lines.Clear;
@@ -252,6 +310,8 @@ begin
     btAlternarNFC.Text := 'Ativar NFC';
     btAlternarNFC.Tag := 0;
   end;
+
+  btGravar.Enabled := (btAlternarNFC.Tag = 1);
 end;
 
 procedure TMainForm.DisableForegroundDispatch;

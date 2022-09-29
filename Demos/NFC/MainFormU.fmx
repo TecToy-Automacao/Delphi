@@ -34933,11 +34933,11 @@ object MainForm: TMainForm
     TextSettings.WordWrap = True
     Align = Client
     Size.Width = 384.000000000000000000
-    Size.Height = 456.000000000000000000
+    Size.Height = 393.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
     Viewport.Width = 376.000000000000000000
-    Viewport.Height = 448.000000000000000000
+    Viewport.Height = 385.000000000000000000
   end
   object tbLista: TToolBar
     Size.Width = 384.000000000000000000
@@ -34956,7 +34956,7 @@ object MainForm: TMainForm
       Text = 'Exemplo de Leitura NFC'
     end
   end
-  object GridPanelLayout1: TGridPanelLayout
+  object gplAtivar: TGridPanelLayout
     Align = Bottom
     Position.Y = 504.000000000000000000
     Size.Width = 384.000000000000000000
@@ -34965,10 +34965,13 @@ object MainForm: TMainForm
     TabOrder = 5
     ColumnCollection = <
       item
-        Value = 86.021505376344090000
+        Value = 74.913437310245230000
       end
       item
-        Value = 13.978494623655910000
+        Value = 12.543281344877380000
+      end
+      item
+        Value = 12.543281344877380000
       end>
     ControlCollection = <
       item
@@ -34978,6 +34981,11 @@ object MainForm: TMainForm
       end
       item
         Column = 1
+        Control = btGravar
+        Row = 0
+      end
+      item
+        Column = 2
         Control = btLimpar
         Row = 0
       end>
@@ -34996,25 +35004,120 @@ object MainForm: TMainForm
       Margins.Top = 10.000000000000000000
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 4.000000000000000000
-      Size.Width = 310.322570800781300000
+      Size.Width = 267.667602539062500000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
       Text = 'Ativar NFC'
       OnClick = btAlternarNFCClick
     end
-    object btLimpar: TButton
+    object btGravar: TButton
       Align = Client
+      Enabled = False
       Images = ImageList1
-      ImageIndex = 1
+      ImageIndex = 2
       Margins.Top = 10.000000000000000000
       Margins.Right = 10.000000000000000000
       Margins.Bottom = 4.000000000000000000
-      Size.Width = 43.677429199218750000
+      Size.Width = 38.166198730468750000
       Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 3
+      OnClick = btGravarClick
+    end
+    object btLimpar: TButton
+      Align = Client
+      Images = ImageList1
+      ImageIndex = 5
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Size.Width = 38.166198730468750000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
       OnClick = btLimparClick
+    end
+  end
+  object gplGravar: TGridPanelLayout
+    Align = Top
+    Position.Y = 48.000000000000000000
+    Size.Width = 384.000000000000000000
+    Size.Height = 63.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    ColumnCollection = <
+      item
+        Value = 74.047006062619370000
+      end
+      item
+        Value = 12.976496968690310000
+      end
+      item
+        Value = 12.976496968690310000
+      end>
+    ControlCollection = <
+      item
+        Column = 1
+        Control = btConfirmarGravar
+        Row = 0
+      end
+      item
+        Column = 0
+        Control = edtTextoGravar
+        Row = 0
+      end
+      item
+        Column = 2
+        Control = btCancelarGravar
+        Row = 0
+      end>
+    RowCollection = <
+      item
+        Value = 100.000000000000000000
+      end
+      item
+        SizeStyle = Auto
+      end>
+    object btConfirmarGravar: TButton
+      Align = Client
+      Images = ImageList1
+      ImageIndex = 2
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Size.Width = 39.829742431640630000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      OnClick = btConfirmarGravarClick
+    end
+    object edtTextoGravar: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Align = VertCenter
+      TabOrder = 4
+      MaxLength = 137
+      Position.X = 10.000000000000000000
+      Position.Y = 15.000000000000000000
+      Margins.Left = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Size.Width = 264.340515136718800000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'digite o texto a gravar, at'#233' 137'
+    end
+    object btCancelarGravar: TButton
+      Align = Client
+      Images = ImageList1
+      ImageIndex = 3
+      Margins.Top = 10.000000000000000000
+      Margins.Right = 10.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Size.Width = 39.829742431640630000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      OnClick = btCancelarGravarClick
     end
   end
   object ImageList1: TImageList
@@ -35065,17 +35168,139 @@ object MainForm: TMainForm
             PNG = {
               89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
               98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
-              00EA494441545847EDD5B111C2201406E0C0148EE00096762E6367E1009E5BB8
-              83A33880655ABB941690E883FC45724702247072E7FB9A904BDEE3C9835831C6
-              7EADEBBAD367827986D79211B85A34C105438BE6DC48298FB875A2989B10E285
-              5B8B62AE18461B15647E3586AB5081A3BC3124AEC5986DD9526B5A563EB34A66
-              2F2D315CE1983C08B18ADB43FF5390D9D8E6F8874088C52DF3C95650C829737D
-              F7B8653ED90A0A3965AEBF186E994FB682A64E99EB640D71CBA2D1929EB1BAD1
-              28F68034E950DE6DD334EF7E8A704AA92752A447F9F76DDBDEEBBA56FD74F3B4
-              D60F5A9D1DC2196305ABAA2FC0E28EB27D915FF80000000049454E44AE426082}
-            FileName = 'C:\temp\Logos\baseline_delete_sweep_white_18dp.png'
+              01CC494441545847ED973B52C33010866D9C8222454A8E90927BA4E0280C27A0
+              A0A42077A0A4E0101C8092D214CC7000D278FC08FFCAABA0C82B3FD0068621DF
+              0CA3D52ABBFA62CBCE901CF977344D73BD05182F3915C5098FD1A469BAD69052
+              132234A454858858A951423822E71C8E42EBF68950E3BE438BBC39D4449EE725
+              87067529345C716F83B4812B54D7F56D55554F3C35A84AA1DF0C9B3CB4AD5BFC
+              0D5C218EE7BF2AE50B510EE1BC288AF736DB82B59529D000FD825292103E7BC7
+              2903D7CE684D0D6A2849F94282CC3D065D190B35F6A5CAB27CE170EBDF2692E3
+              D278D0EF0C0D1F69E49401F38E94842483B4D873102AB0DF9CC749522199BE9E
+              41DC42CB14A921194B484AFAE958E0702E3836F07C2F879F870AC35B3BFB02F9
+              570E5D46F50C02F3A53DA03C2E7969075D095A97C0669D1721D2833D7BA102BC
+              719FA5C23E194B482AD4F3DBF832EEA3BED96C3E38344852AAF83234C7A6BB17
+              23E637F8DB3BE894E3725D2419CABB421C779E3EFB59354232842F443984A7EE
+              AD24B076610A62E993217EF40AD1B7E29E06A9B12B8475E90C1DE676851ABB42
+              FE53A62E63A12BC5610757C8E560324348423132EAFF9741709D65D9154F27A3
+              2A142B43A80969C81CF98324C9279C5EA2622B4451F50000000049454E44AE42
+              6082}
+            FileName = 'C:\temp\Logos\outline_bluetooth_connected_white_18dp.png'
           end>
-        Name = 'baseline_delete_sweep_white_18dp'
+        Name = 'outline_bluetooth_connected_white_18dp'
+      end
+      item
+        MultiResBitmap.Height = 36
+        MultiResBitmap.Width = 36
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              021D494441545847ED973F4802511CC7F53CF014830B1C1B6E74100A2A6828B2
+              AD686874696C68CBADD1DA1A8B86A620686A8EC036A38686C0C0A5A0C1C15D07
+              25FF9CDAF7DDFD94EC3CBDF7EE1482FBC0E3FDDEBFDFFBBEDF7BF77C067C7C5C
+              12A4DC42AFD75B475A86A99A35AEF89024E98E6C7E3A9DCE15C4784AB7DB3D22
+              F77C60AC66BAF01E27A22C5B8641C7C160F08CEC3CECBCD120087C6C8742A135
+              2AB20567B07D17549C0C1C64CDF5182BCA52B5307013D375FDD9F46802BFB691
+              92281F0BF9E1A2BF1844B88608EDE05CBE18CE00EACEED443912E49631A2D254
+              1C3013418C5FA25EA98A91A07CC0CC043198281CE81C15473253414EF89F8210
+              6A6EB035A7349C0B7FCB26E14A10EEBF043EE35BDCC445A402FB51C6DDB240CD
+              42080BC2C4BBD56AB580B3B28FFB2589B404FBB0D96C16D1B642DDB8111284C8
+              C45BADD68DAAAA0A550D5014456551431F4B9B1344056D86C3E138152DC8B29C
+              409F2415B910DD3227932D52CE85A8A02FCA6DC155F4492617A2829EEAF57A8D
+              6C0BED76BB8CECDD2CF12124085F53391A8D66A83844A954D271860E10215BC1
+              E3108D1013758D6C8BBD7158B41A8D46159F7B4ED3B455B43D9ABDF81116C440
+              14F288C6462C169B8B4422F3ECBD833AA1ADEA33EA919F85D313B25D3FF2FF82
+              EB208508A6C89EFCE08788343A4E9D4AA5F28DCCF62E1B804E32CEC5BD316A8A
+              608E4B9A7208DBBFD28814BBFCF69064A3C25BDEB0550F64FBF8784820F00351
+              A28D89BA0F0BAB0000000049454E44AE426082}
+            FileName = 'C:\temp\Logos\outline_save_white_18dp.png'
+          end>
+        Name = 'outline_save_white_18dp'
+      end
+      item
+        MultiResBitmap.Height = 36
+        MultiResBitmap.Width = 36
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              0184494441545847ED942B4E04411086677656AE5889E0008815082482044510
+              480EC011101C80032010883D00822360360182C092201043828004318684790F
+              7F7555D80DF3EA9D112C497D49A5A7BBABFEFED38F7114455194FF44511423F9
+              5C0DD234BDF96B53AEB4069829B22CBBF53C6FCF75DD4F192E41A61107886DC4
+              04B12E530EEADE112F8819BA7783C1E091673A006143DD4E616C13862F8320F8
+              32891640EB3ECFF3437C0E45C61E9660164DA11DC3C8D44C74047A0F30B66516
+              B2456A7F10533B711CBFF2483561187E2449E25334ED9EEFFB094C1DCB72ED48
+              5D2BB42876EC02E2FBE8561E2DE64E60F0D914FC02B5E792DA8CE4374246D0AC
+              49492B747FA2287AE3EA39D03995947A24B716881F49EA52A094EEE035ABCC21
+              B392528DE4D58223784263BD3B8BA06E0853574648A0BB87662C296538AD999E
+              A646F4DA8C90009353992E2339ADF43185639AD06B63257E2068AAB538C58E3E
+              A6B02B67ACC2C064F5AF40E6ADE96A0A351B747FE8B8606617FDE5FFE28AA228
+              8AB29238CE37F9165F120A7915190000000049454E44AE426082}
+            FileName = 'C:\temp\Logos\outline_undo_white_18dp.png'
+          end>
+        Name = 'outline_undo_white_18dp'
+      end
+      item
+        MultiResBitmap.Height = 36
+        MultiResBitmap.Width = 36
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              017D494441545847ED96314EC4301045B3D1165B506EB105C7E0261C8023EC11
+              80135070000A0A0E4049C1213806050591922209FCF17E5683E2596C39BBB290
+              9F64793C198FC73389E3AA504864C1FE20E3385E534CA2AEEB5B8A2641017D01
+              8A492C0045939A7D36446708E20DC5209094BD7D4886A2030A71AA899D9B5DC9
+              4A407F310908255FE2DCD90EC3F0D2B6ED877E070419C7C0690E198B4FF87EC6
+              1A5754DBC07E09E35799780AB0D62397F62327326D4FC6C14CF57DFF463B89FE
+              0EDD9A8F9281AF33B415DA06BE9FD03BA47C3499429B1F565427832C5C344DF3
+              D975DD3BE473F8DEEC96D8BD53349B421B0755B38020B6742B25BA141D870E67
+              E483CF1D54CD02DCAD519A07B47BC82EF36E11E28CC8AFA35C3FD4C73C7635FB
+              F5C35A2B2820AD4FC1F2A9F5795F3F74D410F5B5612F6B7D08D65CADD7193203
+              B2D0934388F59977C9ACAF091BF0A637049D2188DE72EBAF2FC8B9769A1250C8
+              DCBC4B66A17709D19B760B2425AADCD101A5F07F4B768C7F59A1701CAAEA1B1A
+              504745D8B41FBB0000000049454E44AE426082}
+            FileName = 'C:\temp\Logos\outline_local_printshop_white_18dp.png'
+          end>
+        Name = 'outline_local_printshop_white_18dp'
+      end
+      item
+        MultiResBitmap.Height = 36
+        MultiResBitmap.Width = 36
+        MultiResBitmap.LoadSize = 0
+        MultiResBitmap = <
+          item
+            Width = 36
+            Height = 36
+            PNG = {
+              89504E470D0A1A0A0000000D4948445200000024000000240806000000E10098
+              98000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+              010B494441545847ED96C11182301045C1B120FBE0E0C1422CC5422C0A0F76A1
+              10FFE2AE301034599278D97749B2909F379B1986CA300CC38373EEC053352932
+              06FABE3F23CCD1C8A568BAAEBBB46DFB40C6894B3A10D0908CA0912219DEEE48
+              0A83BE53D8BC47E075486362A4A63204ADF9911EE4A8A4B2C808C88B92CA2A23
+              203748AA888C80FCAF524565049CE395FA8B8C80F31652538ACA0838D72BB555
+              66C76334755D3F31DCDFAB11D46F3C2D0B75829BB220E43B9594B90CADE7D757
+              4CCA2743754C83BE5349599311502A27F54B46C0A3FC52A132025EC927152B23
+              E0D5F452083872D640A88C802D0B29B0ED57563A142B2360EB472AD9B551A778
+              AA82A490D1F0D2300C63A4AA5EE665D2850B0C0F5A0000000049454E44AE4260
+              82}
+            FileName = 'C:\temp\Logos\outline_clear_white_18dp.png'
+          end>
+        Name = 'outline_clear_white_18dp'
       end>
     Destination = <
       item
@@ -35089,12 +35314,44 @@ object MainForm: TMainForm
       item
         Layers = <
           item
-            Name = 'baseline_delete_sweep_white_18dp'
+            Name = 'outline_bluetooth_connected_white_18dp'
+            SourceRect.Right = 36.000000000000000000
+            SourceRect.Bottom = 36.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'outline_save_white_18dp'
+            SourceRect.Right = 36.000000000000000000
+            SourceRect.Bottom = 36.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'outline_undo_white_18dp'
+            SourceRect.Right = 36.000000000000000000
+            SourceRect.Bottom = 36.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'outline_local_printshop_white_18dp'
+            SourceRect.Right = 36.000000000000000000
+            SourceRect.Bottom = 36.000000000000000000
+          end>
+      end
+      item
+        Layers = <
+          item
+            Name = 'outline_clear_white_18dp'
             SourceRect.Right = 36.000000000000000000
             SourceRect.Bottom = 36.000000000000000000
           end>
       end>
-    Left = 48
-    Top = 9
+    Left = 72
+    Top = 57
   end
 end
