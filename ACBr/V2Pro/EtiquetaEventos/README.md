@@ -97,3 +97,4 @@ O V2Pro tem um poderoso Scanner, que lê muito rapidamente códigos de Barras 1D
 | --- | --- | --- | --- |  
 | 0.9 | 01/08/2022 | DSA | Primeira Versão |  
 | 1.0 | 11/09/2022 | DSA | Impressão com Cod.Barras Code93 |  
+| 1.1 | 03/10/2022 | DSA | Controle de Presentes e Num.Impressoes por participante |
