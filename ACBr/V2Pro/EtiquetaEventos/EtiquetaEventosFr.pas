@@ -439,7 +439,7 @@ begin
     if not cbImpCodBarras.IsChecked then
       SL.Add(PadCenter(edtLinha4.Text.Trim, ColunasTextoImpressao))
     else
-      SL.Add('</ce><code93>'+edtLinha4.Text.Trim+'</code93>');
+      SL.Add('</ce><code39>'+edtLinha4.Text.Trim+'</code39>');
 
     FLinhasNome := max(min(FLinhasNome, 2), 1);
     SL[0] := '<in>'+SL[0];
