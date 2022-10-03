@@ -1,8 +1,4 @@
-﻿[FDMemTable1]
-Visible=False
-Coordinates=1139,441,84,33
-
-[ListBoxGroupHeader5]
+﻿[ListBoxGroupHeader5]
 Coordinates=779,771,123,33
 
 [Label6]
@@ -37,9 +33,6 @@ Coordinates=59,482,116,177
 
 [seEspLinhas]
 Coordinates=779,463,77,51
-
-[BindingsList1]
-Coordinates=314,889,82,33
 
 [tabCamera]
 Coordinates=235,889,67,33
@@ -227,11 +220,9 @@ Coordinates=633,155,46,51
 [seLinhasPular]
 Coordinates=779,386,84,51
 
-[Button2]
-Coordinates=43,77,53,51
-
 [mURLDownload]
 Coordinates=633,694,93,51
+Visible=True
 
 [ListBoxGroupHeader6]
 Coordinates=1139,221,123,33
@@ -255,14 +246,12 @@ Coordinates=633,1,84,51
 Coordinates=633,463,80,51
 
 [ListView1]
-Coordinates=1360,50,90,231
+Coordinates=1310,600,90,267
 Visible=True
+ExplicitSubNodes=Visible
 
 [SpeedButton2]
 Coordinates=390,732,84,51
-
-[BindSourceDB1]
-Coordinates=489,540,92,141
 
 [seBarrasAltura]
 Coordinates=779,155,88,51
@@ -271,5 +260,49 @@ Coordinates=779,155,88,51
 Coordinates=1139,496,137,33
 
 []
-Coordinates=456,386,97,51
+Coordinates=612,78,82,33
+Visible=False
+
+[cbImpCodBarras]
+Coordinates=264,1,97,51
+
+[GridPanelLayout2]
+Coordinates=270,155,102,33
+
+[ListBoxGroupHeader8]
+Coordinates=426,386,123,33
+
+[ListBoxItem9]
+Coordinates=289,210,79,33
+
+[cbLeitorIntegrado]
+Coordinates=0,0,101,51
+
+[btBaixarLista]
+Coordinates=115,77,79,51
+
+[imgCamera]
+Coordinates=289,78,70,51
+
+[btLimparLista]
+Coordinates=134,1,82,51
+
+[tiStart]
+Coordinates=81,251,44,33
+
+[FDConnection1]
+Coordinates=612,78,90,33
+
+[btLimpar]
+Coordinates=43,77,58,51
+
+[BindSourceDB1]
+Coordinates=1193,700,92,159
+
+[BindingsList1]
+Coordinates=51,216,82,33
+
+[qLista]
+Coordinates=1193,700,63,33
+Visible=False
 

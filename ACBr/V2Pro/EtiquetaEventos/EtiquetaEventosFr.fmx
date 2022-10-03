@@ -64,7 +64,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           StyleLookup = 'toollabel'
           TextSettings.FontColor = claWhite
           TextSettings.HorzAlign = Center
-          Text = 'Lista de Inscritos'
+          Text = '%d Inscritos, %d presentes'
           object SpeedButton3: TSpeedButton
             Align = Right
             IconTintColor = claWhite
@@ -105,17 +105,18 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           item
             AppearanceObjectName = 'Accessory2'
             AppearanceClassName = 'TAccessoryObjectAppearance'
-            Appearance.Width = 41.000000000000000000
+            Appearance.Width = 23.000000000000000000
             Appearance.Height = 44.000000000000000000
             Appearance.Align = Trailing
+            Appearance.PlaceOffset.X = 2.000000000000000000
           end
           item
             AppearanceObjectName = 'TextEmpresa'
             AppearanceClassName = 'TTextObjectAppearance'
             Appearance.TextAlign = Leading
-            Appearance.Width = 341.000000000000000000
+            Appearance.Width = 321.000000000000000000
             Appearance.Height = 26.000000000000000000
-            Appearance.PlaceOffset.X = 10.000000000000000000
+            Appearance.PlaceOffset.X = 6.000000000000000000
             Appearance.PlaceOffset.Y = 31.000000000000000000
           end
           item
@@ -135,10 +136,19 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
             AppearanceObjectName = 'TextCargo'
             AppearanceClassName = 'TTextObjectAppearance'
             Appearance.TextAlign = Leading
-            Appearance.Width = 341.000000000000000000
+            Appearance.Width = 321.000000000000000000
             Appearance.Height = 26.000000000000000000
-            Appearance.PlaceOffset.X = 10.000000000000000000
+            Appearance.PlaceOffset.X = 6.000000000000000000
             Appearance.PlaceOffset.Y = 56.000000000000000000
+          end
+          item
+            AppearanceObjectName = 'Impressoes'
+            AppearanceClassName = 'TTextObjectAppearance'
+            Appearance.Font.Size = 13.000000000000000000
+            Appearance.Width = 33.000000000000000000
+            Appearance.Height = 25.000000000000000000
+            Appearance.PlaceOffset.X = 339.000000000000000000
+            Appearance.PlaceOffset.Y = 31.000000000000000000
           end>
         ItemAppearanceObjects.ItemEditObjects.ObjectsCollection = <
           item
@@ -366,7 +376,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               end
               item
                 Column = 0
-                Control = Button2
+                Control = btLimpar
                 Row = 0
               end>
             RowCollection = <
@@ -391,7 +401,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Text = 'Imprimir'
               OnClick = btImprimirClick
             end
-            object Button2: TButton
+            object btLimpar: TButton
               Align = Client
               Images = ImageList1
               ImageIndex = 16
@@ -404,7 +414,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
               Size.PlatformDefault = False
               TabOrder = 40
               Text = 'Limpar'
-              OnClick = Button2Click
+              OnClick = btLimparClick
             end
           end
         end
@@ -458,7 +468,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
         Size.Height = 424.000000000000000000
         Size.PlatformDefault = False
         TabHeight = 49.000000000000000000
-        TabIndex = 0
+        TabIndex = 1
         TabOrder = 2
         TabPosition = PlatformDefault
         Sizes = (
@@ -472,7 +482,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           CustomIcon = <
             item
             end>
-          IsSelected = True
+          IsSelected = False
           Size.Width = 131.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
@@ -616,7 +626,7 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
           CustomIcon = <
             item
             end>
-          IsSelected = False
+          IsSelected = True
           Size.Width = 131.000000000000000000
           Size.Height = 49.000000000000000000
           Size.PlatformDefault = False
@@ -36247,8 +36257,8 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     Enabled = False
     Interval = 300
     OnTimer = tiStartTimer
-    Left = 16
-    Top = 8
+    Left = 32
+    Top = 24
   end
   object GestureManager1: TGestureManager
     Sensitivity = 80.000000000000000000
@@ -37165,11 +37175,32 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
     Left = 40
     Top = 9
   end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=C:\Tectoy\Delphi\ACBr\V2Pro\EtiquetaEventos\lista.db'
+      'DriverID=SQLite')
+    LoginPrompt = False
+    Left = 8
+    Top = 224
+  end
+  object qLista: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select * from inscritos')
+    Left = 8
+    Top = 272
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSet = qLista
+    ScopeMappings = <>
+    Left = 8
+    Top = 176
+  end
   object BindingsList1: TBindingsList
     Methods = <>
     OutputConverters = <>
-    Left = 68
-    Top = 5
+    Left = 36
+    Top = 181
     object LinkFillControlToField1: TLinkFillControlToField
       Category = 'Quick Bindings'
       Control = ListView1
@@ -37178,65 +37209,36 @@ object EtiquetaEventosForm: TEtiquetaEventosForm
       AutoFill = True
       FillExpressions = <
         item
-          SourceMemberName = 'fdIncricao'
-          ControlMemberName = 'TextInscricao'
+          SourceMemberName = 'Impresso'
+          ControlMemberName = 'Impressoes'
         end
         item
-          SourceMemberName = 'fdNome'
-          ControlMemberName = 'TextNome'
+          SourceMemberName = 'Cargo'
+          ControlMemberName = 'TextCargo'
         end
         item
-          SourceMemberName = 'fdEmpresa'
+          SourceMemberName = 'Empresa'
           ControlMemberName = 'TextEmpresa'
         end
         item
-          SourceMemberName = 'fdCargo'
-          ControlMemberName = 'TextCargo'
+          SourceMemberName = 'Nome'
+          ControlMemberName = 'TextNome'
+        end
+        item
+          SourceMemberName = 'Inscricao'
+          ControlMemberName = 'TextInscricao'
         end>
       FillHeaderExpressions = <>
       FillBreakGroups = <>
     end
   end
-  object FDMemTable1: TFDMemTable
-    FieldDefs = <
-      item
-        Name = 'fdIncricao'
-        DataType = ftString
-        Size = 20
-      end
-      item
-        Name = 'fdNome'
-        DataType = ftString
-        Size = 40
-      end
-      item
-        Name = 'fdEmpresa'
-        DataType = ftString
-        Size = 40
-      end
-      item
-        Name = 'fdCargo'
-        DataType = ftString
-        Size = 20
-      end>
-    IndexDefs = <>
-    IndexFieldNames = 'fdNome'
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvPersistent, rvSilentMode]
-    ResourceOptions.Persistent = True
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    StoreDefs = True
-    Left = 272
-    Top = 16
-  end
-  object BindSourceDB1: TBindSourceDB
-    DataSet = FDMemTable1
-    ScopeMappings = <>
-    Left = 232
-    Top = 8
+  object qPresentes: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select count() as presentes'
+      'from inscritos'
+      'where (impresso > 0)')
+    Left = 48
+    Top = 272
   end
 end
