@@ -4,8 +4,8 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   uDemoPrinter in 'uDemoPrinter.pas' {Form2},
-  FMX.ACBr.SunmiPrinter in '..\PrinterAPI\FMX.ACBr.SunmiPrinter.pas',
-  Androidapi.JNI.SunmiPrinter in '..\PrinterAPI\Androidapi.JNI.SunmiPrinter.pas';
+  Androidapi.JNI.SunmiPrinter in '..\PrinterAPI\Androidapi.JNI.SunmiPrinter.pas',
+  FMX.ACBr.SunmiPrinter in '..\PrinterAPI\FMX.ACBr.SunmiPrinter.pas';
 
 {$R *.res}
 

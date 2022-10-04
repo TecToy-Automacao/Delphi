@@ -17,9 +17,9 @@ Uses
   Androidapi.JNI.Os,
   Androidapi.JNI.Util,
   Androidapi.JNI.SunmiPrinter,
-{$ENDIF}
   FMX.Helpers.Android,
   FMX.Platform.Android,
+{$ENDIF}
   FMX.Graphics,
   System.SysUtils;
 
@@ -555,24 +555,15 @@ begin
 {$IFDEF ANDROID}
   LState := FPrinter.updatePrinterState;
   case LState of
-    __Impressora_Status_OK:
-      FPrinterState := TACBrSunmiPrinterState.Ok;
-    __Impressora_Status_Atualizando:
-      FPrinterState := TACBrSunmiPrinterState.Atualizando;
-    __Impressora_Status_em_Erro:
-      FPrinterState := TACBrSunmiPrinterState.Erro;
-    __Impressora_Status_Sem_Papel:
-      FPrinterState := TACBrSunmiPrinterState.SemPapel;
-    __Impressora_Status_Superaquecida:
-      FPrinterState := TACBrSunmiPrinterState.Superaquecida;
-    __Impressora_Status_Tampa_Aberta:
-      FPrinterState := TACBrSunmiPrinterState.TampaAberta;
-    __Impressora_Status_Erro_no_Cortador:
-      FPrinterState := TACBrSunmiPrinterState.ErroCortador;
-    __Impressora_Status_Recuo_do_cortador:
-      FPrinterState := TACBrSunmiPrinterState.RecuoCortador;
-    __Impressora_Status_nao_detectada:
-      FPrinterState := TACBrSunmiPrinterState.NaoDetectada;
+    __Impressora_Status_OK: FPrinterState := TACBrSunmiPrinterState.Ok;
+    __Impressora_Status_Atualizando: FPrinterState := TACBrSunmiPrinterState.Atualizando;
+    __Impressora_Status_em_Erro: FPrinterState := TACBrSunmiPrinterState.Erro;
+    __Impressora_Status_Sem_Papel: FPrinterState := TACBrSunmiPrinterState.SemPapel;
+    __Impressora_Status_Superaquecida: FPrinterState := TACBrSunmiPrinterState.Superaquecida;
+    __Impressora_Status_Tampa_Aberta: FPrinterState := TACBrSunmiPrinterState.TampaAberta;
+    __Impressora_Status_Erro_no_Cortador: FPrinterState := TACBrSunmiPrinterState.ErroCortador;
+    __Impressora_Status_Recuo_do_cortador: FPrinterState := TACBrSunmiPrinterState.RecuoCortador;
+    __Impressora_Status_nao_detectada: FPrinterState := TACBrSunmiPrinterState.NaoDetectada;
   end;
 {$ENDIF}
 end;

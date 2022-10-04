@@ -16,7 +16,7 @@ type
     { class } function init(aContext: JContext): JSunmiPrinter; cdecl;
   end;
 
-  [JavaSignature('com/acbr/sunmiprinter/Printer')]
+  [JavaSignature('com/acbr/sunmi_printer/Printer')]
   JSunmiPrinter = interface(JObject)
     ['{ECC4767A-37E2-4549-AC7A-018E9A8851FE}']
     Procedure PrintTeste; cdecl;
