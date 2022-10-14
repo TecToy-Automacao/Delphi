@@ -1,4 +1,36 @@
-﻿unit FMX.ACBr.SunmiPrinter;
+﻿{******************************************************************************}
+{ Projeto: Componentes ACBr                                                    }
+{  Biblioteca multiplataforma de componentes Delphi para interação com equipa- }
+{ mentos de Automação Comercial utilizados no Brasil                           }
+{                                                                              }
+{ Direitos Autorais Reservados (c) 2022 Daniel Simoes de Almeida               }
+{                                                                              }
+{ Colaboradores nesse arquivo:   Jaques Nascimento                             }
+{                                                                              }
+{  Você pode obter a última versão desse arquivo na pagina do  Projeto ACBr    }
+{ Componentes localizado em      http://www.sourceforge.net/projects/acbr      }
+{                                                                              }
+{  Esta biblioteca é software livre; você pode redistribuí-la e/ou modificá-la }
+{ sob os termos da Licença Pública Geral Menor do GNU conforme publicada pela  }
+{ Free Software Foundation; tanto a versão 2.1 da Licença, ou (a seu critério) }
+{ qualquer versão posterior.                                                   }
+{                                                                              }
+{  Esta biblioteca é distribuída na expectativa de que seja útil, porém, SEM   }
+{ NENHUMA GARANTIA; nem mesmo a garantia implícita de COMERCIABILIDADE OU      }
+{ ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Consulte a Licença Pública Geral Menor}
+{ do GNU para mais detalhes. (Arquivo LICENÇA.TXT ou LICENSE.TXT)              }
+{                                                                              }
+{  Você deve ter recebido uma cópia da Licença Pública Geral Menor do GNU junto}
+{ com esta biblioteca; se não, escreva para a Free Software Foundation, Inc.,  }
+{ no endereço 59 Temple Street, Suite 330, Boston, MA 02111-1307 USA.          }
+{ Você também pode obter uma copia da licença em:                              }
+{ http://www.opensource.org/licenses/lgpl-license.php                          }
+{                                                                              }
+{ Daniel Simões de Almeida - daniel@projetoacbr.com.br - www.projetoacbr.com.br}
+{       Rua Coronel Aureliano de Camargo, 963 - Tatuí - SP - 18270-170         }
+{******************************************************************************}
+
+unit FMX.ACBr.SunmiPrinter;
 
 interface
 
@@ -24,19 +56,22 @@ Uses
   System.SysUtils;
 
 Const
-  __Impressora_Status_OK = 1;
-  __Impressora_Status_Atualizando = 2;
-  __Impressora_Status_em_Erro = 3;
-  __Impressora_Status_Sem_Papel = 4;
-  __Impressora_Status_Superaquecida = 5;
-  __Impressora_Status_Tampa_Aberta = 6;
-  __Impressora_Status_Erro_no_Cortador = 7;
-  __Impressora_Status_Recuo_do_cortador = 8;
-  __Impressora_Status_nao_detectada = 505;
+  CImpressora_Status_OK = 1;
+  CImpressora_Status_Initializing = 2;
+  CImpressora_Status_Error = 3;
+  CImpressora_Status_Out_Of_Paper = 4;
+  CImpressora_Status_Overheated = 5;
+  CImpressora_Status_Cover_Is_Open = 6;
+  CImpressora_Status_Cutter_Abnormal = 7;
+  CImpressora_Status_Cutter_Normal = 8;
+  CImpressora_Status_Black_Mark_Not_Found = 9;
+  CImpressora_Status_Printer_Not_Detected = 505;
 
 Type
-  TACBrSunmiPrinterState = (Ok, Atualizando, Erro, SemPapel, Superaquecida,
-    TampaAberta, ErroCortador, RecuoCortador, NaoDetectada);
+  TACBrSunmiPrinterState = ( spsOk, spsInitializing, spsError, spsOutOfPaper,
+                             spsOverheated, spsCoverIsOpen, spsCutterAbnormal,
+                             spsCutterNormal, spsBlackMarkNotFound,
+                             spsPrinterNotDetected );
 
   /// <summary>
   /// Printer class for Sunmi Printer
@@ -44,11 +79,11 @@ Type
   TACBrSunmiPrinter = Class
   Private
     FPrinter: JSunmiPrinter;
-    FGavetaAberta: Boolean;
+    FDrawerIsOpen: Boolean;
     FPrinterMode: Integer;
-    FDistanciaMarca: Integer;
-    FCortes: Integer;
-    FAberturas: Integer;
+    FPrinterBBMDistance: Integer;
+    FCutPaperTimes: Integer;
+    FOpenDrawerTimes: Integer;
     FPrinterState: TACBrSunmiPrinterState;
   Public
     Constructor Create;
@@ -245,12 +280,12 @@ Type
     /// </summary>
     Function IfDrawerClosed(aProc: TProc): TACBrSunmiPrinter;
 
-    Property GavetaAberta: Boolean Read FGavetaAberta;
+    Property DrawerIsOpen: Boolean Read FDrawerIsOpen;
     Property PrinterMode: Integer Read FPrinterMode;
-    Property DistanciaMarca: Integer Read FDistanciaMarca;
+    Property PrinterBBMDistance: Integer Read FPrinterBBMDistance;
     Property PrinterState: TACBrSunmiPrinterState Read FPrinterState;
-    Property Cortes: Integer Read FCortes;
-    Property Aberturas: Integer Read FAberturas;
+    Property CutPaperTimes: Integer Read FCutPaperTimes;
+    Property OpenDrawerTimes: Integer Read FOpenDrawerTimes;
   End;
 
 implementation
@@ -501,7 +536,7 @@ function TACBrSunmiPrinter.getCutPaperTimes: TACBrSunmiPrinter;
 begin
   Result := Self;
 {$IFDEF ANDROID}
-  FCortes := FPrinter.getCutPaperTimes;
+  FCutPaperTimes := FPrinter.getCutPaperTimes;
 {$ENDIF}
 end;
 
@@ -509,7 +544,7 @@ function TACBrSunmiPrinter.getDrawerStatus: TACBrSunmiPrinter;
 begin
   Result := Self;
 {$IFDEF ANDROID}
-  FGavetaAberta := FPrinter.getDrawerStatus;
+  FDrawerIsOpen := FPrinter.getDrawerStatus;
 {$ENDIF}
 end;
 
@@ -517,7 +552,7 @@ function TACBrSunmiPrinter.getOpenDrawerTimes: TACBrSunmiPrinter;
 begin
   Result := Self;
 {$IFDEF ANDROID}
-  FAberturas := FPrinter.getOpenDrawerTimes;
+  FOpenDrawerTimes := FPrinter.getOpenDrawerTimes;
 {$ENDIF}
 end;
 
@@ -525,7 +560,7 @@ function TACBrSunmiPrinter.getPrinterBBMDistance: TACBrSunmiPrinter;
 begin
   Result := Self;
 {$IFDEF ANDROID}
-  FDistanciaMarca := FPrinter.getPrinterBBMDistance;
+  FPrinterBBMDistance := FPrinter.getPrinterBBMDistance;
 {$ENDIF}
 end;
 
@@ -555,15 +590,15 @@ begin
 {$IFDEF ANDROID}
   LState := FPrinter.updatePrinterState;
   case LState of
-    __Impressora_Status_OK: FPrinterState := TACBrSunmiPrinterState.Ok;
-    __Impressora_Status_Atualizando: FPrinterState := TACBrSunmiPrinterState.Atualizando;
-    __Impressora_Status_em_Erro: FPrinterState := TACBrSunmiPrinterState.Erro;
-    __Impressora_Status_Sem_Papel: FPrinterState := TACBrSunmiPrinterState.SemPapel;
-    __Impressora_Status_Superaquecida: FPrinterState := TACBrSunmiPrinterState.Superaquecida;
-    __Impressora_Status_Tampa_Aberta: FPrinterState := TACBrSunmiPrinterState.TampaAberta;
-    __Impressora_Status_Erro_no_Cortador: FPrinterState := TACBrSunmiPrinterState.ErroCortador;
-    __Impressora_Status_Recuo_do_cortador: FPrinterState := TACBrSunmiPrinterState.RecuoCortador;
-    __Impressora_Status_nao_detectada: FPrinterState := TACBrSunmiPrinterState.NaoDetectada;
+    CImpressora_Status_OK: FPrinterState := TACBrSunmiPrinterState.spsOk;
+    CImpressora_Status_Initializing: FPrinterState := TACBrSunmiPrinterState.spsInitializing;
+    CImpressora_Status_Error: FPrinterState := TACBrSunmiPrinterState.spsError;
+    CImpressora_Status_Out_Of_Paper: FPrinterState := TACBrSunmiPrinterState.spsOutOfPaper;
+    CImpressora_Status_Overheated: FPrinterState := TACBrSunmiPrinterState.spsOverheated;
+    CImpressora_Status_Cover_Is_Open: FPrinterState := TACBrSunmiPrinterState.spsCoverIsOpen;
+    CImpressora_Status_Cutter_Abnormal: FPrinterState := TACBrSunmiPrinterState.spsCutterAbnormal;
+    CImpressora_Status_Cutter_Normal: FPrinterState := TACBrSunmiPrinterState.spsCutterNormal;
+    CImpressora_Status_Printer_Not_Detected: FPrinterState := TACBrSunmiPrinterState.spsPrinterNotDetected;
   end;
 {$ENDIF}
 end;
@@ -572,7 +607,7 @@ function TACBrSunmiPrinter.IfDrawerClosed(aProc: TProc): TACBrSunmiPrinter;
 begin
   Result := Self;
   FPrinter.getDrawerStatus;
-  If GavetaAberta Then
+  If DrawerIsOpen Then
     aProc;
 end;
 
@@ -580,7 +615,7 @@ function TACBrSunmiPrinter.IfDrawerOpened(aProc: TProc): TACBrSunmiPrinter;
 begin
   Result := Self;
   FPrinter.getDrawerStatus;
-  If Not GavetaAberta Then
+  If Not DrawerIsOpen Then
     aProc;
 end;
 

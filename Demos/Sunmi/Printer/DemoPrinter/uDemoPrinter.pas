@@ -51,16 +51,22 @@ end;
 
 procedure TForm2.Button1Click(Sender: TObject);
 begin
-  FPrinter.setFontSize(10).printTextLF('Teste de impressao Font 10')
-    .setFontSize(12).printTextLF('Teste de impressao Font 12').setFontSize(14)
-    .printTextLF('Teste de impressao Font 14').setFontSize(16)
-    .printTextLF('Teste de impressao Font 16').setFontSize(18)
-    .printTextLF('Teste de impressao Font 18').setFontSize(20)
-    .printTextLF('Teste de impressao Font 20').setAlignment(1)
-    .printBarCode('TESTE', 4).lineWrap(2).setAlignment(2).printText('printText')
-    .printTextLF('|printText + LF').lineWrap(1).setAlignment(1)
-    .printQRCode('ACBr Automação Comercial Brasil').lineWrap(1).setAlignment(2)
-    .printBitmap(ACBr.Bitmap).lineWrap(5).cutPaper;
+  FPrinter.
+     setFontSize(10).printTextLF('Teste de impressao Font 10').
+     setFontSize(12).printTextLF('Teste de impressao Font 12').
+     setFontSize(14).printTextLF('Teste de impressao Font 14').
+     setFontSize(16).printTextLF('Teste de impressao Font 16').
+     setFontSize(18).printTextLF('Teste de impressao Font 18').
+     setFontSize(20).printTextLF('Teste de impressao Font 20').
+     setAlignment(1).
+     printBarCode('TESTE', 4).lineWrap(2).
+     setAlignment(2).
+     printText('printText').printTextLF('|printText + LF').lineWrap(1).
+     setAlignment(1).
+     printQRCode('ACBr Automação Comercial Brasil').lineWrap(1).
+     setAlignment(2).
+     printBitmap(ACBr.Bitmap).lineWrap(5).
+     cutPaper;
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
@@ -69,23 +75,23 @@ begin
     Procedure
     Begin
       case FPrinter.PrinterState of
-        TACBrSunmiPrinterState.Ok:
+        TACBrSunmiPrinterState.spsOk:
           PrinterState.Text := 'Impressora Ok';
-        TACBrSunmiPrinterState.Atualizando:
-          PrinterState.Text := 'Impressora atualizando';
-        TACBrSunmiPrinterState.Erro:
+        TACBrSunmiPrinterState.spsInitializing:
+          PrinterState.Text := 'Impressora Inicializando';
+        TACBrSunmiPrinterState.spsError:
           PrinterState.Text := 'Impressora emerro';
-        TACBrSunmiPrinterState.SemPapel:
+        TACBrSunmiPrinterState.spsOutOfPaper:
           PrinterState.Text := 'Impressora sem papel';
-        TACBrSunmiPrinterState.Superaquecida:
+        TACBrSunmiPrinterState.spsOverheated:
           PrinterState.Text := 'Impressora Superaquecida';
-        TACBrSunmiPrinterState.TampaAberta:
+        TACBrSunmiPrinterState.spsCoverIsOpen:
           PrinterState.Text := 'Impressora com tampa aberta';
-        TACBrSunmiPrinterState.ErroCortador:
+        TACBrSunmiPrinterState.spsCutterAbnormal:
           PrinterState.Text := 'Impressora com erro no cortador';
-        TACBrSunmiPrinterState.RecuoCortador:
-          PrinterState.Text := 'Impressora com recuo no cortador';
-        TACBrSunmiPrinterState.NaoDetectada:
+        TACBrSunmiPrinterState.spsCutterNormal:
+          PrinterState.Text := 'Cortador Ok';
+        TACBrSunmiPrinterState.spsPrinterNotDetected:
           PrinterState.Text := 'Impressora não encontrada';
       end;
     End);
@@ -94,7 +100,7 @@ end;
 procedure TForm2.Button3Click(Sender: TObject);
 begin
   FPrinter.cutPaper.getCutPaperTimes;
-  PrinterState.Text := FPrinter.Cortes.ToString + ' Cortes executados';
+  PrinterState.Text := FPrinter.CutPaperTimes.ToString + ' Cortes executados';
 end;
 
 procedure TForm2.Button4Click(Sender: TObject);
@@ -102,7 +108,7 @@ begin
   FPrinter.openDrawer.getOpenDrawerTimes.Execute(
     Procedure
     Begin
-      PrinterState.Text := 'Gaveta aberta ' + FPrinter.Cortes.ToString
+      PrinterState.Text := 'Gaveta aberta ' + FPrinter.CutPaperTimes.ToString
         + ' vezes';
     End).IfDrawerOpened(
     Procedure
@@ -117,7 +123,7 @@ end;
 
 procedure TForm2.Button5Click(Sender: TObject);
 begin
-  if FPrinter.getDrawerStatus.GavetaAberta then
+  if FPrinter.getDrawerStatus.DrawerIsOpen then
     PrinterState.Text := 'Agaveta está Aberta'
   Else
     PrinterState.Text := 'Agaveta está Fechada';
