@@ -18,13 +18,13 @@ Esse aplicativo será usado pelo Garçom para o lançamento das refeições, dri
 
 Obs: O projeto Garçom faz acesso externo de url, é possível que receba um erro de Clear Text Traffic. Caso isso ocorra, basta abrir o arquivo AndroidManifest.template.xml e adicionar a linha abaixo dentro da tag <application>
 
-```
+```xml
    android:usesClearTextTraffic="true"
 ```
 
 Exemplo: Note a última linha no exemplo abaixo
 
-```
+```xml
     <application
         android:persistent="%persistent%"
         android:restoreAnyVersion="%restoreAnyVersion%"
