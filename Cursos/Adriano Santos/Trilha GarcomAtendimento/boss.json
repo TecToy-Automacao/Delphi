@@ -1,0 +1,13 @@
+{
+	"name": "Garcom",
+	"description": "Módulo de Atendimento Garçom",
+	"version": "1.0.0",
+	"homepage": "http://adrianosantostreina.com.br",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"github.com/adrianosantostreina/loading": "^1.0.1",
+		"github.com/viniciussanchez/dataset-serialize": "^v2.3.5",
+		"github.com/viniciussanchez/restrequest4delphi": "^v3.0.15"
+	}
+}

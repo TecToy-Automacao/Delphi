@@ -33,7 +33,6 @@
 *.bpi
 *.dcp
 *.so
-*.apk
 *.drc
 *.map
 *.dres
