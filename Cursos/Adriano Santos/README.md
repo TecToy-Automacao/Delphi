@@ -16,6 +16,31 @@ Aplicação para uso no caixa. Esse app fará a leitura da comanda através da l
 ## Módulo Garçom
 Esse aplicativo será usado pelo Garçom para o lançamento das refeições, drinks e demais bebidas solicitadas na mesa direto com o consumidor.
 
+Obs: O projeto Garçom faz acesso externo de url, é possível que receba um erro de Clear Text Traffic. Caso isso ocorra, basta abrir o arquivo AndroidManifest.template.xml e adicionar a linha abaixo dentro da tag <application>
+
+```
+   android:usesClearTextTraffic="true"
+```
+
+Exemplo: Note a última linha no exemplo abaixo
+
+```
+    <application
+        android:persistent="%persistent%"
+        android:restoreAnyVersion="%restoreAnyVersion%"
+        android:label="%label%"
+        android:debuggable="%debuggable%"
+        android:largeHeap="%largeHeap%"
+        android:icon="%icon%"
+        android:theme="%theme%"
+        android:hardwareAccelerated="%hardwareAccelerated%"
+        android:resizeableActivity="false"
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true">
+```
+
+
+
 ### <b>Dispositivo Recomendado</b>: V2 e V2 Pro
 </br>
 
