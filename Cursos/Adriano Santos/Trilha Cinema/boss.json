@@ -1,0 +1,13 @@
+{
+	"name": "Trilha Cinema",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./src",
+	"projects": [],
+	"dependencies": {
+		"github.com/academiadocodigo/router4delphi": "^1.0.8",
+		"github.com/adrianosantostreina/customthread": "^1.0.0",
+		"github.com/adrianosantostreina/loading": "^1.0.1"
+	}
+}
