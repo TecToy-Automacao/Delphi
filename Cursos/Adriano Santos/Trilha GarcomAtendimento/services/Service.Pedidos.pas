@@ -49,7 +49,10 @@ type
     public
       { Public declarations }
 
+<<<<<<< HEAD
+=======
       function TotalPedido(const APedido: Integer): Double;
+>>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
       function SyncPedido: Boolean;
       function SyncItensPedido(APedido: Integer): Boolean;
       function DeletePedido(APedido: Integer): Boolean;
@@ -266,6 +269,8 @@ begin
   end;
 end;
 
+<<<<<<< HEAD
+=======
 function TServicePedidos.TotalPedido(const APedido: Integer): Double;
 var
   LTotal: Double;
@@ -281,4 +286,5 @@ begin
   Result := LTotal;
 end;
 
+>>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 end.
