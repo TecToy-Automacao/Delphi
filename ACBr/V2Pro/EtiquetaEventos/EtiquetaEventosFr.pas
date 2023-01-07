@@ -50,7 +50,10 @@ uses
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.StorageBin, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, Data.Bind.DBScope, 
-  ACBrUtil.FilesIO, FMX.Media, FMX.Objects, FMX.SearchBox;
+  ACBrUtil.FilesIO, FMX.Media, FMX.Objects, FMX.SearchBox, FireDAC.UI.Intf,
+  FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
+  FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
+  FireDAC.FMXUI.Wait, FireDAC.DApt, FireDAC.Comp.UI;
 
 const
   CURL_LISTA_EXEMPLO = 'https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv';
@@ -74,7 +77,6 @@ type
     ImageList1: TImageList;
     ListBox1: TListBox;
     SpeedButton2: TSpeedButton;
-    BindingsList1: TBindingsList;
     ListView1: TListView;
     ListBoxGroupHeader6: TListBoxGroupHeader;
     ListBoxItem1: TListBoxItem;
@@ -86,21 +88,17 @@ type
     ListBoxItem4: TListBoxItem;
     edtLinha4: TEdit;
     ListBoxItem5: TListBoxItem;
-    FDMemTable1: TFDMemTable;
-    LinkFillControlToField1: TLinkFillControlToField;
-    BindSourceDB1: TBindSourceDB;
     btQRCode: TButton;
     CameraComponent1: TCameraComponent;
     tabCamera: TTabItem;
     SpeedButton3: TSpeedButton;
-    imgCamera: TImage;
     ToolBar1: TToolBar;
     Label6: TLabel;
     SpeedButton4: TSpeedButton;
     lblScanStatus: TLabel;
     GridPanelLayout3: TGridPanelLayout;
     btImprimir: TButton;
-    Button2: TButton;
+    btLimpar: TButton;
     tabsConfig: TTabControl;
     tabConfImpressora: TTabItem;
     tabConfLista: TTabItem;
@@ -143,7 +141,6 @@ type
     lbEtiqueta: TListBox;
     ListBoxGroupHeader5: TListBoxGroupHeader;
     ListBoxItem6: TListBoxItem;
-    cbImpCodBarras: TCheckBox;
     ListBoxItem7: TListBoxItem;
     seCaracteresLinha: TSpinBox;
     Label8: TLabel;
@@ -153,6 +150,18 @@ type
     GridPanelLayout2: TGridPanelLayout;
     btLimparLista: TButton;
     btBaixarLista: TButton;
+    imgCamera: TImage;
+    ListBoxGroupHeader8: TListBoxGroupHeader;
+    cbImpCodBarras: TCheckBox;
+    ListBoxItem9: TListBoxItem;
+    cbLeitorIntegrado: TCheckBox;
+    tiStart: TTimer;
+    FDConnection1: TFDConnection;
+    qLista: TFDQuery;
+    BindSourceDB1: TBindSourceDB;
+    BindingsList1: TBindingsList;
+    LinkFillControlToField1: TLinkFillControlToField;
+    qPresentes: TFDQuery;
     procedure GestureDone(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
@@ -169,15 +178,24 @@ type
       const ATime: TMediaTime);
     procedure SpeedButton3Click(Sender: TObject);
     procedure btQRCodeClick(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure btLimparClick(Sender: TObject);
     procedure btLimparListaClick(Sender: TObject);
+    procedure tiStartTimer(Sender: TObject);
   private
     FVKService: IFMXVirtualKeyboardService;
     FScanInProgress: Boolean;
     FFrameTake: Integer;
     FScanBitmap: TBitmap;
     FSearchBox: TSearchBox;
+    FSairClick: TDateTime;
     FLinhasNome: Integer;
+    FInscricaoSel: String;
+
+    function CalcularNomeDB: String;
+    procedure ConfigurarDB;
+    procedure CriarDB;
+    procedure AbrirDB;
+    procedure ApagarDB;
 
     function CalcularNomeArqINI: String;
     function CalcularNomeArquivoLista: String;
@@ -213,6 +231,7 @@ implementation
 
 uses
   System.typinfo, System.IniFiles, System.StrUtils, System.Math,
+  System.DateUtils,
   System.Permissions,
   {$IfDef ANDROID}
   Androidapi.Helpers, Androidapi.JNI.Os, Androidapi.JNI.JavaTypes,
@@ -251,11 +270,17 @@ var
   p: TACBrPosPaginaCodigo;
   i: Integer;
 begin
+  ConfigurarDB;
+  CriarDB;
+  AbrirDB;
+
   TPlatformServices.Current.SupportsPlatformService(IFMXVirtualKeyboardService, IInterface(FVKService));
   FScanInProgress := False;
   FScanBitmap := Nil;
   FFrameTake := 0;
   FLinhasNome:= 0;
+  FSairClick := 0;
+  FInscricaoSel := '';
 
   tabsPrincipal.TabPosition := TTabPosition.None;
   tabsPrincipal.First;
@@ -277,7 +302,7 @@ begin
   end;
 
   LerConfiguracao;
-  LerArquivoCSV;
+  tiStart.Enabled := True;
 end;
 
 function TEtiquetaEventosForm.PedirPermissoes: Boolean;
@@ -350,12 +375,25 @@ begin
   ACBrPosPrinter1.Desativar;
 end;
 
+procedure TEtiquetaEventosForm.tiStartTimer(Sender: TObject);
+begin
+  tiStart.Enabled := False;
+  VoltarParaLista;
+end;
+
 procedure TEtiquetaEventosForm.VoltarParaLista;
 begin
   PararCamera;
   FLinhasNome := 0;
+  FInscricaoSel := '';
+  if Assigned(FSearchBox) then
+    FSearchBox.Text := '';
+
   ACBrPosPrinter1.Desativar;
+  AbrirDB;
+
   tabsPrincipal.SetActiveTabWithTransition(tabLista, TTabTransition.Slide);
+  FSearchBox.SetFocus;
 end;
 
 procedure TEtiquetaEventosForm.BaixarLista(AURL: String);
@@ -401,7 +439,7 @@ begin
     if not cbImpCodBarras.IsChecked then
       SL.Add(PadCenter(edtLinha4.Text.Trim, ColunasTextoImpressao))
     else
-      SL.Add('</ce><code93>'+edtLinha4.Text.Trim+'</code93>');
+      SL.Add('</ce><code39>'+edtLinha4.Text.Trim+'</code39>');
 
     FLinhasNome := max(min(FLinhasNome, 2), 1);
     SL[0] := '<in>'+SL[0];
@@ -414,6 +452,9 @@ begin
 
     ACBrPosPrinter1.Ativar;
     ACBrPosPrinter1.Imprimir(SL.Text);
+
+    if (FInscricaoSel <> '') then
+      FDConnection1.ExecSQL('update inscritos set Impresso = Impresso + 1 where Inscricao = '+FInscricaoSel);
   finally
     SL.Free;
   end;
@@ -479,15 +520,26 @@ begin
   if mURLDownload.Text.Trim.IsEmpty then
     mURLDownload.Text := CURL_LISTA_EXEMPLO;
 
-  BaixarLista(mURLDownload.Text);
-  LerArquivoCSV;
-  VoltarParaLista;
+  TDialogServiceAsync.MessageDialog('Zerar Lista Atual e baixar uma Nova ?',
+    TMsgDlgType.mtConfirmation,
+    [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo], TMsgDlgBtn.mbNo, 0,
+    procedure(const AResult: TModalResult)
+    begin
+      if (AResult = mrYes) then
+      begin
+        BaixarLista(mURLDownload.Text);
+        LerArquivoCSV;
+        VoltarParaLista;
+      end;
+    end);
 end;
 
-procedure TEtiquetaEventosForm.Button2Click(Sender: TObject);
+
+procedure TEtiquetaEventosForm.btLimparClick(Sender: TObject);
 begin
   LimparEditsImpressao;
   FLinhasNome := 0;
+  FInscricaoSel := '';
 end;
 
 function TEtiquetaEventosForm.CalcularNomeArqINI: String;
@@ -500,6 +552,11 @@ begin
   Result := ApplicationPath+'lista.csv';
 end;
 
+function TEtiquetaEventosForm.CalcularNomeDB: String;
+begin
+  Result := ApplicationPath+'lista.db';
+end;
+
 procedure TEtiquetaEventosForm.CameraComponent1SampleBufferReady(Sender: TObject;
   const ATime: TMediaTime);
 begin
@@ -507,18 +564,17 @@ begin
   procedure
   begin
     CameraComponent1.SampleBufferToBitmap(imgCamera.Bitmap, True);
-    if (fScanInProgress) then
+    if (FScanInProgress) then
       Exit;
 
-    inc(fFrameTake);
-    if (fFrameTake mod 4 <> 0) then
+    inc(FFrameTake);
+    if (FFrameTake mod 4 <> 0) then
       Exit;
 
-    if Assigned(fScanBitmap) then
-      FreeAndNil(fScanBitmap);
-
-    fScanBitmap := TBitmap.Create();
-    fScanBitmap.Assign(imgCamera.Bitmap);
+    if Assigned(FScanBitmap) then
+      FreeAndNil(FScanBitmap);
+    FScanBitmap := TBitmap.Create();
+    FScanBitmap.Assign(imgCamera.Bitmap);
 
     ParseImage();
   end);
@@ -566,7 +622,47 @@ begin
   ACBrPosPrinter1.ControlePorta := cbControlePorta.IsChecked;
 end;
 
+procedure TEtiquetaEventosForm.ConfigurarDB;
+begin
+  FDConnection1.Connected := False;
+  FDConnection1.DriverName := 'SQLite';
+  FDConnection1.LoginPrompt := False;
+  FDConnection1.Params.Database := CalcularNomeDB;
+  FDConnection1.Connected := True;
+end;
+
+procedure TEtiquetaEventosForm.CriarDB;
+begin
+  FDConnection1.ExecSQL('CREATE TABLE IF NOT EXISTS inscritos ('+
+                          'Inscricao STRING (20) PRIMARY KEY,'+
+                          'Nome      STRING (40),'+
+                          'Empresa   STRING (40),'+
+                          'Cargo     STRING (20),'+
+                          'Impresso  INTEGER (5) DEFAULT (0)'+
+                        ');');
+end;
+
+procedure TEtiquetaEventosForm.ApagarDB;
+begin
+  qLista.Close;
+  qPresentes.Close;
+  FDConnection1.ExecSQL('DROP TABLE IF EXISTS inscritos;');
+end;
+
+procedure TEtiquetaEventosForm.AbrirDB;
+begin
+  qLista.Close;
+  qLista.Open;
+  qPresentes.Close;
+  qPresentes.Open;
+
+  lblInscritos.Text := Format('%d Inscritos, %d presentes',
+    [qLista.RecordCount, qPresentes.FieldByName('presentes').AsInteger]);
+end;
+
 procedure TEtiquetaEventosForm.FormKeyUp(Sender: TObject; var Key: Word; var KeyChar: Char; Shift: TShiftState);
+var
+  t: Int64;
 begin
   if Key = vkHardwareBack then
   begin
@@ -585,19 +681,38 @@ begin
       GravarConfiguracao;
       tabsPrincipal.First;
       Key := 0;
+      Exit;
     end;
 
     if (tabsPrincipal.ActiveTab = tabCamera) then
     begin
       PararCamera;
-      tabsPrincipal.First;
+      VoltarParaLista;
       Key := 0;
+      Exit;
     end;
 
     if (tabsPrincipal.ActiveTab = tabImpressao) then
     begin
-      tabsPrincipal.First;
+      VoltarParaLista;
       Key := 0;
+      Exit;
+    end;
+
+    if Assigned(FSearchBox) and (not FSearchBox.Text.IsEmpty) then
+    begin
+      VoltarParaLista;
+      Key := 0;
+      Exit;
+    end;
+
+    t := MilliSecondsBetween(FSairClick, now);
+    if (t > 2000) then
+    begin
+      FSairClick := Now;
+      Toast('Clicar novamente para Sair');
+      Key := 0;
+      Exit;
     end;
   end;
 end;
@@ -645,6 +760,7 @@ begin
     INI.WriteBool('PosPrinter.Barras','HRI',cbHRI.IsChecked);
 
     INI.WriteBool('Etiqueta','CodBarras', cbImpCodBarras.IsChecked);
+    INI.WriteBool('Etiqueta','LeitorIntegrado', cbLeitorIntegrado.IsChecked);
     INI.WriteInteger('Etiqueta','Caracteres', ColunasTextoImpressao);
     INI.WriteInteger('Etiqueta','LinhasPular', Trunc(seLinhasPular.Value) );
   finally
@@ -665,13 +781,11 @@ begin
       ReadResult: TReadResult;
       ScanManager: TScanManager;
     begin
-      fScanInProgress := True;
-      ScanManager := TScanManager.Create(TBarcodeFormat.Auto, nil);
-
+      FScanInProgress := True;
+      ScanManager := TScanManager.Create(TBarcodeFormat.QR_CODE, nil);
       try
-
         try
-          ReadResult := ScanManager.Scan(fScanBitmap);
+          ReadResult := ScanManager.Scan(FScanBitmap);
         except
           on E: Exception do
           begin
@@ -690,9 +804,7 @@ begin
             i: Integer;
           begin
             if (Length(lblScanStatus.Text) > 10) then
-            begin
               lblScanStatus.Text := 'Lendo';
-            end;
 
             lblScanStatus.Text := lblScanStatus.Text + '.';
             if (ReadResult <> nil) then
@@ -711,11 +823,10 @@ begin
           FreeAndNil(ReadResult);
 
         ScanManager.Free;
-        fScanInProgress := false;
+        FScanInProgress := False;
       end;
 
     end).Start();
-
 end;
 
 procedure TEtiquetaEventosForm.IniciarCamera;
@@ -724,9 +835,9 @@ begin
     Exit;
 
   PararCamera;
-  CameraComponent1.Quality := FMX.Media.TVideoCaptureQuality.MediumQuality;
-  CameraComponent1.Kind := FMX.Media.TCameraKind.BackCamera;
-  CameraComponent1.FocusMode := FMX.Media.TFocusMode.ContinuousAutoFocus;
+  CameraComponent1.Quality := TVideoCaptureQuality.MediumQuality;
+  CameraComponent1.Kind := TCameraKind.BackCamera;
+  CameraComponent1.FocusMode := TFocusMode.ContinuousAutoFocus;
   CameraComponent1.Active := True;
   lblScanStatus.Text := 'Lendo';
 end;
@@ -764,14 +875,21 @@ begin
   Sep := ' ';
   Erros := 0;
 
-  FDMemTable1.Close;
-  FDMemTable1.CreateDataSet;
-  FDMemTable1.Open;
+  ApagarDB;
+  CriarDB;
+  AbrirDB;
 
   BindSourceDB1.DataSource.Enabled := False;
   SL := TStringList.Create;
   try
     SL.LoadFromFile(NomeArq);
+
+    if (SL.Count < 1) then
+    begin
+      Toast('Erro ao ler arquivo (arquivo vazio)');
+      Exit;
+    end;
+
     for i := 0 to SL.Count-1 do
     begin
       Lin := SL[i];
@@ -795,15 +913,15 @@ begin
 
       if (Length(Campos) >= 3) then
       begin
-        FDMemTable1.Append;
-        FDMemTable1.FieldByName('fdIncricao').AsString := Campos[0];
-        FDMemTable1.FieldByName('fdNome').AsString := Campos[1];
+        qLista.Append;
+        qLista.FieldByName('Inscricao').AsString := Campos[0];
+        qLista.FieldByName('Nome').AsString := Campos[1];
         if Length(Campos) > 2 then
-          FDMemTable1.FieldByName('fdEmpresa').AsString := Campos[2];
+          qLista.FieldByName('Empresa').AsString := Campos[2];
         if Length(Campos) > 3 then
-          FDMemTable1.FieldByName('fdCargo').AsString := Campos[3];
-
-        FDMemTable1.Post;
+          qLista.FieldByName('Cargo').AsString := Campos[3];
+        qLista.FieldByName('Impresso').AsInteger := 0;
+        qLista.Post;
       end
       else
         Inc(Erros);
@@ -812,8 +930,14 @@ begin
     SL.Free;
     BindSourceDB1.DataSource.Enabled := True;
   end;
-  
-  Toast(IntToStr(FDMemTable1.RecordCount)+' registros incluidos');
+
+  if (qLista.RecordCount < 1) then
+  begin
+    Toast('Erro ao ler arquivo (nenhum registro válido)');
+    Exit;
+  end;
+
+  Toast(IntToStr(qLista.RecordCount)+' registros incluidos');
   if (Erros > 0) then
     Toast(IntToStr(erros)+' erros encontrados');
 end;
@@ -842,6 +966,7 @@ begin
     cbHRI.IsChecked := INI.ReadBool('Barras','HRI', ACBrPosPrinter1.ConfigBarras.MostrarCodigo);
 
     cbImpCodBarras.IsChecked := INI.ReadBool('Etiqueta','CodBarras', True);
+    cbLeitorIntegrado.IsChecked := INI.ReadBool('Etiqueta','LeitorIntegrado', True);
     seCaracteresLinha.Value := INI.ReadInteger('Etiqueta','Caracteres', 16);
     seLinhasPular.Value := INI.ReadInteger('Etiqueta','LinhasPular', 2);
   finally
@@ -867,6 +992,10 @@ begin
       end;
     end;
   end;
+
+  btQRCode.Visible := not cbLeitorIntegrado.IsChecked;
+  if (tabsPrincipal.ActiveTab = tabLista) then
+    FSearchBox.SetFocus;
 end;
 
 procedure TEtiquetaEventosForm.LimparEditsImpressao;
@@ -901,6 +1030,7 @@ begin
 
   FSearchBox.Text := '';
   FLinhasNome := 0;
+  FInscricaoSel := '';
   LinBarra := IfThen(cbImpCodBarras.IsChecked, 1, 0);
   MaxLins := 4 - LinBarra;
   LimparEditsImpressao;
@@ -910,9 +1040,6 @@ begin
   slCargo := TStringList.Create;
   try
     s := (AItem.View.FindDrawable('TextNome') as TListItemText).Text;
-    i := pos(' ', s);
-    if (i > 0) then           // Acha o primeiro nome
-      s := copy(s, 1, i-1);
     PrepararTextoParaImpressao(s, slNome, 2);
 
     s := (AItem.View.FindDrawable('TextEmpresa') as TListItemText).Text;
@@ -924,9 +1051,14 @@ begin
     if (LinhasTotal > MaxLins) then
       SetCount(slCargo, min(slCargo.Count, 1));
     if (LinhasTotal > MaxLins) then
-      SetCount(slEmpresa, min(slEmpresa.Count, 2));
-    if (LinhasTotal > MaxLins) then
-      SetCount(slNome, min(slNome.Count, 2));
+    begin
+      SetCount(slNome, min(slNome.Count, 1));
+      i := PosLast(' ',slNome[0]);
+      if (i = 0) then
+        i := Length(slNome[0]);
+      s := copy(slNome[0], 1, i);
+      slNome.Text := s;
+    end;
     if (LinhasTotal > MaxLins) then
       SetCount(slEmpresa, min(slEmpresa.Count, 1));
 
@@ -945,14 +1077,13 @@ begin
     if (slFinal.Count > 3) then
       edtLinha4.Text := slFinal[3];
 
-    if cbImpCodBarras.IsChecked then
-    begin
-      s := (AItem.View.FindDrawable('TextInscricao') as TListItemText).Text;
-      edtLinha4.Text := s;
-    end;
+    FInscricaoSel := (AItem.View.FindDrawable('TextInscricao') as TListItemText).Text;
 
     if cbImpCodBarras.IsChecked then
+    begin
+      edtLinha4.Text := FInscricaoSel;
       edtLinha4.TextAlign := TTextAlign.Center
+    end
     else
       edtLinha4.TextAlign := TTextAlign.Leading;
   finally
@@ -966,4 +1097,5 @@ begin
 end;
 
 end.
+
 

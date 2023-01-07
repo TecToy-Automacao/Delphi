@@ -1,5 +1,9 @@
 # Etiquetas Eventos V2Pro
 
+## Sobre o V2Pro
+Trata-se de um SmartPOS, com Impressora, que suporta Bobinas com Etiquetas térmicas  
+Saiba mais em: https://tectoyautomacao.com.br/produtos/terminais-moveis/pdv-portatil-v2-pro
+
 ## Descrição do Projeto
 Esse projeto permite a impressão de Etiquetas para Eventos (crachás) de forma Simples e rápida em um equipamento V2Pro da TecToy
 
@@ -21,6 +25,8 @@ Após o download do arquivo, o aplicativo exibirá o número de inscritos encont
 
 Atualmente, nessa versão, a impressão irá remover a acentuação e cedilha dos Nomes dos incritos, e usará sempre letras MAIÚSCULAS.
 
+Nota: Apesar do V2Pro possuir um Scanner com suporte a códigos 2D, no momento, essa aplicação utiliza a câmera traseira do equipamento, para leitura do QRCode
+
 ## Características da Etiqueta
 - O Rolo de Etiquetas deve ser térmico
 - As etiquetas devem ter o tamanho 60x40mm
@@ -29,7 +35,7 @@ Atualmente, nessa versão, a impressão irá remover a acentuação e cedilha do
 A etiqueta conterá os seguintes itens:
 - Nome do Participante
 - Nomo na Empresa
-- Cod.Barras com o número da inscrição (Code93)
+- Cod.Barras com o número da inscrição (Code39)
 
 ## Exemplo de Etiqueta Impressa
 Veja na figura abaixo, um Crachá usado no Evento **TecToy na Estrada**. A Caneta na foto, é utilizada para dar uma noção de perspectiva e tamanho
@@ -66,6 +72,15 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 	- Espaços
 - Clique em "Salvar" e retorne a tela principal
 	
+## Usando o Scanner do V2Pro
+O V2Pro tem um poderoso Scanner, que lê muito rapidamente códigos de Barras 1D e 2D.. As imagens abaixo, mostram como você pode configurar o seu V2Pro, para fazer uso desse Scanner, em qualquer aplicação
+
+![Tela_V2Pro_ScannerSettings1](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings1.png)
+![Tela_V2Pro_ScannerSettings2](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings2.png)
+![Tela_V2Pro_ScannerSettings3](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings3.png)
+![Tela_V2Pro_ScannerSettings4](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings4.png)
+![Tela_V2Pro_ScannerSettings5](https://github.com/TecToy-Automacao/Delphi/blob/main/ACBr/V2Pro/EtiquetaEventos/img/Tela_V2Pro_ScannerSettings5.png)
+
 ## Como abrir o Projeto no Delphi
 - **Importante**, esse projeto depende dos componentes do **[Projeto ACBr](https://projetoacbr.com.br/)**
 - Se você precisa de mais informações de como baixar e instalar os componentes do ACBr em sua IDE, por favor leia com atenção as intruções dessa página:  
@@ -82,3 +97,5 @@ https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/Etique
 | --- | --- | --- | --- |  
 | 0.9 | 01/08/2022 | DSA | Primeira Versão |  
 | 1.0 | 11/09/2022 | DSA | Impressão com Cod.Barras Code93 |  
+| 1.1 | 03/10/2022 | DSA | Controle de Presentes e Num.Impressoes por participante |
+| 1.2 | 03/09/2022 | DSA | Impressão com Cod.Barras em Code39 |  

@@ -33,7 +33,6 @@
 *.bpi
 *.dcp
 *.so
-*.apk
 *.drc
 *.map
 *.dres
@@ -67,3 +66,4 @@ __recovery/
 
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
+*.bak

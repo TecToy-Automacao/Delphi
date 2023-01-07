@@ -13,7 +13,11 @@
 		"github.com/viniciussanchez/dataset-serialize": {
 			"name": "dataset-serialize",
 			"version": "v2.3.6",
+<<<<<<< HEAD
 			"hash": "1536bd5d3bdd1e11d2014d4e11cc2ae4",
+=======
+			"hash": "5bbe4efe665522a3528982bb8838fce6",
+>>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 			"artifacts": {},
 			"failed": false,
 			"changed": false

@@ -82,7 +82,11 @@ begin
     begin
       memProdutos.Append;
       memProdutos.FieldByName('ID').AsInteger          := LValues.GetValue<integer>('ID');
+<<<<<<< HEAD
       memProdutos.FieldByName('NOME').AsString         := LValues.GetValue<string>('NOME');
+=======
+      //memProdutos.FieldByName('NOME').AsString         := LValues.GetValue<string>('NOME');
+>>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
       memProdutos.FieldByName('DESCRICAO').AsString    := LValues.GetValue<string>('DESCRICAO');
       memProdutos.FieldByName('VLR_UNITARIO').AsFloat  := LValues.GetValue<double>('VLR_UNITARIO');
 
