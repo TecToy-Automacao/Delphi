@@ -64,17 +64,9 @@ uses
   System.UITypes,
   System.Variants,
   System.Permissions
-<<<<<<< HEAD
-  {$IFDEF ANDROID}
-=======
 
-//  MobilePermissions.Model.Signature,
-//  MobilePermissions.Model.Dangerous,
-//  MobilePermissions.Model.Standard,
-//  MobilePermissions.Component
 
 {$IFDEF ANDROID}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
     ,
   ZXing.BarcodeFormat,
   ZXing.ReadResult,
@@ -83,19 +75,9 @@ uses
   Androidapi.JNI.Os,
   Androidapi.Helpers,
   Posix.Unistd
-<<<<<<< HEAD
-
-  {$ENDIF}
-  ;
-=======
-//  MobilePermissions.Model.Signature,
-//  MobilePermissions.Model.Dangerous,
-//  MobilePermissions.Model.Standard,
-//  MobilePermissions.Component
 
 {$ENDIF}
-    ;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+  ;
 
 type
   TProcedureExcept = reference to procedure(const AExcpetion: string);
@@ -279,10 +261,6 @@ type
     procedure speBtnConfComandaClick(Sender: TObject);
     procedure speFecharPedidoClick(Sender: TObject);
     procedure speSairConfigClick(Sender: TObject);
-<<<<<<< HEAD
-=======
-    procedure tbcPrincipalChange(Sender: TObject);
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
   private
     { Private declarations }
     FComanda:        Integer;
@@ -331,15 +309,9 @@ type
 
     procedure Login(AUsuario, ASenha: string; Sender: TObject);
     procedure Logoff(Sender: TObject);
-<<<<<<< HEAD
     {$IFDEF ANDROID}
     procedure Bipar;
     {$ENDIF}
-=======
-{$IFDEF ANDROID}
-    procedure Bipar;
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
     function AppEvent(AAppEvent: TApplicationEvent; AContext: TObject): Boolean;
     function ExtrairTexto(AValue: string; ACaractere: Char): string;
     procedure PedirPermissoes;
@@ -376,44 +348,8 @@ uses
 
 {$R *.fmx}
 
-<<<<<<< HEAD
 
 {$HINTS OFF}
-procedure TfrmPrincipal.PedirPermissoes;
-Var
-  Ok: Boolean;
-begin
-  Ok := True;
-  {$IFDEF ANDROID}
-  PermissionsService.RequestPermissions(
-    [JStringToString(TJManifest_permission.JavaClass.BLUETOOTH),
-     JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_ADMIN),
-     JStringToString(TJManifest_permission.JavaClass.BLUETOOTH_PRIVILEGED),
-     JStringToString(TJManifest_permission.JavaClass.INTERNET),
-     JStringToString(TJManifest_permission.JavaClass.CAMERA)],
-    {$IFDEF DELPHI28_UP}
-    procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
-    {$ELSE}
-    procedure(const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray)
-    {$ENDIF}
-    var
-      GR: TPermissionStatus;
-    begin
-      for GR in AGrantResults do
-        if (GR <> TPermissionStatus.Granted) then
-        begin
-          Ok := False;
-          Break;
-        end;
-    end
-  );
-
-  if not Ok then
-    raise EPermissionException.Create('Sem permissões para acesso a Internet');
-  {$ENDIF}
-=======
-{$HINTS OFF}
-
 procedure TfrmPrincipal.PedirPermissoes;
 Var
   Ok: Boolean;
@@ -445,7 +381,7 @@ begin
   if not OK then
     raise EPermissionException.Create( 'Sem permissões para acesso a Internet');
   {$EndIf}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
 end;
 {$HINTS ON}
 
@@ -490,23 +426,6 @@ begin
         TThread.CurrentThread,
         procedure()
           procedure ClonarFundoGeralPadrao(AControl: TComponent);
-<<<<<<< HEAD
-          var
-            LFundoGeralPadrao : TLayout;
-          begin
-            for var I := 0 to Pred(AControl.ComponentCount) do
-            begin
-              if (AControl.Components[I] is TTabItem) then
-              begin
-                LFundoGeralPadrao := TLayout(lytGeralFundoApp.Clone(AControl.Components[I]));
-
-                TTabItem(AControl.Components[I]).AddObject(LFundoGeralPadrao);
-                LFundoGeralPadrao.SendToBack;
-                ClonarFundoGeralPadrao(AControl.Components[I]);
-              end;
-            end;
-          end;
-=======
         var
           LFundoGeralPadrao: TLayout;
         begin
@@ -522,7 +441,7 @@ begin
             end;
           end;
         end;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
         begin
           // Dialogo de adição de qtde
           lblTitQtde.TextSettings.FontColor := TPerfil.COR_PRINCIPAL;
@@ -589,7 +508,7 @@ begin
 end;
 
 procedure TfrmPrincipal.InsertOnClickEvent(AObject: TControl; AEvent: TNotifyEvent; AllControls: Boolean = True);
-<<<<<<< HEAD
+
   procedure AddEvent(AControl: TControl; AEvent: TNotifyEvent);
   var
     I: Integer;
@@ -612,30 +531,6 @@ procedure TfrmPrincipal.InsertOnClickEvent(AObject: TControl; AEvent: TNotifyEve
       AddEvent(AControl.Controls[I], AEvent);
     end;
   end;
-=======
-procedure AddEvent(AControl: TControl; AEvent: TNotifyEvent);
-var
-  I: Integer;
-begin
-  for I := 0 to Pred(AControl.ControlsCount) do
-  begin
-    if AllControls then
-    begin
-      AControl.Controls[I].HitTest := True;
-      AControl.Controls[I].OnClick := AEvent;
-    end
-    else
-    begin
-      if (AControl.Controls[I] is TSpeedButton) then
-      begin
-        TSpeedButton(AControl.Controls[I]).OnClick := AEvent;
-        Break;
-      end;
-    end;
-    AddEvent(AControl.Controls[I], AEvent);
-  end;
-end;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 
 begin
   AObject.BeginUpdate;
@@ -898,28 +793,20 @@ end;
 
 procedure TfrmPrincipal.OnGestureTapHoldItem(Sender: TObject; const EventInfo: TGestureEventInfo; var Handled: Boolean);
 begin
-<<<<<<< HEAD
+
   {$IFNDEF MSWINDOWS}
   ServicePedidos.memItensPedido.Locate('ID', TLabel(Sender).Owner.Tag, []);
   ServicePedidos.memItensPedido.Edit;
   MostrarQtde;
   {$ENDIF}
-=======
-{$IFNDEF MSWINDOWS}
-  ServicePedidos.memItensPedido.Locate('ID', TLabel(Sender).Owner.Tag, []);
-  ServicePedidos.memItensPedido.Edit;
-  MostrarQtde;
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
 end;
 
 procedure TfrmPrincipal.ParseImage;
 begin
-<<<<<<< HEAD
+
   {$IFDEF ANDROID}
-=======
-{$IFDEF ANDROID}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   TThread.CreateAnonymousThread(
     procedure
     var
@@ -938,11 +825,6 @@ begin
             TThread.Synchronize(TThread.CurrentThread,
               procedure
               begin
-<<<<<<< HEAD
-                //lblScanStatus.Text := 'Erro de leitura';
-=======
-                // lblScanStatus.Text := 'Erro de leitura';
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
               end);
             // exit;
           end;
@@ -971,11 +853,9 @@ begin
         fScanInProgress := False;
       end;
     end).Start();
-<<<<<<< HEAD
+
   {$ENDIF}
-=======
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
 end;
 
 procedure TfrmPrincipal.OnClickPedido(Sender: TObject);
@@ -1023,21 +903,17 @@ begin
       MostrarFundoEscuro;
       lytComanda.BringToFront;
 
-<<<<<<< HEAD
       {$IFDEF ANDROID}
-=======
-{$IFDEF ANDROID}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
+
       camComanda.Active := False;
       camComanda.Quality := FMX.Media.TVideoCaptureQuality.MediumQuality;
       camComanda.Kind := FMX.Media.TCameraKind.BackCamera;
       camComanda.FocusMode := FMX.Media.TFocusMode.ContinuousAutoFocus;
       camComanda.Active := True;
-<<<<<<< HEAD
+
       {$ENDIF}
-=======
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
       lblCodComanda.Text := EmptyStr;
       lytComanda.Width := Self.ClientWidth - 40;
       lytComanda.Position.X := (Self.ClientWidth / 2) - (lytComanda.Width / 2);
@@ -1071,10 +947,7 @@ begin
   recFundoOpaco.Visible := False;
 end;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 procedure TfrmPrincipal.OcultarQtde;
 begin
   TAnimator.AnimateFloat(lytAddProduto, 'Opacity', 0);
@@ -1247,109 +1120,69 @@ end;
 procedure TfrmPrincipal.CustomThread(AOnStart, AOnProcess, AOnComplete: TProc; AOnError: TProcedureExcept;
 const ADoCompleteWithError: Boolean);
 var
-  LThread: TThread;
+  LThread : TThread;
 begin
   LThread :=
     TThread.CreateAnonymousThread(
-    procedure()
-<<<<<<< HEAD
-    //ToDo: Revisar
-    //var
-    //  LDoComplete: Boolean;
-    begin
-      try
-        {$REGION 'Processo completo'}
-        {$REGION 'Start'}
+      procedure()
+      var
+        LDoComplete : Boolean;
+      begin
         try
-          //ToDo: Revisar
-          //LDoComplete := True;
-=======
-    // ToDo: Revisar
-    // var
-    // LDoComplete: Boolean;
-    begin
-      try
-{$REGION 'Processo completo'}
-{$REGION 'Start'}
-        try
-          // ToDo: Revisar
-          // LDoComplete := True;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
-          // Processo Inicial
-          if (Assigned(AOnStart)) then
-          begin
-            TThread.Synchronize(
-              TThread.CurrentThread,
-              procedure()
-              begin
-                AOnStart;
-              end
-              );
-          end;
-<<<<<<< HEAD
-          {$ENDREGION}
-          {$REGION 'Process'}
-          // Processo Principal
-          if Assigned(AOnProcess) then
-            AOnProcess;
-          {$ENDREGION}
-        except
-          on E: Exception do
-          begin
-            //ToDo: Revisar
-            //LDoComplete := ADoCompleteWithError;
-=======
-{$ENDREGION}
-{$REGION 'Process'}
-          // Processo Principal
-          if Assigned(AOnProcess) then
-            AOnProcess;
-{$ENDREGION}
-        except
-          on E: Exception do
-          begin
-            // ToDo: Revisar
-            // LDoComplete := ADoCompleteWithError;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
-            // Processo de Erro
-            if Assigned(AOnError) then
+        {$Region 'Processo completo'}
+          {$Region 'Start'}
+          try
+            LDoComplete := True;
+            //Processo Inicial
+            if (Assigned(AOnStart)) then
             begin
               TThread.Synchronize(
                 TThread.CurrentThread,
-                procedure()
+                procedure ()
                 begin
-                  AOnError(E.Message);
+                  AOnStart;
                 end
+              );
+            end;
+          {$EndRegion}
+          {$Region 'Process'}
+            //Processo Principal
+            if Assigned(AOnProcess) then
+              AOnProcess;
+          {$EndRegion}
+          except on E:Exception do
+            begin
+              LDoComplete := ADoCompleteWithError;
+              //Processo de Erro
+              if Assigned(AOnError) then
+              begin
+                TThread.Synchronize(
+                  TThread.CurrentThread,
+                  procedure ()
+                  begin
+                    AOnError(E.Message);
+                  end
                 );
+              end;
             end;
           end;
-        end;
-      finally
-<<<<<<< HEAD
-        {$REGION 'Complete'}
-=======
-{$REGION 'Complete'}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
-        // Processo de Finalização
-        if Assigned(AOnComplete) then
-        begin
-          TThread.Synchronize(
-            TThread.CurrentThread,
-            procedure()
-            begin
-              AOnComplete;
-            end
+        finally
+          {$Region 'Complete'}
+          //Processo de Finalização
+          if Assigned(AOnComplete) then
+          begin
+            TThread.Synchronize(
+              TThread.CurrentThread,
+              procedure ()
+              begin
+                AOnComplete;
+              end
             );
+          end;
+          {$EndRegion}
+          {$EndRegion}
         end;
-<<<<<<< HEAD
-        {$ENDREGION}
-        {$ENDREGION}
-=======
-{$ENDREGION}
-{$ENDREGION}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
-      end;
-    end
+      end
     );
   LThread.FreeOnTerminate := True;
   LThread.Start;
@@ -1427,17 +1260,12 @@ begin
     AppEventSvc.SetApplicationEventHandler(AppEvent);
   end;
 
-<<<<<<< HEAD
+
   {$IFDEF MSWINDOWS}
     Self.Left := 10;
     Self.Top  := 10;
   {$ENDIF}
-=======
-{$IFDEF MSWINDOWS}
-  Self.Left := 10;
-  Self.Top  := 10;
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   try
     Inicializar;
   except
@@ -1506,14 +1334,11 @@ begin
     then
       OcultarQtde
     else
-<<<<<<< HEAD
-      MudarAba(tbiPrincipal, Sender);
-=======
     begin
       CarregarItensPedido(Sender, ServicePedidos.PedidoSelecionadoID);
       MudarAba(tbiPrincipal, Sender);
     end;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   end
   else if tbcPrincipal.ActiveTab = tbiPrincipal then
   begin
@@ -1611,7 +1436,7 @@ begin
   lytLegenda.BringToFront;
   lytLegenda.Align := TAlignLayout.Bottom;
 
-<<<<<<< HEAD
+
   lsitemBaseMesa.Visible             := False;
   lytGeralFundoApp.Align             := TAlignLayout.Contents;
   tbcOperacao.Position.X             := 0;
@@ -1632,37 +1457,13 @@ begin
   edtLogin.TextSettings.FontColor := TAlphaColorRec.White;
   edtSenha.TextSettings.FontColor := TAlphaColorRec.White;
   {$ENDIF}
-=======
-  lsitemBaseMesa.Visible    := False;
-  lytGeralFundoApp.Align    := TAlignLayout.Contents;
-  tbcOperacao.Position.X    := 0;
-  tbcOperacao.Position.Y    := 48;
-  tbcOperacao.Height        := Self.ClientHeight - 48;
-  tbcOperacao.Width         := Self.ClientWidth;
-  tbcPrincipal.TabPosition  := TTabPosition.None;
-  tbcPrincipal.ActiveTab    := tbiLogin;
-  tbcOperacao.TabPosition   := TTabPosition.None;
-  tbcOperacao.ActiveTab     := tbiMesas;
-  grdMnuMesas.ItemWidth     := (grdMnuMesas.Width / 2);
-  grdMenuProdutos.ItemWidth := grdMnuMesas.Width;
 
-{$IFDEF MSWINDOWS}
-  edtLogin.TextSettings.FontColor := TAlphaColorRec.Black;
-  edtSenha.TextSettings.FontColor := TAlphaColorRec.Black;
-{$ELSE}
-  edtLogin.TextSettings.FontColor := TAlphaColorRec.White;
-  edtSenha.TextSettings.FontColor := TAlphaColorRec.White;
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
   OcultarFundoEscuro;
   OcultarQtde;
 end;
 {$ENDREGION}
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 begin
   try
     PedirPermissoes;
@@ -1740,18 +1541,12 @@ end;
 
 procedure TfrmPrincipal.Config;
 begin
-<<<<<<< HEAD
+
   TLib.User      := 'ADRIANO';
   TLib.Pass      := '123456';
   TLib.Server    := 'localhost';
   TLib.Port      := 9040;
-=======
-  TLib.User   := 'ADRIANO';
-  TLib.Pass   := '123456';
-  TLib.Server := '54.225.21.228';
-  TLib.Port   := 9040;
 
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 end;
 
 procedure TfrmPrincipal.LimparLista(Sender: TObject;
@@ -1785,19 +1580,13 @@ begin
   AClone.Position.Y := APosition; // 10 de Margem esquerda
   AClone.Position.X := 10;
   AClone.Height     := ARectBase.Height;
-<<<<<<< HEAD
+
   {$IFDEF MSWINDOWS}
   AClone.Width := AScroll.Width - 20; // 24 //Barra de rolagem do Windows
   {$ELSE}
   AClone.Width := AScroll.Width - 20; // - 8;
   {$ENDIF}
-=======
-{$IFDEF MSWINDOWS}
-  AClone.Width := AScroll.Width - 20; // 24 //Barra de rolagem do Windows
-{$ELSE}
-  AClone.Width := AScroll.Width - 20; // - 8;
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   ARectBase.Opacity := 1;
   AClone.Visible    := True;
   APosition         := APosition + ARectBase.Height + 10;
@@ -1814,19 +1603,13 @@ begin
   AClone.Position.Y := APosition;
   AClone.Position.X := 4;
   AClone.Height     := ARectBase.Height / 2;
-<<<<<<< HEAD
+
   {$IFDEF MSWINDOWS}
   AClone.Width := AScroll.Width - 8; // 24 //Barra de rolagem do Windows
   {$ELSE}
   AClone.Width := AScroll.Width - 8;
   {$ENDIF}
-=======
-{$IFDEF MSWINDOWS}
-  AClone.Width := AScroll.Width - 8; // 24 //Barra de rolagem do Windows
-{$ELSE}
-  AClone.Width := AScroll.Width - 8;
-{$ENDIF}
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   AClone.Opacity := 0;
   AClone.Visible := True;
 
@@ -1868,11 +1651,9 @@ end;
 
 procedure TfrmPrincipal.speFecharPedidoClick(Sender: TObject);
 begin
-<<<<<<< HEAD
+
   //ToDo: Fechar mesa, alterar o método.
-=======
-  // ToDo: Fechar mesa, alterar o método.
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   ServicePedidos.memItensPedido.Filter   := Format('ID_PEDIDO=%d', [ServicePedidos.PedidoSelecionadoID]);
   ServicePedidos.memItensPedido.Filtered := True;
 
@@ -1931,17 +1712,10 @@ begin
   //
 end;
 
-<<<<<<< HEAD
-{$IFDEF ANDROID}
-=======
-procedure TfrmPrincipal.tbcPrincipalChange(Sender: TObject);
-begin
-
-end;
 
 {$IFDEF ANDROID}
 
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
 procedure TfrmPrincipal.Bipar;
 var
   ResStream: TResourceStream;
@@ -1967,10 +1741,7 @@ begin
 end;
 {$ENDIF}
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 procedure TfrmPrincipal.camComandaSampleBufferReady(Sender: TObject;
 const ATime: TMediaTime);
 begin
@@ -2001,14 +1772,10 @@ begin
   Result := True;
   case AAppEvent of
     TApplicationEvent.WillBecomeInactive,
-<<<<<<< HEAD
+
     TApplicationEvent.EnteredBackground,
     TApplicationEvent.WillTerminate: camComanda.Active := False;
-=======
-      TApplicationEvent.EnteredBackground,
-      TApplicationEvent.WillTerminate:
-      camComanda.Active := False;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   end;
 end;
 
@@ -2054,13 +1821,10 @@ begin
   ServicePedidos.memItensPedido.Filtered := False;
 
   ServicePedidos.memPedidos.Append;
-<<<<<<< HEAD
+
   ServicePedidos.memPedidos.FieldByName('ID').AsInteger          := -1;       // Servidor Gera o ID_Pedido - GetIDPedido + 1;
   ServicePedidos.memPedidos.FieldByName('STATUS').AsString       := 'A';
-=======
-  ServicePedidos.memPedidos.FieldByName('ID').AsInteger        := -1; // Servidor Gera o ID_Pedido - GetIDPedido + 1;
-  ServicePedidos.memPedidos.FieldByName('STATUS').AsString     := 'A';
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
+
   ServicePedidos.memPedidos.FieldByName('VALOR_TOTAL').AsFloat := 0;
   ServicePedidos.memPedidos.FieldByName('ID_GARCOM').AsInteger := ServiceUsuarios.memGarcom.FieldByName('ID').AsInteger;
   ServicePedidos.memPedidos.FieldByName('ID_MESA').AsInteger   := ServiceMesas.memMesas.FieldByName('ID').AsInteger;
