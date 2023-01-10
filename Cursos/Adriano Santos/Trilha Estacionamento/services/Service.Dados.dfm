@@ -13,14 +13,12 @@ object ServiceDados: TServiceDados
         'ses\Park.db'
       'OpenMode=ReadWrite'
       'DriverID=SQLite')
-    Connected = True
     LoginPrompt = False
     BeforeConnect = fdConnBeforeConnect
     Left = 40
     Top = 16
   end
   object QryCarros: TFDQuery
-    Active = True
     Connection = fdConn
     SQL.Strings = (
       'SELECT * FROM CARROS WHERE BAIXADO = 0 ORDER BY PLACA')
