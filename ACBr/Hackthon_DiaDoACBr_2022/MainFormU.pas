@@ -541,6 +541,10 @@ begin
     begin
       FRespPasso1 := '';
       Toast('TAG RFID não tem RTD_TEXT');
+      Memo1.Lines.Add('TAG RFID não tem RTD_TEXT');
+      Memo1.Lines.Add('');
+      Memo1.Lines.Add('-- NDEF DUMP --');
+      Memo1.Lines.Add(DumpNDef(Tag));
     end;
   end;
 end;
