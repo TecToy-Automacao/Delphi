@@ -12,13 +12,6 @@ uses
 type
   TPerfil = class
     protected
-<<<<<<< HEAD
-      function String2Hex(const Buffer: AnsiString): string;
-      function Hex2String(const Buffer: string): AnsiString;
-=======
-//      function String2Hex(const Buffer: AnsiString): string;
-//      function Hex2String(const Buffer: string): AnsiString;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
     private
       class var FCOR_PRINCIPAL       : TAlphaColor;
       class var FCOR_SECUNDARIA      : TAlphaColor;
@@ -47,32 +40,6 @@ type
 implementation
 
 { TPerfil }
-
-<<<<<<< HEAD
-function TPerfil.String2Hex(const Buffer: AnsiString): string;
-begin
-  SetLength(Result, Length(Buffer) * 2);
-  BinToHex(PAnsiChar(Buffer), PChar(Result), Length(Buffer));
-end;
-
-function TPerfil.Hex2String(const Buffer: string): AnsiString;
-begin
-  SetLength(Result, Length(Buffer) div 2);
-  HexToBin(PChar(Buffer), PAnsiChar(Result), Length(Result));
-end;
-=======
-//function TPerfil.String2Hex(const Buffer: AnsiString): string;
-//begin
-//  SetLength(Result, Length(Buffer) * 2);
-//  BinToHex(PAnsiChar(Buffer), PChar(Result), Length(Buffer));
-//end;
-//
-//function TPerfil.Hex2String(const Buffer: string): AnsiString;
-//begin
-//  SetLength(Result, Length(Buffer) div 2);
-//  HexToBin(PChar(Buffer), PAnsiChar(Result), Length(Result));
-//end;
->>>>>>> 2162eb58de87ca0133b7864ec9c2a5825dca7be9
 
 class procedure TPerfil.InicializarCores;
 begin

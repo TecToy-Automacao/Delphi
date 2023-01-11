@@ -6,43 +6,19 @@
         <Projects Include="Trilha API\api.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Trilha GarcomAtendimento\GarcomAtendimento.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="Trilha MiniPDV\MiniPDV.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="Trilha Monitor de Preparo\#. Rascunhos\MonitorPreparo_RascunhoDeAula.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="Trilha Estacionamento\Park.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="Trilha Cinema\Cinema.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="D:\Temp\Impressao Bluetooth\Impressão Bluetooth\ImpressaoBT.dproj">
+        <Projects Include="Trilha GarcomAtendimento\GarcomAtendimento.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Monitores\Project1.dproj">
+        <Projects Include="Trilha Monitor de Preparo\MonitorPreparo.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="TestesDuas Telas\TestDuasTelas.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Multi-Device Samples\User Interface\Forms\Forms.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Mobile Snippets\AndroidIntents\SendIntent\SendIntent.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="Rascunho Monitor de Preparo\RascunhoMonitorPreparo.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="D:\Temp\Lives Discord\1. Componentes\Projeto2\Proj2.dproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="D:\Downloads\1. Testar Delphi\ServerPushFlavio\Server\Server.dproj">
+        <Projects Include="Trilha Estacionamento\Park.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -62,15 +38,6 @@
     <Target Name="api:Make">
         <MSBuild Projects="Trilha API\api.dproj" Targets="Make"/>
     </Target>
-    <Target Name="GarcomAtendimento">
-        <MSBuild Projects="Trilha GarcomAtendimento\GarcomAtendimento.dproj"/>
-    </Target>
-    <Target Name="GarcomAtendimento:Clean">
-        <MSBuild Projects="Trilha GarcomAtendimento\GarcomAtendimento.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="GarcomAtendimento:Make">
-        <MSBuild Projects="Trilha GarcomAtendimento\GarcomAtendimento.dproj" Targets="Make"/>
-    </Target>
     <Target Name="MiniPDV">
         <MSBuild Projects="Trilha MiniPDV\MiniPDV.dproj"/>
     </Target>
@@ -79,24 +46,6 @@
     </Target>
     <Target Name="MiniPDV:Make">
         <MSBuild Projects="Trilha MiniPDV\MiniPDV.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="MonitorPreparo_RascunhoDeAula">
-        <MSBuild Projects="Trilha Monitor de Preparo\#. Rascunhos\MonitorPreparo_RascunhoDeAula.dproj"/>
-    </Target>
-    <Target Name="MonitorPreparo_RascunhoDeAula:Clean">
-        <MSBuild Projects="Trilha Monitor de Preparo\#. Rascunhos\MonitorPreparo_RascunhoDeAula.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="MonitorPreparo_RascunhoDeAula:Make">
-        <MSBuild Projects="Trilha Monitor de Preparo\#. Rascunhos\MonitorPreparo_RascunhoDeAula.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="Park">
-        <MSBuild Projects="Trilha Estacionamento\Park.dproj"/>
-    </Target>
-    <Target Name="Park:Clean">
-        <MSBuild Projects="Trilha Estacionamento\Park.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="Park:Make">
-        <MSBuild Projects="Trilha Estacionamento\Park.dproj" Targets="Make"/>
     </Target>
     <Target Name="Cinema">
         <MSBuild Projects="Trilha Cinema\Cinema.dproj"/>
@@ -107,86 +56,41 @@
     <Target Name="Cinema:Make">
         <MSBuild Projects="Trilha Cinema\Cinema.dproj" Targets="Make"/>
     </Target>
-    <Target Name="ImpressaoBT">
-        <MSBuild Projects="D:\Temp\Impressao Bluetooth\Impressão Bluetooth\ImpressaoBT.dproj"/>
+    <Target Name="GarcomAtendimento">
+        <MSBuild Projects="Trilha GarcomAtendimento\GarcomAtendimento.dproj"/>
     </Target>
-    <Target Name="ImpressaoBT:Clean">
-        <MSBuild Projects="D:\Temp\Impressao Bluetooth\Impressão Bluetooth\ImpressaoBT.dproj" Targets="Clean"/>
+    <Target Name="GarcomAtendimento:Clean">
+        <MSBuild Projects="Trilha GarcomAtendimento\GarcomAtendimento.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="ImpressaoBT:Make">
-        <MSBuild Projects="D:\Temp\Impressao Bluetooth\Impressão Bluetooth\ImpressaoBT.dproj" Targets="Make"/>
+    <Target Name="GarcomAtendimento:Make">
+        <MSBuild Projects="Trilha GarcomAtendimento\GarcomAtendimento.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Project1">
-        <MSBuild Projects="Monitores\Project1.dproj"/>
+    <Target Name="MonitorPreparo">
+        <MSBuild Projects="Trilha Monitor de Preparo\MonitorPreparo.dproj"/>
     </Target>
-    <Target Name="Project1:Clean">
-        <MSBuild Projects="Monitores\Project1.dproj" Targets="Clean"/>
+    <Target Name="MonitorPreparo:Clean">
+        <MSBuild Projects="Trilha Monitor de Preparo\MonitorPreparo.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Project1:Make">
-        <MSBuild Projects="Monitores\Project1.dproj" Targets="Make"/>
+    <Target Name="MonitorPreparo:Make">
+        <MSBuild Projects="Trilha Monitor de Preparo\MonitorPreparo.dproj" Targets="Make"/>
     </Target>
-    <Target Name="TestDuasTelas">
-        <MSBuild Projects="TestesDuas Telas\TestDuasTelas.dproj"/>
+    <Target Name="Park">
+        <MSBuild Projects="Trilha Estacionamento\Park.dproj"/>
     </Target>
-    <Target Name="TestDuasTelas:Clean">
-        <MSBuild Projects="TestesDuas Telas\TestDuasTelas.dproj" Targets="Clean"/>
+    <Target Name="Park:Clean">
+        <MSBuild Projects="Trilha Estacionamento\Park.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="TestDuasTelas:Make">
-        <MSBuild Projects="TestesDuas Telas\TestDuasTelas.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="Forms">
-        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Multi-Device Samples\User Interface\Forms\Forms.dproj"/>
-    </Target>
-    <Target Name="Forms:Clean">
-        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Multi-Device Samples\User Interface\Forms\Forms.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="Forms:Make">
-        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Multi-Device Samples\User Interface\Forms\Forms.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="SendIntent">
-        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Mobile Snippets\AndroidIntents\SendIntent\SendIntent.dproj"/>
-    </Target>
-    <Target Name="SendIntent:Clean">
-        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Mobile Snippets\AndroidIntents\SendIntent\SendIntent.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="SendIntent:Make">
-        <MSBuild Projects="C:\Users\Public\Documents\Embarcadero\Studio\22.0\Samples\Object Pascal\Mobile Snippets\AndroidIntents\SendIntent\SendIntent.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="RascunhoMonitorPreparo">
-        <MSBuild Projects="Rascunho Monitor de Preparo\RascunhoMonitorPreparo.dproj"/>
-    </Target>
-    <Target Name="RascunhoMonitorPreparo:Clean">
-        <MSBuild Projects="Rascunho Monitor de Preparo\RascunhoMonitorPreparo.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="RascunhoMonitorPreparo:Make">
-        <MSBuild Projects="Rascunho Monitor de Preparo\RascunhoMonitorPreparo.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="Proj2">
-        <MSBuild Projects="D:\Temp\Lives Discord\1. Componentes\Projeto2\Proj2.dproj"/>
-    </Target>
-    <Target Name="Proj2:Clean">
-        <MSBuild Projects="D:\Temp\Lives Discord\1. Componentes\Projeto2\Proj2.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="Proj2:Make">
-        <MSBuild Projects="D:\Temp\Lives Discord\1. Componentes\Projeto2\Proj2.dproj" Targets="Make"/>
-    </Target>
-    <Target Name="Server">
-        <MSBuild Projects="D:\Downloads\1. Testar Delphi\ServerPushFlavio\Server\Server.dproj"/>
-    </Target>
-    <Target Name="Server:Clean">
-        <MSBuild Projects="D:\Downloads\1. Testar Delphi\ServerPushFlavio\Server\Server.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="Server:Make">
-        <MSBuild Projects="D:\Downloads\1. Testar Delphi\ServerPushFlavio\Server\Server.dproj" Targets="Make"/>
+    <Target Name="Park:Make">
+        <MSBuild Projects="Trilha Estacionamento\Park.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="api;GarcomAtendimento;MiniPDV;MonitorPreparo_RascunhoDeAula;Park;Cinema;ImpressaoBT;Project1;TestDuasTelas;Forms;SendIntent;RascunhoMonitorPreparo;Proj2;Server"/>
+        <CallTarget Targets="api;MiniPDV;Cinema;GarcomAtendimento;MonitorPreparo;Park"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="api:Clean;GarcomAtendimento:Clean;MiniPDV:Clean;MonitorPreparo_RascunhoDeAula:Clean;Park:Clean;Cinema:Clean;ImpressaoBT:Clean;Project1:Clean;TestDuasTelas:Clean;Forms:Clean;SendIntent:Clean;RascunhoMonitorPreparo:Clean;Proj2:Clean;Server:Clean"/>
+        <CallTarget Targets="api:Clean;MiniPDV:Clean;Cinema:Clean;GarcomAtendimento:Clean;MonitorPreparo:Clean;Park:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="api:Make;GarcomAtendimento:Make;MiniPDV:Make;MonitorPreparo_RascunhoDeAula:Make;Park:Make;Cinema:Make;ImpressaoBT:Make;Project1:Make;TestDuasTelas:Make;Forms:Make;SendIntent:Make;RascunhoMonitorPreparo:Make;Proj2:Make;Server:Make"/>
+        <CallTarget Targets="api:Make;MiniPDV:Make;Cinema:Make;GarcomAtendimento:Make;MonitorPreparo:Make;Park:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
