@@ -53,7 +53,8 @@ uses
   ACBrUtil.FilesIO, FMX.Media, FMX.Objects, FMX.SearchBox, FireDAC.UI.Intf,
   FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
   FireDAC.Phys.SQLite, FireDAC.Phys.SQLiteDef, FireDAC.Stan.ExprFuncs,
-  FireDAC.FMXUI.Wait, FireDAC.DApt, FireDAC.Comp.UI;
+  FireDAC.FMXUI.Wait, FireDAC.DApt, FireDAC.Comp.UI,
+  FireDAC.Phys.SQLiteWrapper.Stat;
 
 const
   CURL_LISTA_EXEMPLO = 'https://raw.githubusercontent.com/TecToy-Automacao/Delphi/main/ACBr/V2Pro/EtiquetaEventos/csv/exemplo_lista.csv';
