@@ -3,6 +3,11 @@
 ## Onde estão os fontes ?
 Os fontes desse projeto, forum incorporados ao Projeto ACBr, veja mais informações em **Como Instalar**
 
+Saiba mais sobre o ACBr em: https://projetoacbr.com.br/
+
+Instruções de como baixar os Fontes do ACBr: https://projetoacbr.com.br/fontes/
+
+
 ## Como instalar
 1. Rode o Instalador do Projeto ACBr, e marque o novo Package **ACBr_Android.dpk**
 2. Abra o Demo em: *\ACBr\Exemplos\ACBrAndroid\SunmiPrinter*
