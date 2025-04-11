@@ -74,3 +74,7 @@ Android/
 Android64/
 Win32/
 Win64/
+lib/
+*.res
+*.lps
+*.ico
