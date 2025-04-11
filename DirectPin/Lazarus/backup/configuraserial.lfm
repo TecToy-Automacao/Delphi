@@ -1,0 +1,159 @@
+object frConfiguraSerial: TfrConfiguraSerial
+  Left = 398
+  Height = 260
+  Top = 174
+  Width = 180
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsToolWindow
+  Caption = 'Porta Serial'
+  ClientHeight = 260
+  ClientWidth = 180
+  Constraints.MinHeight = 260
+  Constraints.MinWidth = 180
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Pitch = fpVariable
+  Position = poOwnerFormCenter
+  LCLVersion = '3.6.0.0'
+  object Label5: TLabel
+    Left = 8
+    Height = 13
+    Top = 8
+    Width = 136
+    Caption = '&Baud rate (Bits por Segundo)'
+    FocusControl = cmbBaudRate
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 8
+    Height = 13
+    Top = 53
+    Width = 118
+    Caption = '&Data Bits (Bits de Dados)'
+    FocusControl = cmbDataBits
+    ParentColor = False
+  end
+  object Label7: TLabel
+    Left = 8
+    Height = 13
+    Top = 97
+    Width = 77
+    Caption = '&Parity (Paridade)'
+    FocusControl = cmbParity
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 8
+    Height = 13
+    Top = 140
+    Width = 120
+    Caption = '&Stop Bits (Bits de Parada)'
+    FocusControl = cmbStopBits
+    ParentColor = False
+  end
+  object cmbBaudRate: TComboBox
+    Left = 8
+    Height = 21
+    Top = 26
+    Width = 161
+    ItemHeight = 13
+    ItemIndex = 6
+    Items.Strings = (
+      '110'
+      '300'
+      '600'
+      '1200'
+      '2400'
+      '4800'
+      '9600'
+      '14400'
+      '19200'
+      '38400'
+      '56000'
+      '57600'
+      '115200'
+    )
+    TabOrder = 0
+    Text = '9600'
+  end
+  object cmbDataBits: TComboBox
+    Left = 8
+    Height = 21
+    Top = 69
+    Width = 161
+    ItemHeight = 13
+    ItemIndex = 3
+    Items.Strings = (
+      '5'
+      '6'
+      '7'
+      '8'
+    )
+    Style = csDropDownList
+    TabOrder = 1
+    Text = '8'
+  end
+  object cmbParity: TComboBox
+    Left = 8
+    Height = 21
+    Top = 114
+    Width = 161
+    ItemHeight = 13
+    ItemIndex = 0
+    Items.Strings = (
+      'None'
+      'Odd'
+      'Even'
+      'Mark'
+      'Space'
+    )
+    Style = csDropDownList
+    TabOrder = 2
+    Text = 'None'
+  end
+  object cmbStopBits: TComboBox
+    Left = 8
+    Height = 21
+    Top = 158
+    Width = 161
+    ItemHeight = 13
+    ItemIndex = 0
+    Items.Strings = (
+      '1'
+      '1,5'
+      '2'
+    )
+    Style = csDropDownList
+    TabOrder = 3
+    Text = '1'
+  end
+  object BitBtn1: TBitBtn
+    Left = 51
+    Height = 25
+    Top = 222
+    Width = 75
+    Caption = '&OK'
+    Default = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 4
+  end
+  object chHardFlow: TCheckBox
+    Left = 16
+    Height = 17
+    Top = 196
+    Width = 63
+    Caption = 'HardFlow'
+    TabOrder = 5
+  end
+  object chSoftFlow: TCheckBox
+    Left = 104
+    Height = 17
+    Top = 196
+    Width = 59
+    Caption = 'SoftFlow'
+    TabOrder = 6
+  end
+end
