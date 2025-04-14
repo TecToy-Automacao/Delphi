@@ -1,11 +1,13 @@
 object FormMain: TFormMain
   Left = 391
-  Height = 439
+  Height = 450
   Top = 234
-  Width = 569
+  Width = 520
   Caption = 'FormMain'
-  ClientHeight = 439
-  ClientWidth = 569
+  ClientHeight = 450
+  ClientWidth = 520
+  Constraints.MinHeight = 450
+  Constraints.MinWidth = 520
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '3.6.0.0'
@@ -13,11 +15,11 @@ object FormMain: TFormMain
     Left = 0
     Height = 89
     Top = 0
-    Width = 569
+    Width = 520
     Align = alTop
     Caption = 'PinPad'
     ClientHeight = 69
-    ClientWidth = 565
+    ClientWidth = 516
     TabOrder = 0
     object Label4: TLabel
       AnchorSideLeft.Control = cbxPorta
@@ -36,7 +38,7 @@ object FormMain: TFormMain
       Left = 16
       Height = 23
       Top = 23
-      Width = 345
+      Width = 296
       Anchors = [akTop, akLeft, akRight]
       ItemHeight = 15
       ItemWidth = 250
@@ -46,7 +48,7 @@ object FormMain: TFormMain
       AnchorSideTop.Control = cbxPorta
       AnchorSideBottom.Control = cbxPorta
       AnchorSideBottom.Side = asrBottom
-      Left = 377
+      Left = 328
       Height = 23
       Hint = 'Procurar Impressoras USB'
       Top = 23
@@ -88,6 +90,8 @@ object FormMain: TFormMain
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000
       }
+      Images = ImageList1
+      ImageIndex = 12
       OnClick = btSearchPortsClick
       ShowHint = True
       ParentShowHint = False
@@ -96,7 +100,7 @@ object FormMain: TFormMain
       AnchorSideTop.Control = cbxPorta
       AnchorSideBottom.Control = cbxPorta
       AnchorSideBottom.Side = asrBottom
-      Left = 417
+      Left = 368
       Height = 23
       Top = 23
       Width = 32
@@ -129,6 +133,8 @@ object FormMain: TFormMain
         00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       }
+      Images = ImageList1
+      ImageIndex = 0
       OnClick = btSerialClick
     end
     object Label10: TLabel
@@ -140,7 +146,7 @@ object FormMain: TFormMain
       ParentColor = False
     end
     object seTimeOut: TSpinEdit
-      Left = 465
+      Left = 416
       Height = 23
       Top = 23
       Width = 82
@@ -155,11 +161,11 @@ object FormMain: TFormMain
     Left = 0
     Height = 129
     Top = 89
-    Width = 569
+    Width = 520
     Align = alTop
     Caption = 'Transação de Pagamento'
     ClientHeight = 109
-    ClientWidth = 565
+    ClientWidth = 516
     TabOrder = 1
     object cbxTypeTransaction: TComboBox
       AnchorSideBottom.Side = asrBottom
@@ -230,7 +236,7 @@ object FormMain: TFormMain
       Left = 352
       Height = 23
       Top = 23
-      Width = 193
+      Width = 144
       Anchors = [akLeft, akRight, akBottom]
       ItemHeight = 15
       Style = csDropDownList
@@ -282,8 +288,9 @@ object FormMain: TFormMain
       Left = 352
       Height = 30
       Top = 65
-      Width = 107
-      Caption = 'Enviar Pagto'
+      Width = 146
+      Anchors = [akTop, akRight]
+      Caption = 'Enviar Pagamento'
       Images = ImageList1
       ImageIndex = 1
       OnClick = btEnviarTransPagtoClick
@@ -292,25 +299,52 @@ object FormMain: TFormMain
   end
   object gbEstorno: TGroupBox
     Left = 0
-    Height = 62
+    Height = 70
     Top = 218
-    Width = 569
+    Width = 520
     Align = alTop
     Caption = 'Enviar Estorno'
+    ClientHeight = 50
+    ClientWidth = 516
     TabOrder = 2
+    object edNSU: TEdit
+      Left = 16
+      Height = 23
+      Top = 18
+      Width = 160
+      TabOrder = 0
+    end
+    object Label1: TLabel
+      Left = 16
+      Height = 15
+      Top = 2
+      Width = 23
+      Caption = 'NSU'
+    end
+    object btEnviarEstorno: TBitBtn
+      Left = 352
+      Height = 30
+      Top = 11
+      Width = 146
+      Anchors = [akTop, akRight]
+      Caption = 'Enviar Estorno'
+      Images = ImageList1
+      ImageIndex = 11
+      OnClick = btEnviarEstornoClick
+      TabOrder = 1
+    end
   end
   object mLog: TMemo
     Left = 0
-    Height = 159
-    Top = 280
-    Width = 569
+    Height = 162
+    Top = 288
+    Width = 520
     Align = alClient
     ScrollBars = ssVertical
     TabOrder = 3
   end
   object ImageList1: TImageList
-    Left = 280
-    Top = 65528
+    Left = 272
     Bitmap = {
       4C7A0D0000001000000010000000240600000000000078DAED5B69685C55147E
       5D62B5D19A1A691B1BEDA255C4E2825AC605378CD62E82E8280A2A1597404DEC

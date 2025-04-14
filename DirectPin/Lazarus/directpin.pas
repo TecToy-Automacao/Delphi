@@ -89,9 +89,9 @@ type
     property receiptContent: String read FreceiptContent write FreceiptContent;
   end;
 
-  { TTDPayLoadRequestReversal }
+  { TDPPayLoadRequestReversal }
 
-  TTDPayLoadRequestReversal = class
+  TDPPayLoadRequestReversal = class
   private
     Fnsu: String;
     Ftype_: String;
@@ -106,9 +106,9 @@ type
     property nsu: String read Fnsu write Fnsu;
   end;
 
-  { TTDPayLoadResponseReversal }
+  { TDPPayLoadResponseReversal }
 
-  TTDPayLoadResponseReversal = class
+  TDPPayLoadResponseReversal = class
   private
     Fmessage: String;
     FreceiptContent: String;
@@ -305,6 +305,9 @@ var
 begin
   Clear;
   o := GetJSON(AValue) as TJSONObject;
+  if not Assigned(o) then
+    Exit;
+
   try
     Ftype_ := o.Strings['type'];
     amount := o.Floats['amount'];
@@ -396,21 +399,21 @@ begin
   end;
 end;
 
-{ TTDPayLoadRequestReversal }
+{ TDPPayLoadRequestReversal }
 
-constructor TTDPayLoadRequestReversal.Create;
+constructor TDPPayLoadRequestReversal.Create;
 begin
   inherited;
   Clear;
 end;
 
-procedure TTDPayLoadRequestReversal.Clear;
+procedure TDPPayLoadRequestReversal.Clear;
 begin
   Fnsu := '';
   Ftype_ := 'reversal';
 end;
 
-function TTDPayLoadRequestReversal.GetAsJSON: String;
+function TDPPayLoadRequestReversal.GetAsJSON: String;
 var
   o: TJSONObject;
 begin
@@ -424,12 +427,15 @@ begin
   end;
 end;
 
-procedure TTDPayLoadRequestReversal.SetAsJSON(AValue: String);
+procedure TDPPayLoadRequestReversal.SetAsJSON(AValue: String);
 var
   o: TJSONObject;
 begin
   Clear;
   o := GetJSON(AValue) as TJSONObject;
+  if not Assigned(o) then
+    Exit;
+
   try
     Ftype_ := o.Strings['type'];
     nsu := o.Strings['nsu'];
@@ -438,15 +444,15 @@ begin
   end;
 end;
 
-{ TTDPayLoadResponseReversal }
+{ TDPPayLoadResponseReversal }
 
-constructor TTDPayLoadResponseReversal.Create;
+constructor TDPPayLoadResponseReversal.Create;
 begin
   inherited;
   Clear;
 end;
 
-procedure TTDPayLoadResponseReversal.Clear;
+procedure TDPPayLoadResponseReversal.Clear;
 begin
   Fmessage := '';
   FreceiptContent := '';
@@ -454,7 +460,7 @@ begin
   Ftype_ := '';
 end;
 
-function TTDPayLoadResponseReversal.GetAsJSON: String;
+function TDPPayLoadResponseReversal.GetAsJSON: String;
 var
   o: TJSONObject;
 begin
@@ -470,12 +476,15 @@ begin
   end;
 end;
 
-procedure TTDPayLoadResponseReversal.SetAsJSON(AValue: String);
+procedure TDPPayLoadResponseReversal.SetAsJSON(AValue: String);
 var
   o: TJSONObject;
 begin
   Clear;
   o := GetJSON(AValue) as TJSONObject;
+  if not Assigned(o) then
+    Exit;
+
   try
     Ftype_ := o.Strings['type'];
     result_ := o.Booleans['result'];

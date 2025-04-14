@@ -18,6 +18,7 @@ type
 
   TFormMain = class(TForm)
     btEnviarTransPagto: TBitBtn;
+    btEnviarEstorno: TBitBtn;
     btSearchPorts: TSpeedButton;
     btSerial: TSpeedButton;
     cbIsPreAuth: TCheckBox;
@@ -27,10 +28,12 @@ type
     cbxPorta: TComboBox;
     cbxCreditType: TComboBox;
     cbIsTyped: TCheckBox;
+    edNSU: TEdit;
     gbEstorno: TGroupBox;
     gbPinPad: TGroupBox;
     gbPagamento: TGroupBox;
     ImageList1: TImageList;
+    Label1: TLabel;
     Label10: TLabel;
     Label4: TLabel;
     Label5: TLabel;
@@ -42,6 +45,7 @@ type
     seTimeOut: TSpinEdit;
     seValor: TFloatSpinEdit;
     seInstallment: TSpinEdit;
+    procedure btEnviarEstornoClick(Sender: TObject);
     procedure btEnviarTransPagtoClick(Sender: TObject);
     procedure btSearchPortsClick(Sender: TObject);
     procedure btSerialClick(Sender: TObject);
@@ -49,7 +53,8 @@ type
     procedure FormDestroy(Sender: TObject);
   private
     fSerial: TBlockSerial;
-    procedure ConfigurarSerial;
+    function ConectarSerial: Boolean;
+    function ConfigurarSerial: Boolean;
     function LerRespostaSerial(ATimeOut: Integer): AnsiString;
     procedure Log(const Info: AnsiString);
   public
@@ -113,7 +118,18 @@ begin
   fSerial.Free;
 end;
 
-procedure TFormMain.ConfigurarSerial;
+function TFormMain.ConectarSerial: Boolean;
+var
+  porta: TCaption;
+begin
+  porta := cbxPorta.Text;
+  Log(Format('Conectando em: %s', [porta]));
+  fSerial.Connect(porta);
+  Log(Format('  Serial.LastError: %d', [fSerial.LastError]));
+  Result := (fSerial.LastError = 0);
+end;
+
+function TFormMain.ConfigurarSerial: Boolean;
 var
   baud, bits, stop: Integer;
   parity: Char;
@@ -130,6 +146,7 @@ begin
               [baud, bits, parity, stop, BoolToStr(softflow, True), BoolToStr(hardflow, True)]));
   fSerial.config(baud, bits, parity, stop, softflow, hardflow);
   Log(Format('  Serial.LastError: %d', [fSerial.LastError]));
+  Result := (fSerial.LastError = 0);
 end;
 
 function TFormMain.LerRespostaSerial(ATimeOut: Integer): AnsiString;
@@ -197,24 +214,19 @@ end;
 procedure TFormMain.btEnviarTransPagtoClick(Sender: TObject);
 var
   ReqTrans: TDPPayloadRequestTransaction;
-  Payload, porta, JSonResp: String;
-  dpMessage: TDPSerialMessage;
-  b: Byte;
-  s: AnsiString;
   ResTrans: TDPPayloadResponseTransaction;
+  dpMessage: TDPSerialMessage;
+  Payload, porta, JSonResp: String;
+  s: AnsiString;
+  b: Byte;
 begin
   Log('-- Enviar Transacao Pagamento --');
 
-  porta := cbxPorta.Text;
-  Log(Format('Conectando em: %s', [porta]));
-  fSerial.Connect(porta);
-  Log(Format('  Serial.LastError: %d', [fSerial.LastError]));
-  if (fSerial.LastError <> 0) then
+  if not ConectarSerial then
     Exit;
 
   try
-    ConfigurarSerial;
-    if (fSerial.LastError <> 0) then
+    if not ConfigurarSerial then
       Exit;
 
     ReqTrans := TDPPayloadRequestTransaction.Create;
@@ -238,6 +250,8 @@ begin
     try
       dpMessage.PayLoad := Payload;
       s := dpMessage.message;
+      Log('- Serial Message -');
+      Log(s);
       fSerial.SendString(s);
       Log(Format('  Serial.LastError: %d', [fSerial.LastError]));
       if (fSerial.LastError <> 0) then
@@ -262,22 +276,96 @@ begin
         Log(JSonResp);
 
         ResTrans.AsJSON := JSonResp;
-
         Log('-- Dados da Resposta da Transação --');
         Log('Result: '+BoolToStr(ResTrans.result_, True));
         Log('message: '+ResTrans.message);
         Log('amount: '+FormatFloat('0.00', ResTrans.amount));
         Log('nsu: '+ResTrans.nsu);
+        Log('nsuAcquirer: '+ResTrans.nsuAcquirer);
         Log('panMasked: '+ResTrans.panMasked);
         Log('date: '+FormatDateTime('dd/mm/yy hh:nn:ss', ResTrans.date));
         Log('typeCard: '+ResTrans.typeCard);
         Log('finalResult: '+ResTrans.finalResult);
         Log('codeResult: '+IntToStr(ResTrans.codeResult));
-        Log('receiptContent: '+ResTrans.receiptContent);
+        Log('- receiptContent -');
+        Log( StringReplace(ResTrans.receiptContent, '@', sLineBreak, [rfReplaceAll]) );
+        edNSU.Text := ResTrans.nsu;
       finally
          ResTrans.Free;
       end;
+    finally
+      dpMessage.Free;
+    end;
+  finally
+    fSerial.CloseSocket;
+  end;
+end;
 
+procedure TFormMain.btEnviarEstornoClick(Sender: TObject);
+var
+  ReqRev: TDPPayLoadRequestReversal;
+  ResRev: TDPPayLoadResponseReversal;
+  dpMessage: TDPSerialMessage;
+  Payload, JSonResp: String;
+  s: AnsiString;
+begin
+  Log('-- Enviar Estorno --');
+
+  if not ConectarSerial then
+    Exit;
+
+  try
+    if not ConfigurarSerial then
+      Exit;
+
+    ReqRev := TDPPayLoadRequestReversal.Create;
+    try
+       ReqRev.nsu := edNSU.Text;
+       Payload := ReqRev.AsJSON;
+       Log('- Payload -');
+       Log(Payload);
+    finally
+       ReqRev.Free;
+    end;
+
+    dpMessage := TDPSerialMessage.Create;
+    try
+      dpMessage.PayLoad := Payload;
+      s := dpMessage.message;
+      Log('- Serial Message -');
+      Log(s);
+      fSerial.SendString(s);
+      Log(Format('  Serial.LastError: %d', [fSerial.LastError]));
+      if (fSerial.LastError <> 0) then
+        Exit;
+
+      s := LerRespostaSerial(seTimeOut.Value * 100);
+
+      ResRev := TDPPayLoadResponseReversal.Create;
+      try
+        try
+          dpMessage.message := s;
+          JSonResp := dpMessage.PayLoad;
+        except
+          On E: Exception do
+          begin
+            Log(E.Message);
+            JSonResp := DecodeStringBase64(s);
+          end;
+        end;
+
+        Log('- Resposta -');
+        Log(JSonResp);
+
+        ResRev.AsJSON := JSonResp;
+        Log('-- Dados da Resposta da Transação --');
+        Log('Result: '+BoolToStr(ResRev.result_, True));
+        Log('message: '+ResRev.message);
+        Log('- receiptContent -');
+        Log( StringReplace(ResRev.receiptContent, '@', sLineBreak, [rfReplaceAll]) );
+      finally
+         ResRev.Free;
+      end;
     finally
       dpMessage.Free;
     end;
