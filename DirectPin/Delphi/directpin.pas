@@ -1,7 +1,5 @@
 unit DirectPin;
 
-{$mode ObjFPC}{$H+}
-
 interface
 
 uses
@@ -60,7 +58,7 @@ type
     FcodeResult: Integer;
     Fdate: TDateTime;
     FfinalResult: String;
-    Fmessage: String;
+    Fmessage_: String;
     Fnsu: String;
     FnsuAcquirer: String;
     FpanMasked: String;
@@ -77,7 +75,7 @@ type
 
     property type_: String read Ftype_;
     property result_: Boolean read Fresult_ write Fresult_;
-    property message: String read Fmessage write Fmessage;
+    property message_: String read Fmessage_ write Fmessage_;
     property amount: Double read Famount write Famount;
     property nsu: String read Fnsu write Fnsu;
     property nsuAcquirer: String read FnsuAcquirer write FnsuAcquirer;
@@ -110,7 +108,7 @@ type
 
   TDPPayLoadResponseReversal = class
   private
-    Fmessage: String;
+    Fmessage_: String;
     FreceiptContent: String;
     Fresult_: Boolean;
     Ftype_: String;
@@ -123,7 +121,7 @@ type
 
     property type_: String read Ftype_;
     property result_: Boolean read Fresult_ write Fresult_;
-    property message: String read Fmessage write Fmessage;
+    property message_: String read Fmessage_ write Fmessage_;
     property receiptContent: String read FreceiptContent write FreceiptContent;
   end;
 
@@ -133,15 +131,15 @@ type
   private
     FPayLoad: String;
 
-    function GetMessage: AnsiString;
-    procedure SetMessage(AValue: AnsiString);
+    function GetMessage_: AnsiString;
+    procedure SetMessage_(AValue: AnsiString);
   protected
 
   public
     constructor Create;
     procedure Clear;
 
-    property message: AnsiString read GetMessage write SetMessage;
+    property message_: AnsiString read GetMessage_ write SetMessage_;
     property PayLoad: String read FPayLoad write FPayLoad;
     function Checksum(const AString: AnsiString): AnsiString;
   end;
@@ -160,8 +158,8 @@ type
 implementation
 
 uses
-  fpjson, DateUtils,
-  base64;
+  DateUtils, Math,
+  JSons, synacode;
 
 // https://forum.lazarus.freepascal.org/index.php/topic,38279.msg259717.html#msg259717
 function StringCrcCCITT(const s: AnsiString; initial:Word=0; polynomial:Word=$1021): Word;
@@ -284,16 +282,16 @@ var
 begin
   o := TJSONObject.Create;
   try
-    o.Add('type', type_);
-    o.Add('amount', Trunc(amount*100));
-    o.Add('typeTransaction', typeTransactionToString(typeTransaction));
-    o.Add('creditType', creditTypeToString(creditType));
-    o.Add('installment', installment);
-    o.Add('isTyped', isTyped);
-    o.Add('isPreAuth', isPreAuth);
-    o.Add('interestType', interestTypeToString(interestType));
-    o.Add('printReceipt', printReceipt);
-    Result := o.AsJSON;
+    o.Add('type').Value.AsString := type_;
+    o.Add('amount').Value.AsInteger := Trunc(RoundTo(amount*100, 0));
+    o.Add('typeTransaction').Value.AsString := typeTransactionToString(typeTransaction);
+    o.Add('creditType').Value.AsString := creditTypeToString(creditType);
+    o.Add('installment').Value.AsInteger := installment;
+    o.Add('isTyped').Value.AsBoolean := isTyped;
+    o.Add('isPreAuth').Value.AsBoolean := isPreAuth;
+    o.Add('interestType').Value.AsString := interestTypeToString(interestType);
+    o.Add('printReceipt').Value.AsBoolean := printReceipt;
+    Result := o.Stringify;
   finally
     o.Free;
   end;
@@ -304,21 +302,19 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := GetJSON(AValue) as TJSONObject;
-  if not Assigned(o) then
-    Exit;
-
+  o := TJSONObject.Create();
   try
-    Ftype_ := o.Strings['type'];
-    amount := o.Integers['amount']/100;
-    typeTransaction := StringTotypeTransaction(o.Strings['typeTransaction']);
-    creditType := StringTocreditType(o.Strings['creditType']);
-    installment := o.Integers['installment'];
-    isTyped := o.Booleans['isTyped'];
-    isPreAuth := o.Booleans['isPreAuth'];
-    isTyped := o.Booleans['isTyped'];
-    interestType := StringTointerestType(o.Strings['interestType']);
-    printReceipt := o.Booleans['printReceipt'];
+    o.Parse(AValue);
+    Ftype_ := o.Values['type'].AsString;
+    amount := o.Values['amount'].AsInteger/100;
+    typeTransaction := StringTotypeTransaction(o.Values['typeTransaction'].AsString);
+    creditType := StringTocreditType(o.Values['creditType'].AsString);
+    installment := o.Values['installment'].AsInteger;
+    isTyped := o.Values['isTyped'].AsBoolean;
+    isPreAuth := o.Values['isPreAuth'].AsBoolean;
+    isTyped := o.Values['isTyped'].AsBoolean;
+    interestType := StringTointerestType(o.Values['interestType'].AsString);
+    printReceipt := o.Values['printReceipt'].AsBoolean;
   finally
     o.Free;
   end;
@@ -338,7 +334,7 @@ begin
   FcodeResult := 0;
   Fdate := 0;
   FfinalResult := '';
-  Fmessage := '';
+  Fmessage_ := '';
   Fnsu := '';
   FnsuAcquirer := '';
   FpanMasked := '';
@@ -354,19 +350,19 @@ var
 begin
   o := TJSONObject.Create;
   try
-    o.Add('type', type_);
-    o.Add('result', result_);
-    o.Add('message', message);
-    o.Add('amount', Trunc(amount*100));
-    o.Add('nsu', nsu);
-    o.Add('nsuAcquirer', nsuAcquirer);
-    o.Add('panMasked', panMasked);
-    o.Add('date', DateTimeToUnix(date, False)*1000);
-    o.Add('typeCard', typeCard);
-    o.Add('finalResult', finalResult);
-    o.Add('codeResult', codeResult);
-    o.Add('receiptContent', receiptContent);
-    Result := o.AsJSON;
+    o.Add('type').Value.AsString := type_;
+    o.Add('result').Value.AsBoolean := result_;
+    o.Add('message').Value.AsString := message_;
+    o.Add('amount').Value.AsInteger := Trunc(amount*100);
+    o.Add('nsu').Value.AsString := nsu;
+    o.Add('nsuAcquirer').Value.AsString := nsuAcquirer;
+    o.Add('panMasked').Value.AsString := panMasked;
+    o.Add('date').Value.AsInteger := DateTimeToUnix(date)*1000;
+    o.Add('typeCard').Value.AsString := typeCard;
+    o.Add('finalResult').Value.AsString := finalResult;
+    o.Add('codeResult').Value.AsInteger := codeResult;
+    o.Add('receiptContent').Value.AsString := receiptContent;
+    Result := o.Stringify;
   finally
     o.Free;
   end;
@@ -377,23 +373,21 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := GetJSON(AValue) as TJSONObject;
-  if not Assigned(o) then
-    Exit;
-
+  o := TJSONObject.Create;
   try
-    Ftype_ := o.Strings['type'];
-    result_ := o.Booleans['result'];
-    message := o.Strings['message'];
-    amount := o.Integers['amount']/100;
-    nsu := o.Strings['nsu'];
-    nsuAcquirer := o.Strings['nsuAcquirer'];
-    panMasked := o.Strings['panMasked'];
-    date := UnixToDateTime(Trunc(o.Int64s['date']/1000), False);
-    typeCard := o.Strings['typeCard'];
-    finalResult := o.Strings['finalResult'];
-    codeResult := o.Integers['codeResult'];
-    receiptContent := o.Strings['receiptContent'];
+    o.Parse(AValue);
+    Ftype_ := o.Values['type'].AsString;
+    result_ := o.Values['result'].AsBoolean;
+    message_ := o.Values['message'].AsString;
+    amount := o.Values['amount'].AsInteger/100;
+    nsu := o.Values['nsu'].AsString;
+    nsuAcquirer := o.Values['nsuAcquirer'].AsString;
+    panMasked := o.Values['panMasked'].AsString;
+    date := UnixToDateTime(Trunc(o.Values['date'].AsInteger/1000));
+    typeCard := o.Values['typeCard'].AsString;
+    finalResult := o.Values['finalResult'].AsString;
+    codeResult := o.Values['codeResult'].AsInteger;
+    receiptContent := o.Values['receiptContent'].AsString;
   finally
     o.Free;
   end;
@@ -419,9 +413,9 @@ var
 begin
   o := TJSONObject.Create;
   try
-    o.Add('type', type_);
-    o.Add('nsu', nsu);
-    Result := o.AsJSON;
+    o.Add('type').Value.AsString := type_;
+    o.Add('nsu').Value.AsString := nsu;
+    Result := o.Stringify;
   finally
     o.Free;
   end;
@@ -432,13 +426,11 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := GetJSON(AValue) as TJSONObject;
-  if not Assigned(o) then
-    Exit;
-
+  o := TJSONObject.Create;
   try
-    Ftype_ := o.Strings['type'];
-    nsu := o.Strings['nsu'];
+    o.Parse(AValue);
+    Ftype_ := o.Values['type'].AsString;
+    nsu := o.Values['nsu'].AsString;
   finally
     o.Free;
   end;
@@ -454,7 +446,7 @@ end;
 
 procedure TDPPayLoadResponseReversal.Clear;
 begin
-  Fmessage := '';
+  Fmessage_ := '';
   FreceiptContent := '';
   Fresult_ := False;
   Ftype_ := '';
@@ -466,11 +458,11 @@ var
 begin
   o := TJSONObject.Create;
   try
-    o.Add('type', type_);
-    o.Add('result', result_);
-    o.Add('message', message);
-    o.Add('receiptContent', receiptContent);
-    Result := o.AsJSON;
+    o.Add('type').Value.AsString := type_;
+    o.Add('result').Value.AsBoolean := result_;
+    o.Add('message').Value.AsString := message_;
+    o.Add('receiptContent').Value.AsString := receiptContent;
+    Result := o.Stringify;
   finally
     o.Free;
   end;
@@ -481,15 +473,13 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := GetJSON(AValue) as TJSONObject;
-  if not Assigned(o) then
-    Exit;
-
+  o := TJSONObject.Create;
   try
-    Ftype_ := o.Strings['type'];
-    result_ := o.Booleans['result'];
-    message := o.Strings['message'];
-    receiptContent := o.Strings['receiptContent'];
+    o.Parse(AValue);
+    Ftype_ := o.Values['type'].AsString;
+    result_ := o.Values['result'].AsBoolean;
+    message_ := o.Values['message'].AsString;
+    receiptContent := o.Values['receiptContent'].AsString;
   finally
     o.Free;
   end;
@@ -518,15 +508,15 @@ begin
   Result := chr(StrToInt('$'+copy(hex,1,2))) + chr(StrToInt('$'+copy(hex,3,2)))
 end;
 
-function TDPSerialMessage.GetMessage: AnsiString;
+function TDPSerialMessage.GetMessage_: AnsiString;
 var
   s: String;
 begin
-  s := EncodeStringBase64(PayLoad);
+  s := EncodeBase64(PayLoad);
   Result := chr(SYN) + s + Checksum(s) + chr(ETB) ;
 end;
 
-procedure TDPSerialMessage.SetMessage(AValue: AnsiString);
+procedure TDPSerialMessage.SetMessage_(AValue: AnsiString);
 var
   s, crc1, crc2: AnsiString;
   le: Integer;
@@ -548,7 +538,7 @@ begin
   if (crc1 <> crc2) then
     raise Exception.Create('message with wrong CRC');
 
-  FPayLoad := DecodeStringBase64(s);
+  FPayLoad := DecodeBase64(s);
 end;
 
 end.

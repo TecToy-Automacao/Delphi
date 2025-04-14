@@ -138,10 +138,11 @@ object FormMain: TFormMain
       OnClick = btSerialClick
     end
     object Label10: TLabel
-      Left = 376
+      Left = 416
       Height = 15
       Top = 8
       Width = 47
+      Anchors = [akTop, akRight]
       Caption = 'TimeOut'
       ParentColor = False
     end
