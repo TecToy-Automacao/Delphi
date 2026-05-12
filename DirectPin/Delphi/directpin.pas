@@ -1,5 +1,6 @@
 unit DirectPin;
 
+
 interface
 
 uses
@@ -16,6 +17,10 @@ type
   TDPtypeTransaction = (dptNONE, dptDEBIT, dptCREDIT, dptVOUCHER, dptPIX);
   TDPcreditType = (dpcNO_INSTALLMENT, dpcINSTALLMENT);
   TDPinterestType = (dpiMERCHANT, dpiISSUER);
+  TDPTypeCard = (dptcNONE, dptcMAGNETIC, dptcEMV_CONTACT, dptcCONTACTLESS_STRIPE, dptcCONTACTLESS_EMV, dptcTYPED);
+  TDPFinalResult = (dpfrAPPROVED, dpfrPENDING, dpfrREPROVED_HOST, dpfrREPROVED_CARD, dpfrCANCELED, dpfrABORTED, dpfrCONNECTION_ERROR, dpfrCARD_READ_ERROR, dpfrCONFIRMED, dpfrUNDONE);
+  TDPCollectInputType = (dpcitNUMERIC, dpcitNUMERIC_PASSWORD, dpcitPASSWORD, dpcitEMAIL, dpcitTEXT);
+  TDPMessageType = (dpmtTEXT, dpmtQR_CODE);
 
   { TDPPayloadTransacao }
 
@@ -24,7 +29,9 @@ type
   TDPPayloadRequestTransaction = class
   private
     Famount: Double;
-    FcreditType: TDPcredittype;
+    FautoConfirm: Boolean;
+    FcreditType: TDPcreditType;
+    FentityIdentifier: String;
     Finstallment: Integer;
     FinterestType: TDPinterestType;
     FisPreAuth: Boolean;
@@ -46,8 +53,10 @@ type
     property installment: Integer read Finstallment write Finstallment;
     property isTyped: Boolean read FisTyped write FisTyped;
     property isPreAuth: Boolean read FisPreAuth write FisPreAuth;
+    property autoConfirm: Boolean read FautoConfirm write FautoConfirm;
     property interestType: TDPinterestType read FinterestType write FinterestType;
     property printReceipt: Boolean read FprintReceipt write FprintReceipt;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
   end;
 
   { TDPPayloadResponseTransaction }
@@ -55,16 +64,21 @@ type
   TDPPayloadResponseTransaction = class
   private
     Famount: Double;
+    FauthCode: String;
+    Fbrand: String;
     FcodeResult: Integer;
     Fdate: TDateTime;
-    FfinalResult: String;
-    Fmessage_: String;
+    FfinalResult: TDPFinalResult;
+    FforceReset: Boolean;
+    Fmessage: String;
     Fnsu: String;
     FnsuAcquirer: String;
     FpanMasked: String;
     FreceiptContent: String;
     Fresult_: Boolean;
-    FtypeCard: String;
+    FserialNumber: String;
+    Ftype: String;
+    FtypeCard: TDPTypeCard;
     Ftype_: String;
     function GetAsJSON: String;
     procedure SetAsJSON(AValue: String);
@@ -75,22 +89,28 @@ type
 
     property type_: String read Ftype_;
     property result_: Boolean read Fresult_ write Fresult_;
-    property message_: String read Fmessage_ write Fmessage_;
+    property message: String read Fmessage write Fmessage;
     property amount: Double read Famount write Famount;
     property nsu: String read Fnsu write Fnsu;
     property nsuAcquirer: String read FnsuAcquirer write FnsuAcquirer;
     property panMasked: String read FpanMasked write FpanMasked;
     property date: TDateTime read Fdate write Fdate;
-    property typeCard: String read FtypeCard write FtypeCard;
-    property finalResult: String read FfinalResult write FfinalResult;
+    property typeCard: TDPTypeCard read FtypeCard write FtypeCard;
+    property finalResult: TDPFinalResult read FfinalResult write FfinalResult;
     property codeResult: Integer read FcodeResult write FcodeResult;
+    property authCode: String read FauthCode write FauthCode;
+    property brand: String read Fbrand write Fbrand;
+    property serialNumber: String read FserialNumber write FserialNumber;
+    property typeResult: String read Ftype write Ftype;
     property receiptContent: String read FreceiptContent write FreceiptContent;
+    property forceReset: Boolean read FforceReset write FforceReset;
   end;
 
   { TDPPayLoadRequestReversal }
 
   TDPPayLoadRequestReversal = class
   private
+    FentityIdentifier: String;
     Fnsu: String;
     Ftype_: String;
     function GetAsJSON: String;
@@ -102,15 +122,19 @@ type
 
     property type_: String read Ftype_;
     property nsu: String read Fnsu write Fnsu;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
   end;
 
   { TDPPayLoadResponseReversal }
 
   TDPPayLoadResponseReversal = class
   private
-    Fmessage_: String;
+    FfinalResult: TDPFinalResult;
+    FforceReset: Boolean;
+    Fmessage: String;
     FreceiptContent: String;
     Fresult_: Boolean;
+    Ftype: String;
     Ftype_: String;
     function GetAsJSON: String;
     procedure SetAsJSON(AValue: String);
@@ -121,8 +145,165 @@ type
 
     property type_: String read Ftype_;
     property result_: Boolean read Fresult_ write Fresult_;
-    property message_: String read Fmessage_ write Fmessage_;
+    property message: String read Fmessage write Fmessage;
+    property finalResult: TDPFinalResult read FfinalResult write FfinalResult;
+    property typeResult: String read Ftype write Ftype;
     property receiptContent: String read FreceiptContent write FreceiptContent;
+    property forceReset: Boolean read FforceReset write FforceReset;
+  end;
+
+  { TDPPayloadRequestConfirmTransaction }
+
+  TDPPayloadRequestConfirmTransaction = class
+  private
+    FentityIdentifier: String;
+    Fnsu: String;
+    Ftype_: String;
+    function GetAsJSON: String;
+    procedure SetAsJSON(const AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+    property type_: String read Ftype_;
+    property nsu: String read Fnsu write Fnsu;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
+  end;
+
+  { TDPPayloadRequestUndoTransaction }
+
+  TDPPayloadRequestUndoTransaction = class
+  private
+    FentityIdentifier: String;
+    Fnsu: String;
+    Ftype_: String;
+    function GetAsJSON: String;
+    procedure SetAsJSON(const AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+    property type_: String read Ftype_;
+    property nsu: String read Fnsu write Fnsu;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
+  end;
+
+  { TDPPayloadRequestAbort }
+
+  TDPPayloadRequestAbort = class
+  private
+    FentityIdentifier: String;
+    Ftype_: String;
+    function GetAsJSON: String;
+    procedure SetAsJSON(const AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+    property type_: String read Ftype_;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
+  end;
+
+  { TDPPayloadRequestCollect }
+
+  TDPPayloadRequestCollect = class
+  private
+    FentityIdentifier: String;
+    FinputType: TDPCollectInputType;
+    Fmask: String;
+    Ftitle: String;
+    Ftype_: String;
+    function GetAsJSON: String;
+    procedure SetAsJSON(const AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+    property type_: String read Ftype_;
+    property title: String read Ftitle write Ftitle;
+    property mask: String read Fmask write Fmask;
+    property inputType: TDPCollectInputType read FinputType write FinputType;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
+  end;
+
+  { TDPPayloadRequestMessage }
+
+  TDPPayloadRequestMessage = class
+  private
+    FcancelMessage: String;
+    FconfirmMessage: String;
+    FentityIdentifier: String;
+    Fmessage: String;
+    Ftimeout: Integer;
+    Ftitle: String;
+    Ftype_: String;
+    FtypeMessage: TDPMessageType;
+    function GetAsJSON: String;
+    procedure SetAsJSON(const AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+    property type_: String read Ftype_;
+    property typeMessage: TDPMessageType read FtypeMessage write FtypeMessage;
+    property title: String read Ftitle write Ftitle;
+    property message: String read Fmessage write Fmessage;
+    property confirmMessage: String read FconfirmMessage write FconfirmMessage;
+    property cancelMessage: String read FcancelMessage write FcancelMessage;
+    property timeout: Integer read Ftimeout write Ftimeout;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
+  end;
+
+  { TDPPayloadRequestSurvey }
+
+  TDPPayloadRequestSurvey = class
+  private
+    Factive: Boolean;
+    FallowComment: Boolean;
+    Fchannel: String;
+    FcontextJSON: String;
+    FcreatedAt: String;
+    FcustomerId: String;
+    FdeviceIdentifier: String;
+    FentityIdentifier: String;
+    Fevent: String;
+    Fflow: String;
+    FoperationType: String;
+    Fquestion: String;
+    FscaleMax: Integer;
+    FscaleMin: Integer;
+    FsurveyId: String;
+    FsurveyType: String;
+    Ftitle: String;
+    FtransactionId: String;
+    Ftype_: String;
+    FuserId: String;
+    function GetAsJSON: String;
+    procedure SetAsJSON(const AValue: String);
+  public
+    constructor Create;
+    procedure Clear;
+    property AsJSON: String read GetAsJSON write SetAsJSON;
+    property type_: String read Ftype_;
+    property surveyType: String read FsurveyType write FsurveyType;
+    property title: String read Ftitle write Ftitle;
+    property question: String read Fquestion write Fquestion;
+    property scaleMin: Integer read FscaleMin write FscaleMin;
+    property scaleMax: Integer read FscaleMax write FscaleMax;
+    property surveyId: String read FsurveyId write FsurveyId;
+    property allowComment: Boolean read FallowComment write FallowComment;
+    property active: Boolean read Factive write Factive;
+    property createdAt: String read FcreatedAt write FcreatedAt;
+    property userId: String read FuserId write FuserId;
+    property customerId: String read FcustomerId write FcustomerId;
+    property transactionId: String read FtransactionId write FtransactionId;
+    property operationType: String read FoperationType write FoperationType;
+    property channel: String read Fchannel write Fchannel;
+    property deviceIdentifier: String read FdeviceIdentifier write FdeviceIdentifier;
+    property flow: String read Fflow write Fflow;
+    property event: String read Fevent write Fevent;
+    property contextJSON: String read FcontextJSON write FcontextJSON;
+    property entityIdentifier: String read FentityIdentifier write FentityIdentifier;
   end;
 
   { TDPSerialMessage }
@@ -131,15 +312,15 @@ type
   private
     FPayLoad: String;
 
-    function GetMessage_: AnsiString;
-    procedure SetMessage_(AValue: AnsiString);
+    function GetMessage: AnsiString;
+    procedure SetMessage(AValue: AnsiString);
   protected
 
   public
     constructor Create;
     procedure Clear;
 
-    property message_: AnsiString read GetMessage_ write SetMessage_;
+    property message: AnsiString read GetMessage write SetMessage;
     property PayLoad: String read FPayLoad write FPayLoad;
     function Checksum(const AString: AnsiString): AnsiString;
   end;
@@ -155,11 +336,98 @@ type
   function interestTypeToString(AinterestType: TDPinterestType): String;
   function StringTointerestType(const AStr: String): TDPinterestType;
 
+  function finalResultToString(AfinalResult: TDPFinalResult): String;
+  function StringTofinalResult(const AStr: String): TDPFinalResult;
+
+  function typeCardToString(AtypeCard: TDPTypeCard): String;
+  function StringTotypeCard(const AStr: String): TDPTypeCard;
+
+  function collectInputTypeToString(AInputType: TDPCollectInputType): String;
+  function StringToCollectInputType(const AStr: String): TDPCollectInputType;
+
+  function messageTypeToString(AMessageType: TDPMessageType): String;
+  function StringToMessageType(const AStr: String): TDPMessageType;
+
+  { Bytes UTF-8 em AnsiString (sem code page) <-> Unicode }
+  function Utf8RawAnsiToString(const Utf8Bytes: AnsiString): String;
+  function StringToUtf8RawAnsi(const S: String): AnsiString;
+
 implementation
 
 uses
-  DateUtils, Math,
-  JSons, synacode;
+  DateUtils, Math, JSons, synacode;
+
+function Utf8RawAnsiToString(const Utf8Bytes: AnsiString): String;
+var
+  b: TBytes;
+  n: Integer;
+begin
+  n := Length(Utf8Bytes);
+  SetLength(b, n);
+  if n > 0 then
+    Move(Utf8Bytes[1], b[0], n);
+  Result := TEncoding.UTF8.GetString(b);
+end;
+
+function StringToUtf8RawAnsi(const S: String): AnsiString;
+var
+  b: TBytes;
+  n: Integer;
+begin
+  b := TEncoding.UTF8.GetBytes(S);
+  n := Length(b);
+  SetLength(Result, n);
+  if n > 0 then
+    Move(b[0], Result[1], n);
+end;
+
+function JsonTryGetString(const o: TJSONObject; const AName: String; const ADefault: String = ''): String;
+begin
+  Result := ADefault;
+  if (not Assigned(o)) or (o.Find(AName) < 0) then
+    Exit;
+  try
+    Result := o.Values[AName].AsString;
+  except
+    Result := ADefault;
+  end;
+end;
+
+function JsonTryGetBool(const o: TJSONObject; const AName: String; const ADefault: Boolean = False): Boolean;
+begin
+  Result := ADefault;
+  if (not Assigned(o)) or (o.Find(AName) < 0) then
+    Exit;
+  try
+    Result := o.Values[AName].AsBoolean;
+  except
+    Result := ADefault;
+  end;
+end;
+
+function JsonTryGetInt(const o: TJSONObject; const AName: String; const ADefault: Integer = 0): Integer;
+begin
+  Result := ADefault;
+  if (not Assigned(o)) or (o.Find(AName) < 0) then
+    Exit;
+  try
+    Result := o.Values[AName].AsInteger;
+  except
+    Result := ADefault;
+  end;
+end;
+
+function JsonTryGetInt64(const o: TJSONObject; const AName: String; const ADefault: Int64 = 0): Int64;
+begin
+  Result := ADefault;
+  if (not Assigned(o)) or (o.Find(AName) < 0) then
+    Exit;
+  try
+    Result := o.Values[AName].AsInt64;
+  except
+    Result := ADefault;
+  end;
+end;
 
 // https://forum.lazarus.freepascal.org/index.php/topic,38279.msg259717.html#msg259717
 function StringCrcCCITT(const s: AnsiString; initial:Word=0; polynomial:Word=$1021): Word;
@@ -255,6 +523,132 @@ begin
     Result := dpiMERCHANT;
 end;
 
+function finalResultToString(AfinalResult: TDPFinalResult): String;
+begin
+  case AfinalResult of
+    dpfrAPPROVED: Result := 'APPROVED';
+    dpfrPENDING: Result := 'PENDING';
+    dpfrREPROVED_HOST: Result := 'REPROVED_HOST';
+    dpfrREPROVED_CARD: Result := 'REPROVED_CARD';
+    dpfrCANCELED: Result := 'CANCELED';
+    dpfrABORTED: Result := 'ABORTED';
+    dpfrCONNECTION_ERROR: Result := 'CONNECTION_ERROR';
+    dpfrCARD_READ_ERROR: Result := 'CARD_READ_ERROR';
+    dpfrCONFIRMED: Result := 'CONFIRMED';
+    dpfrUNDONE: Result := 'UNDONE';
+  else
+    Result := 'CONNECTION_ERROR';
+  end;
+end;
+
+function StringTofinalResult(const AStr: String): TDPFinalResult;
+var
+  s: String;
+begin
+  s := Trim(UpperCase(AStr));
+  if (s = 'APPROVED') then
+    Result := dpfrAPPROVED
+  else if (s = 'PENDING') then
+    Result := dpfrPENDING
+  else if (s = 'REPROVED_HOST') then
+    Result := dpfrREPROVED_HOST
+  else if (s = 'REPROVED_CARD') then
+    Result := dpfrREPROVED_CARD
+  else if (s = 'CANCELED') then
+    Result := dpfrCANCELED
+  else if (s = 'ABORTED') then
+    Result := dpfrABORTED
+  else if (s = 'CARD_READ_ERROR') then
+    Result := dpfrCARD_READ_ERROR
+  else if (s = 'CONFIRMED') then
+    Result := dpfrCONFIRMED
+  else if (s = 'UNDONE') or (s = 'UNDO') then
+    Result := dpfrUNDONE
+  else
+    Result := dpfrCONNECTION_ERROR;
+end;
+
+function typeCardToString(AtypeCard: TDPTypeCard): String;
+begin
+  case AtypeCard of
+    dptcMAGNETIC: Result := 'MAGNETIC';
+    dptcEMV_CONTACT: Result := 'EMV_CONTACT';
+    dptcCONTACTLESS_STRIPE: Result := 'CONTACTLESS_STRIPE';
+    dptcCONTACTLESS_EMV: Result := 'CONTACTLESS_EMV';
+    dptcTYPED: Result := 'TYPED';
+  else
+    Result := 'NONE';
+  end;
+end;
+
+function StringTotypeCard(const AStr: String): TDPTypeCard;
+var
+  s: String;
+begin
+  s := Trim(UpperCase(AStr));
+  if (s = 'MAGNETIC') then
+    Result := dptcMAGNETIC
+  else if (s = 'EMV_CONTACT') then
+    Result := dptcEMV_CONTACT
+  else if (s = 'CONTACTLESS_STRIPE') then
+    Result := dptcCONTACTLESS_STRIPE
+  else if (s = 'CONTACTLESS_EMV') then
+    Result := dptcCONTACTLESS_EMV
+  else if (s = 'TYPED') then
+    Result := dptcTYPED
+  else
+    Result := dptcNONE;
+end;
+
+function collectInputTypeToString(AInputType: TDPCollectInputType): String;
+begin
+  case AInputType of
+    dpcitNUMERIC: Result := 'NUMERIC';
+    dpcitNUMERIC_PASSWORD: Result := 'NUMERIC_PASSWORD';
+    dpcitPASSWORD: Result := 'PASSWORD';
+    dpcitEMAIL: Result := 'EMAIL';
+  else
+    Result := 'TEXT';
+  end;
+end;
+
+function StringToCollectInputType(const AStr: String): TDPCollectInputType;
+var
+  s: String;
+begin
+  s := Trim(UpperCase(AStr));
+  if (s = 'NUMERIC') then
+    Result := dpcitNUMERIC
+  else if (s = 'NUMERIC_PASSWORD') then
+    Result := dpcitNUMERIC_PASSWORD
+  else if (s = 'PASSWORD') then
+    Result := dpcitPASSWORD
+  else if (s = 'EMAIL') then
+    Result := dpcitEMAIL
+  else
+    Result := dpcitTEXT;
+end;
+
+function messageTypeToString(AMessageType: TDPMessageType): String;
+begin
+  case AMessageType of
+    dpmtQR_CODE: Result := 'QR_CODE';
+  else
+    Result := 'TEXT';
+  end;
+end;
+
+function StringToMessageType(const AStr: String): TDPMessageType;
+var
+  s: String;
+begin
+  s := Trim(UpperCase(AStr));
+  if (s = 'QR_CODE') then
+    Result := dpmtQR_CODE
+  else
+    Result := dpmtTEXT;
+end;
+
 { TDPPayloadRequestTransaction }
 
 constructor TDPPayloadRequestTransaction.Create;
@@ -266,7 +660,9 @@ end;
 procedure TDPPayloadRequestTransaction.Clear;
 begin
   Famount := 0;
+  FautoConfirm := True;
   FcreditType := dpcNO_INSTALLMENT;
+  FentityIdentifier := '';
   Finstallment := 0;
   FinterestType := dpiMERCHANT;
   FisPreAuth := False;
@@ -280,17 +676,20 @@ function TDPPayloadRequestTransaction.GetAsJSON: String;
 var
   o: TJSONObject;
 begin
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
   try
-    o.Add('type').Value.AsString := type_;
-    o.Add('amount').Value.AsInteger := Trunc(RoundTo(amount*100, 0));
-    o.Add('typeTransaction').Value.AsString := typeTransactionToString(typeTransaction);
-    o.Add('creditType').Value.AsString := creditTypeToString(creditType);
-    o.Add('installment').Value.AsInteger := installment;
-    o.Add('isTyped').Value.AsBoolean := isTyped;
-    o.Add('isPreAuth').Value.AsBoolean := isPreAuth;
-    o.Add('interestType').Value.AsString := interestTypeToString(interestType);
-    o.Add('printReceipt').Value.AsBoolean := printReceipt;
+    o.Put('type', type_);
+    o.Put('amount', Trunc(amount*100));
+    o.Put('typeTransaction', typeTransactionToString(typeTransaction));
+    o.Put('creditType', creditTypeToString(creditType));
+    o.Put('installment', installment);
+    o.Put('isTyped', isTyped);
+    o.Put('isPreAuth', isPreAuth);
+    o.Put('autoConfirm', autoConfirm);
+    o.Put('interestType', interestTypeToString(interestType));
+    o.Put('printReceipt', printReceipt);
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
     Result := o.Stringify;
   finally
     o.Free;
@@ -302,19 +701,21 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := TJSONObject.Create();
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
   try
     o.Parse(AValue);
-    Ftype_ := o.Values['type'].AsString;
-    amount := o.Values['amount'].AsInteger/100;
-    typeTransaction := StringTotypeTransaction(o.Values['typeTransaction'].AsString);
-    creditType := StringTocreditType(o.Values['creditType'].AsString);
-    installment := o.Values['installment'].AsInteger;
-    isTyped := o.Values['isTyped'].AsBoolean;
-    isPreAuth := o.Values['isPreAuth'].AsBoolean;
-    isTyped := o.Values['isTyped'].AsBoolean;
-    interestType := StringTointerestType(o.Values['interestType'].AsString);
-    printReceipt := o.Values['printReceipt'].AsBoolean;
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    amount := JsonTryGetInt64(o, 'amount', 0) / 100;
+    typeTransaction := StringTotypeTransaction(JsonTryGetString(o, 'typeTransaction', 'NONE'));
+    creditType := StringTocreditType(JsonTryGetString(o, 'creditType', 'NO_INSTALLMENT'));
+    installment := JsonTryGetInt(o, 'installment', 0);
+    isTyped := JsonTryGetBool(o, 'isTyped', False);
+    isPreAuth := JsonTryGetBool(o, 'isPreAuth', False);
+    autoConfirm := JsonTryGetBool(o, 'autoConfirm', True);
+    interestType := StringTointerestType(JsonTryGetString(o, 'interestType', 'MERCHANT'));
+    printReceipt := JsonTryGetBool(o, 'printReceipt', False);
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
   finally
     o.Free;
   end;
@@ -331,16 +732,21 @@ end;
 procedure TDPPayloadResponseTransaction.Clear;
 begin
   Famount := 0;
+  FauthCode := '';
+  Fbrand := '';
   FcodeResult := 0;
   Fdate := 0;
-  FfinalResult := '';
-  Fmessage_ := '';
+  FfinalResult := dpfrCONNECTION_ERROR;
+  FforceReset := False;
+  Fmessage := '';
   Fnsu := '';
   FnsuAcquirer := '';
   FpanMasked := '';
   FreceiptContent := '';
   Fresult_ := False;
-  FtypeCard := '';
+  FserialNumber := '';
+  Ftype := '';
+  FtypeCard := dptcNONE;
   Ftype_ := '';
 end;
 
@@ -348,20 +754,29 @@ function TDPPayloadResponseTransaction.GetAsJSON: String;
 var
   o: TJSONObject;
 begin
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
   try
-    o.Add('type').Value.AsString := type_;
-    o.Add('result').Value.AsBoolean := result_;
-    o.Add('message').Value.AsString := message_;
-    o.Add('amount').Value.AsInteger := Trunc(amount*100);
-    o.Add('nsu').Value.AsString := nsu;
-    o.Add('nsuAcquirer').Value.AsString := nsuAcquirer;
-    o.Add('panMasked').Value.AsString := panMasked;
-    o.Add('date').Value.AsInteger := DateTimeToUnix(date)*1000;
-    o.Add('typeCard').Value.AsString := typeCard;
-    o.Add('finalResult').Value.AsString := finalResult;
-    o.Add('codeResult').Value.AsInteger := codeResult;
-    o.Add('receiptContent').Value.AsString := receiptContent;
+    o.Put('type', type_);
+    o.Put('result', result_);
+    o.Put('message', message);
+    o.Put('amount', Trunc(amount*100));
+    if (Trim(authCode) <> '') then
+      o.Put('authCode', authCode);
+    if (Trim(brand) <> '') then
+      o.Put('brand', brand);
+    o.Put('nsu', nsu);
+    o.Put('nsuAcquirer', nsuAcquirer);
+    o.Put('panMasked', panMasked);
+    o.Put('date', DateTimeToUnix(date, False)*1000);
+    if (Trim(serialNumber) <> '') then
+      o.Put('serialNumber', serialNumber);
+    if (Trim(typeResult) <> '') then
+      o.Put('type', typeResult);
+    o.Put('typeCard', typeCardToString(typeCard));
+    o.Put('finalResult', finalResultToString(finalResult));
+    o.Put('codeResult', codeResult);
+    o.Put('receiptContent', receiptContent);
+    o.Put('forceReset', forceReset);
     Result := o.Stringify;
   finally
     o.Free;
@@ -373,21 +788,28 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
   try
     o.Parse(AValue);
-    Ftype_ := o.Values['type'].AsString;
-    result_ := o.Values['result'].AsBoolean;
-    message_ := o.Values['message'].AsString;
-    amount := o.Values['amount'].AsInteger/100;
-    nsu := o.Values['nsu'].AsString;
-    nsuAcquirer := o.Values['nsuAcquirer'].AsString;
-    panMasked := o.Values['panMasked'].AsString;
-    date := UnixToDateTime(Trunc(o.Values['date'].AsInteger/1000));
-    typeCard := o.Values['typeCard'].AsString;
-    finalResult := o.Values['finalResult'].AsString;
-    codeResult := o.Values['codeResult'].AsInteger;
-    receiptContent := o.Values['receiptContent'].AsString;
+    Ftype_ := JsonTryGetString(o, 'type', '');
+    result_ := JsonTryGetBool(o, 'result', False);
+    message := JsonTryGetString(o, 'message', '');
+    amount := JsonTryGetInt64(o, 'amount', 0) / 100;
+    authCode := JsonTryGetString(o, 'authCode', '');
+    brand := JsonTryGetString(o, 'brand', '');
+    nsu := JsonTryGetString(o, 'nsu', '');
+    nsuAcquirer := JsonTryGetString(o, 'nsuAcquirer', '');
+    panMasked := JsonTryGetString(o, 'panMasked', '');
+    if o.Find('date') >= 0 then
+      date := UnixToDateTime(Trunc(JsonTryGetInt64(o, 'date', 0) / 1000), False);
+    serialNumber := JsonTryGetString(o, 'serialNumber', '');
+    typeResult := JsonTryGetString(o, 'type', '');
+    typeCard := StringTotypeCard(JsonTryGetString(o, 'typeCard', 'NONE'));
+    finalResult := StringTofinalResult(JsonTryGetString(o, 'finalResult', ''));
+    codeResult := JsonTryGetInt(o, 'codeResult', 0);
+    receiptContent := JsonTryGetString(o, 'receiptContent', '');
+    forceReset := JsonTryGetBool(o, 'forceReset', False);
   finally
     o.Free;
   end;
@@ -403,18 +825,21 @@ end;
 
 procedure TDPPayLoadRequestReversal.Clear;
 begin
+  FentityIdentifier := '';
   Fnsu := '';
-  Ftype_ := 'reversal';
+  Ftype_ := 'cancelTransaction';
 end;
 
 function TDPPayLoadRequestReversal.GetAsJSON: String;
 var
   o: TJSONObject;
 begin
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
   try
-    o.Add('type').Value.AsString := type_;
-    o.Add('nsu').Value.AsString := nsu;
+    o.Put('type', type_);
+    o.Put('nsu', nsu);
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
     Result := o.Stringify;
   finally
     o.Free;
@@ -426,11 +851,13 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
   try
     o.Parse(AValue);
-    Ftype_ := o.Values['type'].AsString;
-    nsu := o.Values['nsu'].AsString;
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    nsu := JsonTryGetString(o, 'nsu', '');
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
   finally
     o.Free;
   end;
@@ -446,9 +873,12 @@ end;
 
 procedure TDPPayLoadResponseReversal.Clear;
 begin
-  Fmessage_ := '';
+  FfinalResult := dpfrCONNECTION_ERROR;
+  FforceReset := False;
+  Fmessage := '';
   FreceiptContent := '';
   Fresult_ := False;
+  Ftype := '';
   Ftype_ := '';
 end;
 
@@ -456,12 +886,16 @@ function TDPPayLoadResponseReversal.GetAsJSON: String;
 var
   o: TJSONObject;
 begin
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
   try
-    o.Add('type').Value.AsString := type_;
-    o.Add('result').Value.AsBoolean := result_;
-    o.Add('message').Value.AsString := message_;
-    o.Add('receiptContent').Value.AsString := receiptContent;
+    o.Put('type', type_);
+    o.Put('result', result_);
+    o.Put('message', message);
+    o.Put('finalResult', finalResultToString(finalResult));
+    if (Trim(typeResult) <> '') then
+      o.Put('type', typeResult);
+    o.Put('receiptContent', receiptContent);
+    o.Put('forceReset', forceReset);
     Result := o.Stringify;
   finally
     o.Free;
@@ -473,13 +907,409 @@ var
   o: TJSONObject;
 begin
   Clear;
-  o := TJSONObject.Create;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
   try
     o.Parse(AValue);
-    Ftype_ := o.Values['type'].AsString;
-    result_ := o.Values['result'].AsBoolean;
-    message_ := o.Values['message'].AsString;
-    receiptContent := o.Values['receiptContent'].AsString;
+    Ftype_ := JsonTryGetString(o, 'type', '');
+    result_ := JsonTryGetBool(o, 'result', False);
+    message := JsonTryGetString(o, 'message', '');
+    finalResult := StringTofinalResult(JsonTryGetString(o, 'finalResult', ''));
+    typeResult := JsonTryGetString(o, 'type', '');
+    receiptContent := JsonTryGetString(o, 'receiptContent', '');
+    forceReset := JsonTryGetBool(o, 'forceReset', False);
+  finally
+    o.Free;
+  end;
+end;
+
+{ TDPPayloadRequestConfirmTransaction }
+
+constructor TDPPayloadRequestConfirmTransaction.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDPPayloadRequestConfirmTransaction.Clear;
+begin
+  Ftype_ := 'confirmtransaction';
+  Fnsu := '';
+  FentityIdentifier := '';
+end;
+
+function TDPPayloadRequestConfirmTransaction.GetAsJSON: String;
+var
+  o: TJSONObject;
+begin
+  o := TJSONObject.Create(nil);
+  try
+    o.Put('type', type_);
+    o.Put('nsu', nsu);
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
+    Result := o.Stringify;
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TDPPayloadRequestConfirmTransaction.SetAsJSON(const AValue: String);
+var
+  o: TJSONObject;
+begin
+  Clear;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
+  try
+    o.Parse(AValue);
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    nsu := JsonTryGetString(o, 'nsu', '');
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
+  finally
+    o.Free;
+  end;
+end;
+
+{ TDPPayloadRequestUndoTransaction }
+
+constructor TDPPayloadRequestUndoTransaction.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDPPayloadRequestUndoTransaction.Clear;
+begin
+  Ftype_ := 'undotransaction';
+  Fnsu := '';
+  FentityIdentifier := '';
+end;
+
+function TDPPayloadRequestUndoTransaction.GetAsJSON: String;
+var
+  o: TJSONObject;
+begin
+  o := TJSONObject.Create(nil);
+  try
+    o.Put('type', type_);
+    o.Put('nsu', nsu);
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
+    Result := o.Stringify;
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TDPPayloadRequestUndoTransaction.SetAsJSON(const AValue: String);
+var
+  o: TJSONObject;
+begin
+  Clear;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
+  try
+    o.Parse(AValue);
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    nsu := JsonTryGetString(o, 'nsu', '');
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
+  finally
+    o.Free;
+  end;
+end;
+
+{ TDPPayloadRequestAbort }
+
+constructor TDPPayloadRequestAbort.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDPPayloadRequestAbort.Clear;
+begin
+  Ftype_ := 'abort';
+  FentityIdentifier := '';
+end;
+
+function TDPPayloadRequestAbort.GetAsJSON: String;
+var
+  o: TJSONObject;
+begin
+  o := TJSONObject.Create(nil);
+  try
+    o.Put('type', type_);
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
+    Result := o.Stringify;
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TDPPayloadRequestAbort.SetAsJSON(const AValue: String);
+var
+  o: TJSONObject;
+begin
+  Clear;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
+  try
+    o.Parse(AValue);
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
+  finally
+    o.Free;
+  end;
+end;
+
+{ TDPPayloadRequestCollect }
+
+constructor TDPPayloadRequestCollect.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDPPayloadRequestCollect.Clear;
+begin
+  Ftype_ := 'collect';
+  Ftitle := '';
+  Fmask := '';
+  FinputType := dpcitTEXT;
+  FentityIdentifier := '';
+end;
+
+function TDPPayloadRequestCollect.GetAsJSON: String;
+var
+  o: TJSONObject;
+begin
+  o := TJSONObject.Create(nil);
+  try
+    o.Put('type', type_);
+    o.Put('title', title);
+    if (Trim(mask) <> '') then
+      o.Put('mask', mask);
+    o.Put('inputType', collectInputTypeToString(inputType));
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
+    Result := o.Stringify;
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TDPPayloadRequestCollect.SetAsJSON(const AValue: String);
+var
+  o: TJSONObject;
+begin
+  Clear;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
+  try
+    o.Parse(AValue);
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    title := JsonTryGetString(o, 'title', '');
+    mask := JsonTryGetString(o, 'mask', '');
+    inputType := StringToCollectInputType(JsonTryGetString(o, 'inputType', 'TEXT'));
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
+  finally
+    o.Free;
+  end;
+end;
+
+{ TDPPayloadRequestMessage }
+
+constructor TDPPayloadRequestMessage.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDPPayloadRequestMessage.Clear;
+begin
+  Ftype_ := 'message';
+  FtypeMessage := dpmtTEXT;
+  Ftitle := '';
+  Fmessage := '';
+  FconfirmMessage := '';
+  FcancelMessage := '';
+  Ftimeout := 0;
+  FentityIdentifier := '';
+end;
+
+function TDPPayloadRequestMessage.GetAsJSON: String;
+var
+  o: TJSONObject;
+begin
+  o := TJSONObject.Create(nil);
+  try
+    o.Put('type', type_);
+    o.Put('typeMessage', messageTypeToString(typeMessage));
+    o.Put('title', title);
+    if (Trim(message) <> '') then
+      o.Put('message', message);
+    if (Trim(confirmMessage) <> '') then
+      o.Put('confirmMessage', confirmMessage);
+    if (Trim(cancelMessage) <> '') then
+      o.Put('cancelMessage', cancelMessage);
+    if (timeout > 0) then
+      o.Put('timeout', timeout);
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
+    Result := o.Stringify;
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TDPPayloadRequestMessage.SetAsJSON(const AValue: String);
+var
+  o: TJSONObject;
+begin
+  Clear;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
+  try
+    o.Parse(AValue);
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    typeMessage := StringToMessageType(JsonTryGetString(o, 'typeMessage', 'TEXT'));
+    title := JsonTryGetString(o, 'title', '');
+    message := JsonTryGetString(o, 'message', '');
+    confirmMessage := JsonTryGetString(o, 'confirmMessage', '');
+    cancelMessage := JsonTryGetString(o, 'cancelMessage', '');
+    timeout := JsonTryGetInt(o, 'timeout', 0);
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
+  finally
+    o.Free;
+  end;
+end;
+
+{ TDPPayloadRequestSurvey }
+
+constructor TDPPayloadRequestSurvey.Create;
+begin
+  inherited;
+  Clear;
+end;
+
+procedure TDPPayloadRequestSurvey.Clear;
+begin
+  Ftype_ := 'survey';
+  FsurveyType := '';
+  Ftitle := '';
+  Fquestion := '';
+  FscaleMin := 0;
+  FscaleMax := 0;
+  FsurveyId := '';
+  FallowComment := True;
+  Factive := True;
+  FcreatedAt := '';
+  FuserId := '';
+  FcustomerId := '';
+  FtransactionId := '';
+  FoperationType := '';
+  Fchannel := '';
+  FdeviceIdentifier := '';
+  Fflow := '';
+  Fevent := '';
+  FcontextJSON := '';
+  FentityIdentifier := '';
+end;
+
+function TDPPayloadRequestSurvey.GetAsJSON: String;
+var
+  o: TJSONObject;
+  ctx: TJSONObject;
+begin
+  o := TJSONObject.Create(nil);
+  try
+    o.Put('type', type_);
+    if (Trim(surveyType) <> '') then
+      o.Put('surveyType', surveyType);
+    if (Trim(title) <> '') then
+      o.Put('title', title);
+    o.Put('question', question);
+    o.Put('scaleMin', scaleMin);
+    o.Put('scaleMax', scaleMax);
+    if (Trim(surveyId) <> '') then
+      o.Put('surveyId', surveyId);
+    o.Put('allowComment', allowComment);
+    o.Put('active', active);
+    if (Trim(createdAt) <> '') then
+      o.Put('createdAt', createdAt);
+    if (Trim(userId) <> '') then
+      o.Put('userId', userId);
+    if (Trim(customerId) <> '') then
+      o.Put('customerId', customerId);
+    if (Trim(transactionId) <> '') then
+      o.Put('transactionId', transactionId);
+    if (Trim(operationType) <> '') then
+      o.Put('operationType', operationType);
+    if (Trim(channel) <> '') then
+      o.Put('channel', channel);
+    if (Trim(deviceIdentifier) <> '') then
+      o.Put('deviceIdentifier', deviceIdentifier);
+    if (Trim(flow) <> '') then
+      o.Put('flow', flow);
+    if (Trim(event) <> '') then
+      o.Put('event', event);
+
+    if (Trim(contextJSON) <> '') then
+    begin
+      ctx := TJSONObject.Create(nil);
+      try
+        ctx.AutoAdd := False;
+        ctx.Parse(contextJSON);
+        o.Put('context', ctx);
+      finally
+        ctx.Free;
+      end;
+    end;
+
+    if (Trim(entityIdentifier) <> '') then
+      o.Put('entityIdentifier', entityIdentifier);
+
+    Result := o.Stringify;
+  finally
+    o.Free;
+  end;
+end;
+
+procedure TDPPayloadRequestSurvey.SetAsJSON(const AValue: String);
+var
+  o: TJSONObject;
+  idx: Integer;
+begin
+  Clear;
+  o := TJSONObject.Create(nil);
+  o.AutoAdd := False;
+  try
+    o.Parse(AValue);
+    Ftype_ := JsonTryGetString(o, 'type', Ftype_);
+    surveyType := JsonTryGetString(o, 'surveyType', '');
+    title := JsonTryGetString(o, 'title', '');
+    question := JsonTryGetString(o, 'question', '');
+    scaleMin := JsonTryGetInt(o, 'scaleMin', 0);
+    scaleMax := JsonTryGetInt(o, 'scaleMax', 0);
+    surveyId := JsonTryGetString(o, 'surveyId', '');
+    allowComment := JsonTryGetBool(o, 'allowComment', True);
+    active := JsonTryGetBool(o, 'active', True);
+    createdAt := JsonTryGetString(o, 'createdAt', '');
+    userId := JsonTryGetString(o, 'userId', '');
+    customerId := JsonTryGetString(o, 'customerId', '');
+    transactionId := JsonTryGetString(o, 'transactionId', '');
+    operationType := JsonTryGetString(o, 'operationType', '');
+    channel := JsonTryGetString(o, 'channel', '');
+    deviceIdentifier := JsonTryGetString(o, 'deviceIdentifier', '');
+    flow := JsonTryGetString(o, 'flow', '');
+    event := JsonTryGetString(o, 'event', '');
+    entityIdentifier := JsonTryGetString(o, 'entityIdentifier', '');
+
+    idx := o.Find('context');
+    if idx >= 0 then
+      contextJSON := o.Items[idx].Value.Stringify;
   finally
     o.Free;
   end;
@@ -508,21 +1338,23 @@ begin
   Result := chr(StrToInt('$'+copy(hex,1,2))) + chr(StrToInt('$'+copy(hex,3,2)))
 end;
 
-function TDPSerialMessage.GetMessage_: AnsiString;
+function TDPSerialMessage.GetMessage: AnsiString;
 var
-  s: String;
+  s: AnsiString;
 begin
-  s := EncodeBase64(PayLoad);
-  Result := chr(SYN) + s + Checksum(s) + chr(ETB) ;
+  { JSON em UTF-8 antes do Base64; bytes sem conversao por code page ANSI. }
+  s := EncodeBase64(StringToUtf8RawAnsi(FPayLoad));
+  Result := AnsiChar(SYN) + s + Checksum(s) + AnsiChar(ETB);
 end;
 
-procedure TDPSerialMessage.SetMessage_(AValue: AnsiString);
+procedure TDPSerialMessage.SetMessage(AValue: AnsiString);
 var
   s, crc1, crc2: AnsiString;
   le: Integer;
 begin
   Clear;
   le := Length(AValue);
+  // min: SYN + 1 byte payload + ETB + CRC(2) = 5
   if (le < 5) then
     raise Exception.Create('invalid message ');
 
@@ -537,11 +1369,7 @@ begin
   crc2 := Checksum(s);
   if (crc1 <> crc2) then
     raise Exception.Create('message with wrong CRC');
-
-  FPayLoad := DecodeBase64(s);
+  FPayLoad := Utf8RawAnsiToString(DecodeBase64(s));
 end;
 
 end.
-
-
-// TODO, verificar Boolean e TDates

@@ -96,12 +96,14 @@ type
     function GetAsArray: TJsonArray;
     function GetAsBoolean: Boolean;
     function GetAsInteger: Integer;
+    function GetAsInt64: Int64;
     function GetAsNumber: Extended;
     function GetAsObject: TJsonObject;
     function GetAsString: String;
     function GetIsNull: Boolean;
     procedure SetAsBoolean(const Value: Boolean);
     procedure SetAsInteger(const Value: Integer);
+    procedure SetAsInt64(const Value: Int64);
     procedure SetAsNumber(const Value: Extended);
     procedure SetAsString(const Value: String);
     procedure SetIsNull(const Value: Boolean);
@@ -129,6 +131,7 @@ type
     property AsString: String read GetAsString write SetAsString;
     property AsNumber: Extended read GetAsNumber write SetAsNumber;
     property AsInteger: Integer read GetAsInteger write SetAsInteger;
+    property AsInt64: Int64 read GetAsInt64 write SetAsInt64;
     property AsBoolean: Boolean read GetAsBoolean write SetAsBoolean;
     property AsObject: TJsonObject read GetAsObject write SetAsObject;
     property AsArray: TJsonArray read GetAsArray write SetAsArray;
@@ -159,6 +162,7 @@ type
     function Put(const Value: TJsonNull): TJsonValue; overload;
     function Put(const Value: Boolean): TJsonValue; overload;
     function Put(const Value: Integer): TJsonValue; overload;
+    function Put(const Value: Int64): TJsonValue; overload;
     function Put(const Value: Extended): TJsonValue; overload;
     function Put(const Value: String): TJsonValue; overload;
     function Put(const Value: TJsonArray): TJsonValue; overload;
@@ -220,6 +224,7 @@ type
     function Put(const Name: String; const Value: TJsonNull): TJsonValue; overload;
     function Put(const Name: String; const Value: Boolean): TJsonValue; overload;
     function Put(const Name: String; const Value: Integer): TJsonValue; overload;
+    function Put(const Name: String; const Value: Int64): TJsonValue; overload;
     function Put(const Name: String; const Value: Extended): TJsonValue; overload;
     function Put(const Name: String; const Value: String): TJsonValue; overload;
     function Put(const Name: String; const Value: TJsonArray): TJsonValue; overload;
@@ -285,6 +290,7 @@ type
     function Put(const Value: TJsonNull): TJsonValue; overload;
     function Put(const Value: Boolean): TJsonValue; overload;
     function Put(const Value: Integer): TJsonValue; overload;
+    function Put(const Value: Int64): TJsonValue; overload;
     function Put(const Value: Extended): TJsonValue; overload;
     function Put(const Value: String): TJsonValue; overload;
     function Put(const Value: TJsonArray): TJsonValue; overload;
@@ -694,6 +700,18 @@ begin
   end;
 end;
 
+function TJsonValue.GetAsInt64: Int64;
+begin
+  Result := 0;
+  case FValueType of
+    jvNone, jvNull: Result := 0;
+    jvString: Result := StrToInt64(FStringValue);
+    jvNumber: Result := Trunc(FNumberValue);
+    jvBoolean: Result := Ord(FBooleanValue);
+    jvObject, jvArray: RaiseValueTypeError(jvNumber);
+  end;
+end;
+
 function TJsonValue.GetAsNumber: Extended;
 begin
   Result := 0;
@@ -800,6 +818,11 @@ begin
   SetAsNumber(Value);
 end;
 
+procedure TJsonValue.SetAsInt64(const Value: Int64);
+begin
+  SetAsNumber(Value);
+end;
+
 procedure TJsonValue.SetAsNumber(const Value: Extended);
 begin
   if FValueType <> jvNumber then
@@ -861,7 +884,16 @@ begin
   case FValueType of
     jvNone, jvNull: Result := 'null';
     jvString: Result := '"' + Encode(FStringValue) + '"';
-    jvNumber: Result := FixedFloatToStr(FNumberValue);
+    jvNumber:
+      begin
+        Result := FixedFloatToStr(FNumberValue);
+        // Int64
+        if (Pos('E', Result) > 0) and
+           (FNumberValue >= Low(Int64)) and
+           (FNumberValue <= High(Int64)) and
+           (FNumberValue = Trunc(FNumberValue)) then
+          Result := IntToStr(Trunc(FNumberValue));
+      end;
     jvBoolean: Result := StrBoolean[FBooleanValue];
     jvObject: Result := FObjectValue.Stringify;
     jvArray: Result := FArrayValue.Stringify;
@@ -979,6 +1011,12 @@ function TJsonArray.Put(const Value: Integer): TJsonValue;
 begin
   Result := Add;
   Result.AsInteger := Value;
+end;
+
+function TJsonArray.Put(const Value: Int64): TJsonValue;
+begin
+  Result := Add;
+  Result.AsInt64 := Value;
 end;
 
 function TJsonArray.Put(const Value: TJsonEmpty): TJsonValue;
@@ -1240,6 +1278,13 @@ function TJsonObject.Put(const Name: String;
 begin
   Result := Add(Name).Value;
   Result.AsInteger := Value;
+end;
+
+function TJsonObject.Put(const Name: String;
+  const Value: Int64): TJsonValue;
+begin
+  Result := Add(Name).Value;
+  Result.AsInt64 := Value;
 end;
 
 function TJsonObject.Put(const Name: String;
@@ -1506,6 +1551,12 @@ begin
 end;
 
 function TJson.Put(const Value: Integer): TJsonValue;
+begin
+  CheckJsonArray;
+  Result := FJsonArray.Put(Value);
+end;
+
+function TJson.Put(const Value: Int64): TJsonValue;
 begin
   CheckJsonArray;
   Result := FJsonArray.Put(Value);

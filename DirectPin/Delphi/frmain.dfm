@@ -1,127 +1,66 @@
 object FormMain: TFormMain
-  Left = 406
+  Left = 391
   Top = 234
-  Width = 536
-  Height = 489
-  Caption = 'FormMain'
+  Caption = 'DirectPin - Exemplo'
+  ClientHeight = 820
+  ClientWidth = 864
   Color = clBtnFace
-  Constraints.MinHeight = 450
+  Constraints.MinHeight = 720
   Constraints.MinWidth = 520
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 13
   object gbPinPad: TGroupBox
     Left = 0
     Top = 0
-    Width = 520
-    Height = 81
+    Width = 864
+    Height = 132
     Align = alTop
     Caption = 'PinPad'
     TabOrder = 0
     DesignSize = (
-      520
-      81)
+      864
+      132)
     object Label4: TLabel
       Left = 16
       Top = 16
       Width = 25
       Height = 13
-      Anchors = [akLeft, akBottom]
       Caption = 'Porta'
       Color = clBtnFace
       ParentColor = False
     end
     object btSearchPorts: TSpeedButton
-      Left = 328
-      Top = 39
+      Left = 672
+      Top = 32
       Width = 32
-      Height = 26
+      Height = 23
       Hint = 'Procurar Impressoras USB'
-      Anchors = [akTop, akRight, akBottom]
-      Glyph.Data = {
-        36040000424D3604000000000000360000002800000010000000100000000100
-        2000000000000004000064000000640000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000005000000A6000000EF00000031000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        00000000000000000005000000AC000000FF000000FF00000053000000000000
-        000000000000000000010000003F0000008E000000B0000000AA0000007B0000
-        002100000005000000AC000000FF000000FF0000008C00000001000000000000
-        000000000019000000BB000000FF000000FF000000FF000000FF000000FF0000
-        00FB000000CF000000FF000000FF0000008C0000000100000000000000000000
-        0013000000DB000000FF000000FF000000D20000009C000000A5000000E90000
-        00FF000000FF000000FF0000008C000000010000000000000000000000000000
-        009F000000FF000000FB0000005E0000000100000000000000000000000A0000
-        009D000000FF000000FF00000053000000000000000000000000000000180000
-        00FC000000FF0000007100000000000000000000000000000000000000000000
-        0002000000C0000000FF000000C8000000000000000000000000000000580000
-        00FF000000F70000000900000000000000000000000000000000000000000000
-        000000000051000000FF000000FF0000000D00000000000000000000006F0000
-        00FF000000DB0000000000000000000000000000000000000000000000000000
-        00000000002C000000FF000000FF0000002200000000000000000000005E0000
-        00FF000000F20000000400000000000000000000000000000000000000000000
-        000000000046000000FF000000FF000000110000000000000000000000220000
-        00FF000000FF0000005800000000000000000000000000000000000000000000
-        0000000000A8000000FF000000D4000000000000000000000000000000000000
-        00B5000000FF000000F000000039000000000000000000000000000000010000
-        0075000000FF000000FF00000068000000000000000000000000000000000000
-        0022000000EE000000FF000000FC000000AA000000730000007B000000C80000
-        00FF000000FF000000BF00000003000000000000000000000000000000000000
-        00000000002F000000DC000000FF000000FF000000FF000000FF000000FF0000
-        00FF000000B00000000E00000000000000000000000000000000000000000000
-        0000000000000000000900000068000000B7000000D9000000D4000000A50000
-        0046000000010000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000}
+      Anchors = [akTop, akRight]
+      ImageIndex = 12
+      Images = ImageList1
       ParentShowHint = False
       ShowHint = True
       OnClick = btSearchPortsClick
     end
     object btSerial: TSpeedButton
-      Left = 368
-      Top = 39
+      Left = 712
+      Top = 32
       Width = 32
-      Height = 26
-      Anchors = [akTop, akRight, akBottom]
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        1800000000000003000000000000000000000000000000000000FFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF323232
-        3232323E3E3E565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFF565656FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFF503200FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        565656565656FFFFFFFFFFFF3232322626262626262626262626265032005032
-        000000504873FFFFFFFFFFFFFFFFFFFF6E6E6EFFFFFFFFFFFFFFFFFFFFFFFF6E
-        6E6E32323232323232323232323250320000005025AAFFFFFFFFFFFFFF565656
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5656563232323232326E6E6E5032005032
-        008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF3E3E3EFFFFFFFFFFFF50320050320056
-        56564A4A4A5050003232325032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
-        FFFFFF5656563E3E3E2626265032006262625656565050003232325032005032
-        008FFF6B8ED4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5050005050006E
-        6E6E5656565050003250005032005032008FFF6B8ED4FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8686865656565656563250005032005032
-        008FFF6B48B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3232323E
-        3E3EA4A0A08686866E6E6E565656503200C0C0C02557FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFF5050004A4A4A3232323232323232323232325032
-        00FFFFFF6B8FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      Height = 23
+      Anchors = [akTop, akRight]
+      ImageIndex = 0
+      Images = ImageList1
       OnClick = btSerialClick
     end
     object Label10: TLabel
-      Left = 416
-      Top = 24
+      Left = 760
+      Top = 16
       Width = 40
       Height = 13
       Anchors = [akTop, akRight]
@@ -129,18 +68,26 @@ object FormMain: TFormMain
       Color = clBtnFace
       ParentColor = False
     end
+    object Label11: TLabel
+      Left = 16
+      Top = 72
+      Width = 66
+      Height = 13
+      Caption = 'EntityIdentifier'
+      Color = clBtnFace
+      ParentColor = False
+    end
     object cbxPorta: TComboBox
       Left = 16
-      Top = 39
-      Width = 296
+      Top = 32
+      Width = 640
       Height = 21
       Anchors = [akLeft, akTop, akRight]
-      ItemHeight = 13
       TabOrder = 0
     end
     object seTimeOut: TSpinEdit
-      Left = 416
-      Top = 39
+      Left = 760
+      Top = 32
       Width = 82
       Height = 22
       Anchors = [akTop, akRight]
@@ -149,21 +96,29 @@ object FormMain: TFormMain
       TabOrder = 1
       Value = 2000
     end
+    object edEntityIdentifier: TEdit
+      Left = 16
+      Top = 88
+      Width = 640
+      Height = 21
+      Anchors = [akLeft, akRight]
+      TabOrder = 2
+    end
   end
   object gbPagamento: TGroupBox
     Left = 0
-    Top = 81
-    Width = 520
-    Height = 129
+    Top = 132
+    Width = 864
+    Height = 148
     Align = alTop
     Caption = 'Transa'#231#227'o de Pagamento'
     TabOrder = 1
     DesignSize = (
-      520
-      129)
+      864
+      148)
     object Label5: TLabel
       Left = 16
-      Top = 24
+      Top = 22
       Width = 90
       Height = 13
       Caption = 'Tipo da Transa'#231#227'o'
@@ -172,7 +127,7 @@ object FormMain: TFormMain
     end
     object Label6: TLabel
       Left = 136
-      Top = 24
+      Top = 22
       Width = 57
       Height = 13
       Caption = 'Parcelado ?'
@@ -181,7 +136,7 @@ object FormMain: TFormMain
     end
     object Label7: TLabel
       Left = 288
-      Top = 24
+      Top = 22
       Width = 41
       Height = 13
       Caption = 'Parcelas'
@@ -190,7 +145,7 @@ object FormMain: TFormMain
     end
     object Label8: TLabel
       Left = 352
-      Top = 24
+      Top = 22
       Width = 67
       Height = 13
       Caption = 'Parcelado Por'
@@ -199,7 +154,7 @@ object FormMain: TFormMain
     end
     object Label9: TLabel
       Left = 16
-      Top = 72
+      Top = 74
       Width = 24
       Height = 13
       Caption = 'Valor'
@@ -208,27 +163,23 @@ object FormMain: TFormMain
     end
     object cbxTypeTransaction: TComboBox
       Left = 16
-      Top = 39
+      Top = 40
       Width = 104
       Height = 21
       Style = csDropDownList
-      Anchors = [akLeft, akBottom]
-      ItemHeight = 13
       TabOrder = 0
     end
     object cbxCreditType: TComboBox
       Left = 136
-      Top = 39
+      Top = 40
       Width = 136
       Height = 21
       Style = csDropDownList
-      Anchors = [akLeft, akBottom]
-      ItemHeight = 13
       TabOrder = 1
     end
     object seInstallment: TSpinEdit
       Left = 288
-      Top = 39
+      Top = 40
       Width = 50
       Height = 22
       MaxValue = 10
@@ -238,17 +189,26 @@ object FormMain: TFormMain
     end
     object cbxInterestType: TComboBox
       Left = 352
-      Top = 39
-      Width = 144
+      Top = 40
+      Width = 488
       Height = 21
       Style = csDropDownList
-      Anchors = [akLeft, akRight, akBottom]
-      ItemHeight = 13
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 3
+    end
+    object seValor: TEdit
+      Left = 16
+      Top = 92
+      Width = 104
+      Height = 21
+      TabOrder = 4
+      Text = '1,00'
+      OnChange = seValorChange
+      OnKeyPress = seValorKeyPress
     end
     object cbIsTyped: TCheckBox
       Left = 136
-      Top = 72
+      Top = 74
       Width = 63
       Height = 19
       Caption = 'Digitado'
@@ -256,7 +216,7 @@ object FormMain: TFormMain
     end
     object cbIsPreAuth: TCheckBox
       Left = 136
-      Top = 96
+      Top = 99
       Width = 101
       Height = 19
       Caption = 'Pr'#233' Autoriza'#231#227'o'
@@ -264,46 +224,79 @@ object FormMain: TFormMain
     end
     object cbPrintReceipt: TCheckBox
       Left = 267
-      Top = 96
+      Top = 98
       Width = 64
       Height = 19
       Caption = 'Imprimir'
       TabOrder = 7
     end
+    object cbAutoConfirm: TCheckBox
+      Left = 267
+      Top = 74
+      Width = 228
+      Height = 19
+      Caption = 'Confirmar Transa'#231#227'o Automaticamente'
+      Checked = True
+      State = cbChecked
+      TabOrder = 8
+    end
     object btEnviarTransPagto: TBitBtn
-      Left = 352
-      Top = 81
+      Left = 536
+      Top = 66
       Width = 146
       Height = 30
       Anchors = [akTop, akRight]
       Caption = 'Enviar Pagamento'
-      TabOrder = 8
+      ImageIndex = 1
+      Images = ImageList1
+      TabOrder = 9
       OnClick = btEnviarTransPagtoClick
     end
-    object seValor: TEdit
-      Left = 16
-      Top = 86
-      Width = 104
-      Height = 21
-      BiDiMode = bdLeftToRight
-      ParentBiDiMode = False
-      TabOrder = 4
-      Text = '1,00'
-      OnChange = seValorChange
-      OnKeyPress = seValorKeyPress
+    object btConfirmar: TBitBtn
+      Left = 536
+      Top = 102
+      Width = 146
+      Height = 30
+      Caption = 'Confirmar Pagamento'
+      ImageIndex = 5
+      Images = ImageList1
+      TabOrder = 10
+      OnClick = btConfirmarClick
+    end
+    object btUndo: TBitBtn
+      Left = 696
+      Top = 102
+      Width = 146
+      Height = 30
+      Caption = 'Desfazer Pagamento'
+      ImageIndex = 11
+      Images = ImageList1
+      TabOrder = 11
+      OnClick = btUndoClick
+    end
+    object btAbortar: TBitBtn
+      Left = 696
+      Top = 66
+      Width = 146
+      Height = 30
+      Caption = 'Abortar Pagamento'
+      ImageIndex = 11
+      Images = ImageList1
+      TabOrder = 12
+      OnClick = btAbortarClick
     end
   end
   object gbEstorno: TGroupBox
     Left = 0
-    Top = 210
-    Width = 520
-    Height = 70
+    Top = 280
+    Width = 864
+    Height = 82
     Align = alTop
     Caption = 'Enviar Estorno'
     TabOrder = 2
     DesignSize = (
-      520
-      70)
+      864
+      82)
     object Label1: TLabel
       Left = 16
       Top = 20
@@ -313,35 +306,479 @@ object FormMain: TFormMain
     end
     object edNSU: TEdit
       Left = 16
-      Top = 36
+      Top = 40
       Width = 160
       Height = 21
       TabOrder = 0
     end
     object btEnviarEstorno: TBitBtn
-      Left = 352
-      Top = 29
+      Left = 696
+      Top = 34
       Width = 146
       Height = 30
       Anchors = [akTop, akRight]
       Caption = 'Enviar Estorno'
+      ImageIndex = 11
+      Images = ImageList1
       TabOrder = 1
       OnClick = btEnviarEstornoClick
     end
   end
+  object gbOperacoes: TGroupBox
+    Left = 0
+    Top = 362
+    Width = 864
+    Height = 256
+    Align = alTop
+    Caption = 'Operacoes'
+    TabOrder = 3
+    object PageControl1: TPageControl
+      Left = 2
+      Top = 15
+      Width = 860
+      Height = 239
+      ActivePage = TabSheetColeta
+      Align = alClient
+      TabOrder = 0
+      object TabSheetColeta: TTabSheet
+        Caption = 'Coleta'
+        object Label12: TLabel
+          Left = 8
+          Top = 14
+          Width = 26
+          Height = 13
+          Caption = 'Titulo'
+        end
+        object Label13: TLabel
+          Left = 216
+          Top = 14
+          Width = 41
+          Height = 13
+          Caption = 'Mascara'
+        end
+        object Label14: TLabel
+          Left = 344
+          Top = 14
+          Width = 21
+          Height = 13
+          Caption = 'Tipo'
+        end
+        object edCollectTitle: TEdit
+          Left = 8
+          Top = 32
+          Width = 200
+          Height = 21
+          TabOrder = 0
+        end
+        object edCollectMask: TEdit
+          Left = 216
+          Top = 32
+          Width = 120
+          Height = 21
+          TabOrder = 1
+        end
+        object cbxCollectInputType: TComboBox
+          Left = 344
+          Top = 32
+          Width = 140
+          Height = 21
+          Style = csDropDownList
+          TabOrder = 2
+        end
+        object btColetar: TBitBtn
+          Left = 8
+          Top = 66
+          Width = 120
+          Height = 30
+          Caption = 'Coletar'
+          TabOrder = 3
+          OnClick = btColetarClick
+        end
+      end
+      object TabSheetMensagem: TTabSheet
+        Caption = 'Mensagem'
+        object Label18: TLabel
+          Left = 8
+          Top = 14
+          Width = 21
+          Height = 13
+          Caption = 'Tipo'
+        end
+        object Label19: TLabel
+          Left = 116
+          Top = 14
+          Width = 26
+          Height = 13
+          Caption = 'Titulo'
+        end
+        object Label20: TLabel
+          Left = 304
+          Top = 14
+          Width = 38
+          Height = 13
+          Caption = 'Timeout'
+        end
+        object Label21: TLabel
+          Left = 8
+          Top = 60
+          Width = 44
+          Height = 13
+          Caption = 'Confirmar'
+        end
+        object Label22: TLabel
+          Left = 120
+          Top = 60
+          Width = 42
+          Height = 13
+          Caption = 'Cancelar'
+        end
+        object Label23: TLabel
+          Left = 400
+          Top = 14
+          Width = 73
+          Height = 13
+          Caption = 'Texto/QRCode'
+        end
+        object cbxMsgTipo: TComboBox
+          Left = 8
+          Top = 32
+          Width = 100
+          Height = 21
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object edMsgTitulo: TEdit
+          Left = 116
+          Top = 32
+          Width = 180
+          Height = 21
+          TabOrder = 1
+        end
+        object seMsgTimeout: TSpinEdit
+          Left = 304
+          Top = 32
+          Width = 80
+          Height = 22
+          MaxValue = 600000
+          MinValue = 0
+          TabOrder = 2
+          Value = 15000
+        end
+        object edMsgConfirmar: TEdit
+          Left = 8
+          Top = 78
+          Width = 100
+          Height = 21
+          TabOrder = 3
+        end
+        object edMsgCancelar: TEdit
+          Left = 120
+          Top = 78
+          Width = 106
+          Height = 21
+          TabOrder = 4
+        end
+        object mmMsgTexto: TMemo
+          Left = 400
+          Top = 32
+          Width = 432
+          Height = 146
+          ScrollBars = ssVertical
+          TabOrder = 5
+        end
+        object btEnviarMensagem: TBitBtn
+          Left = 136
+          Top = 124
+          Width = 152
+          Height = 30
+          Caption = 'Exibir Mensagem'
+          TabOrder = 6
+          OnClick = btEnviarMensagemClick
+        end
+      end
+      object TabSheetPesquisa: TTabSheet
+        Caption = 'Pesquisa'
+        object Label24: TLabel
+          Left = 8
+          Top = 14
+          Width = 81
+          Height = 13
+          Caption = 'Tipo de pesquisa'
+        end
+        object Label25: TLabel
+          Left = 116
+          Top = 14
+          Width = 118
+          Height = 13
+          Caption = 'T'#237'tulo exibido no terminal'
+        end
+        object Label15: TLabel
+          Left = 304
+          Top = 14
+          Width = 175
+          Height = 13
+          Caption = 'Pergunta exibida ao operador/cliente'
+        end
+        object Label16: TLabel
+          Left = 8
+          Top = 62
+          Width = 103
+          Height = 13
+          Caption = 'Menor nota da escala'
+        end
+        object Label17: TLabel
+          Left = 136
+          Top = 62
+          Width = 99
+          Height = 13
+          Caption = 'Maior nota da escala'
+        end
+        object Label36: TLabel
+          Left = 512
+          Top = 14
+          Width = 42
+          Height = 13
+          Caption = 'Contexto'
+        end
+        object Label37: TLabel
+          Left = 8
+          Top = 156
+          Width = 136
+          Height = 13
+          Caption = 'Data de cria'#231#227'o da pesquisa'
+        end
+        object Label38: TLabel
+          Left = 8
+          Top = 110
+          Width = 110
+          Height = 13
+          Caption = 'Identificador do usu'#225'rio'
+        end
+        object Label39: TLabel
+          Left = 144
+          Top = 110
+          Width = 107
+          Height = 13
+          Caption = 'Identificador do cliente'
+        end
+        object Label40: TLabel
+          Left = 280
+          Top = 110
+          Width = 76
+          Height = 13
+          Caption = 'ID da transa'#231#227'o'
+        end
+        object Label41: TLabel
+          Left = 400
+          Top = 110
+          Width = 69
+          Height = 13
+          Caption = 'Tipo operacao'
+        end
+        object Label42: TLabel
+          Left = 520
+          Top = 110
+          Width = 76
+          Height = 13
+          Caption = 'Canal de origem'
+        end
+        object Label43: TLabel
+          Left = 376
+          Top = 156
+          Width = 125
+          Height = 13
+          Caption = 'Identificador do dispositivo'
+        end
+        object Label44: TLabel
+          Left = 640
+          Top = 110
+          Width = 68
+          Height = 13
+          Caption = 'Fluxo/Jornada'
+        end
+        object Label45: TLabel
+          Left = 736
+          Top = 110
+          Width = 34
+          Height = 13
+          Caption = 'Evento'
+        end
+        object Label46: TLabel
+          Left = 170
+          Top = 156
+          Width = 169
+          Height = 13
+          Caption = 'Identificador da pesquisa (Opcional)'
+        end
+        object cbxSurveyTipo: TComboBox
+          Left = 8
+          Top = 32
+          Width = 100
+          Height = 21
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object edSurveyTitulo: TEdit
+          Left = 116
+          Top = 32
+          Width = 180
+          Height = 21
+          TabOrder = 1
+        end
+        object edSurveyQuestion: TEdit
+          Left = 304
+          Top = 32
+          Width = 196
+          Height = 21
+          TabOrder = 2
+        end
+        object cbSurveyAtiva: TCheckBox
+          Left = 304
+          Top = 80
+          Width = 45
+          Height = 19
+          Caption = 'Ativa'
+          Checked = True
+          State = cbChecked
+          TabOrder = 3
+        end
+        object cbSurveyPermitirComentario: TCheckBox
+          Left = 360
+          Top = 80
+          Width = 124
+          Height = 19
+          Caption = 'Permitir coment'#195#161'rio'
+          Checked = True
+          State = cbChecked
+          TabOrder = 4
+        end
+        object seSurveyMin: TSpinEdit
+          Left = 8
+          Top = 80
+          Width = 113
+          Height = 22
+          MaxValue = 10
+          MinValue = 0
+          TabOrder = 5
+          Value = 0
+        end
+        object seSurveyMax: TSpinEdit
+          Left = 136
+          Top = 80
+          Width = 112
+          Height = 22
+          MaxValue = 10
+          MinValue = 0
+          TabOrder = 6
+          Value = 10
+        end
+        object mmSurveyContext: TMemo
+          Left = 512
+          Top = 32
+          Width = 312
+          Height = 56
+          Lines.Strings = (
+            '{ "journey": "card_present"'
+            '}')
+          ScrollBars = ssVertical
+          TabOrder = 7
+        end
+        object btSurvey: TBitBtn
+          Left = 612
+          Top = 164
+          Width = 224
+          Height = 30
+          Caption = 'Enviar Pesquisa de Satisfa'#231#227'o'
+          TabOrder = 8
+          OnClick = btSurveyClick
+        end
+        object edSurveyCreatedAt: TEdit
+          Left = 8
+          Top = 174
+          Width = 146
+          Height = 21
+          TabOrder = 9
+        end
+        object edSurveyUserId: TEdit
+          Left = 8
+          Top = 126
+          Width = 126
+          Height = 21
+          TabOrder = 10
+        end
+        object edSurveyCustomerId: TEdit
+          Left = 144
+          Top = 126
+          Width = 124
+          Height = 21
+          TabOrder = 11
+        end
+        object edSurveyTransactionId: TEdit
+          Left = 280
+          Top = 126
+          Width = 110
+          Height = 21
+          TabOrder = 12
+        end
+        object edSurveyOperationType: TEdit
+          Left = 400
+          Top = 126
+          Width = 110
+          Height = 21
+          TabOrder = 13
+        end
+        object edSurveyChannel: TEdit
+          Left = 520
+          Top = 126
+          Width = 110
+          Height = 21
+          TabOrder = 14
+        end
+        object edSurveyDeviceIdentifier: TEdit
+          Left = 376
+          Top = 174
+          Width = 216
+          Height = 21
+          TabOrder = 15
+        end
+        object edSurveyFlow: TEdit
+          Left = 640
+          Top = 126
+          Width = 90
+          Height = 21
+          TabOrder = 16
+        end
+        object edSurveyEvent: TEdit
+          Left = 736
+          Top = 126
+          Width = 88
+          Height = 21
+          TabOrder = 17
+          Text = 'transaction_finished'
+        end
+        object edSurveyId: TEdit
+          Left = 170
+          Top = 174
+          Width = 191
+          Height = 21
+          TabOrder = 18
+        end
+      end
+    end
+  end
   object mLog: TMemo
     Left = 0
-    Top = 280
-    Width = 520
-    Height = 170
+    Top = 618
+    Width = 864
+    Height = 202
     Align = alClient
     ScrollBars = ssVertical
-    TabOrder = 3
+    TabOrder = 4
   end
   object ImageList1: TImageList
     Left = 272
     Bitmap = {
-      494C01010D000E00040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C01010D000E00040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -873,6 +1310,7 @@ object FormMain: TFormMain
       FFC080018001FFFFFF8080018001FFFFFF019FF98181FFFFFE039FF981810F01
       E0079FF980010F81800F9FF9800187C1001F80018001C001003F80018001E001
       003F80018001F019003F9FF98F81FFFD103F80018003FFFFE07F80018007FFFF
-      E07FFFFFC00FFFFFE1FFFFFFFFFFFFFF}
+      E07FFFFFC00FFFFFE1FFFFFFFFFFFFFF00000000000000000000000000000000
+      000000000000}
   end
 end
